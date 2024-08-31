@@ -1,7 +1,7 @@
 module.exports = {
   root: true, // 프로젝트의 루트 디렉토리임을 명시
   env: {
-    browser: true, // 브라우저 환경을 지원하도록 설정
+    browser: true, // 브라우
     es2021: true, // ES2021 문법을 지원하도록 설정
   },
   extends: [

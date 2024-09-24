@@ -1,13 +1,14 @@
 import connectDB from "@/lib/db";
-import { Cocktails } from "@/lib/schemas/cocktails";
+import { Emoji } from "@/lib/schemas/emoji";
 
 export async function GET(request: Request) {
   try {
     connectDB();
 
-    const cocktails = await Cocktails.find().lean();
-    return Response.json(cocktails);
+    const emojis = await Emoji.find().lean();
+    return Response.json(emojis);
   } catch (error) {
     return Response.json(error);
   }
 }
+Emoji;

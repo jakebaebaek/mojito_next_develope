@@ -20,6 +20,9 @@ const cocktailsSchema = new mongoose.Schema(
     hashtag: {
       type: [String],
     },
+    img: {
+      type: String,
+    },
   },
   { collection: "Cocktails" }
 );

@@ -1,5 +1,6 @@
+import Link from "next/link";
 import style from "./card.module.scss";
-
+import Heart from "../../../public/Heart.svg";
 export default function Card() {
   // 별 클릭 함수
   // 마우스가 별에 들어올 때 실행되는 함수
@@ -10,23 +11,18 @@ export default function Card() {
   return (
     <>
       <div className={`${style.card}`}>
-        <img src="star.png" />
-        <img src="star.png" />
-        <a href="/desc:id">
+        <Link href="/desc:id">
+          <div className={`${style.text}`}>Cocktail</div>
           <div>
-            <img src="칵테일 이미지" alt="Cocktail Image" />
-            <h3>칵테일 이름</h3>
+            <img
+              className={`${style.img}`}
+              src="https://mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com/0.png"
+              alt="Cocktail Image"
+            />
+            {/* <svg className={`${style.heart}`} src="heart.svg" /></svg> */}
           </div>
-        </a>
-
-        <div>
-          <img
-            className={`${style.img}`}
-            src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_mango_lime_virgin_margarita-1.png"
-            alt="Cocktail Image"
-          />
-          <h3 className={`${style.text}`}>Cocktail</h3>
-        </div>
+        </Link>
+        <Heart className={`${style.heart}`} />
       </div>
     </>
   );

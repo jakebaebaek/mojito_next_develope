@@ -1,15 +1,22 @@
+@import "@/styles/theme";
+
 .card {
   width: 23rem;
   height: 25rem;
   background-color: white;
   border-radius: 2rem;
   box-shadow: $shadow;
-  justify-content: center;
-  align-content: center;
 
   .text {
-    background-color: red;
     font-size: 1.8rem;
     font-weight: $light;
+    text-align: center;
+  }
+  .img {
+    width: 13.9rem;
+  }
+  .heart {
+    fill: white;
+    stroke: $gray-200;
   }
 }

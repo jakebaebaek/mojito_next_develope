@@ -19,7 +19,6 @@ export default function Card() {
               src="https://mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com/0.png"
               alt="Cocktail Image"
             />
-            {/* <svg className={`${style.heart}`} src="heart.svg" /></svg> */}
           </div>
         </Link>
         <Heart className={`${style.heart}`} />

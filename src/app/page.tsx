@@ -1,6 +1,13 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import style from "./page.module.scss";
+import Card from "@/components/card/Card";
 
 export default function Home() {
-  return <h1>hello</h1>;
+  return (
+    <>
+      <h1>hello Jiho~!^^</h1>
+
+      <Card></Card>
+    </>
+  );
 }

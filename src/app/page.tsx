@@ -5,9 +5,11 @@ import Card from "@/components/card/Card";
 export default function Home() {
   return (
     <>
-      <h1>hello Jiho~!^^</h1>
-
-      <Card></Card>
+      <div className={`${style.card_page}`}>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+      </div>
     </>
   );
 }

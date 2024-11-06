@@ -1,0 +1,68 @@
+@import "@/styles/theme";
+.card_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 44rem;
+  height: 22rem;
+  background-color: white;
+  border-radius: 2rem;
+  box-shadow: $shadow;
+  position: relative;
+
+  .desc_link {
+    display: flex;
+    flex-direction: row;
+    // justify-content: center;
+    // align-items: center;
+    position: relative;
+
+    .info_wrap {
+      display: flex;
+      flex-direction: column;
+      width: 19rem;
+
+      .name {
+        margin-top: 2rem;
+        font-size: 1.6rem;
+        font-weight: $light;
+        text-align: center;
+      }
+      .img {
+        height: 14rem;
+        object-fit: contain;
+      }
+    }
+
+    .line {
+      border: 0.1rem solid $gray-100;
+      height: 20rem;
+      position: relative;
+      top: 1rem;
+    }
+
+    .memo_wrap {
+      padding: 2rem 2.5rem;
+      width: 24.9rem;
+
+      .star {
+      }
+      .memo {
+        font-size: 1.6rem;
+        padding-top: 1rem;
+        height: 13rem;
+        line-height: 2.4rem;
+        width: 20rem;
+        //말줄임
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}

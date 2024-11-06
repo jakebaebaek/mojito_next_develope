@@ -1,0 +1,19 @@
+@import "@/styles/theme";
+
+.button {
+  width: 100%;
+  font-size: 1.6rem;
+  border-radius: 3rem;
+  border: none;
+  height: 4.6rem;
+  padding: 0 6rem;
+  font-weight: $regular;
+}
+.orange_button {
+  background-color: $main-color;
+  color: white;
+}
+.gray_button {
+  background-color: $gray-100;
+  color: $gray-400;
+}

@@ -12,9 +12,25 @@
 
   display: flex;
   flex-direction: column;
-  //   justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  padding-left: 0.7rem;
 
-  .up {
+  li {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 0 1.2rem;
+    height: 5rem;
+    cursor: pointer;
+  }
+
+  .heart_svg {
+    stroke: $gray-500;
+    fill: none;
+
+    path {
+      stroke-width: 3;
+    }
   }
 }

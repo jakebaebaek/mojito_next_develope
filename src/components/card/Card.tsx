@@ -1,19 +1,6 @@
 import Link from "next/link";
 import style from "./card.module.scss";
-import Heart from "../../../public/Heart.svg";
-
-interface HeartIconProps {
-  size?: number;
-  className?: string;
-}
-
-export const HeartIcon = ({ size = 24, className }: HeartIconProps) => {
-  return (
-    <div className={className} style={{ width: size, height: size }}>
-      <Heart style={{ width: "100%", height: "100%" }} />
-    </div>
-  );
-};
+import Heart from "@public/Heart.svg";
 
 export default function Card() {
   // 별 클릭 함수

@@ -1,0 +1,20 @@
+@import "@/styles/theme";
+
+.navigation {
+  width: 7rem;
+  height: 21.8rem;
+  background-color: white;
+  box-shadow: $shadow;
+  position: fixed;
+  right: 0;
+  top: 14rem;
+  border-radius: 3rem 0 0 3rem;
+
+  display: flex;
+  flex-direction: column;
+  //   justify-content: center;
+  align-items: center;
+
+  .up {
+  }
+}

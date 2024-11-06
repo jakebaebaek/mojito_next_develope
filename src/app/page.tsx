@@ -3,10 +3,13 @@ import style from "./page.module.scss";
 import Card from "@/components/card/Card";
 import MemoCard from "@/components/card/MemoCard";
 import Button from "@/components/button/Button";
+import Navigation from "@/components/navigation/Navigation";
+import LoginModal from "@/components/modal/LoginModal";
 
 export default function Home() {
   return (
     <>
+      <Navigation />
       <div className={`${style.card_page}`}>
         <Card
           id="1"
@@ -26,6 +29,7 @@ export default function Home() {
           <Button text="검색" color="gray" />
           <Button text="검색" color="orange" />
         </div>
+        <LoginModal />
       </div>
     </>
   );

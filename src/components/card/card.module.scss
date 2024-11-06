@@ -18,14 +18,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    .text {
+
+    .name {
       margin-top: 2rem;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: $light;
       text-align: center;
     }
     .img {
       height: 14rem;
+      object-fit: contain;
     }
   }
 

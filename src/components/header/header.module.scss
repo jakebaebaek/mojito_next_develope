@@ -1,0 +1,87 @@
+@import "@/styles/theme";
+
+.header {
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  //   justify-content: space-between;
+  height: 7rem;
+  width: 100%;
+  background-color: white;
+  border-bottom: 0.1rem solid $main-color;
+  align-items: center;
+  font-weight: $bold;
+  font-size: 1.6rem;
+  white-space: nowrap;
+  z-index: 2;
+  //   position: relative;
+
+  .home_btn {
+    display: flex;
+    flex-direction: row;
+    margin-left: 4rem;
+    gap: 1rem;
+  }
+  ul {
+    margin-left: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14rem;
+    position: relative;
+    left: 10%;
+    // width: 60rem;
+    // background-color: yellow;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      //   background-color: red;
+    }
+
+    .search_btn {
+      display: flex;
+      gap: 1rem;
+      .search_svg {
+        height: 2rem;
+        width: 2rem;
+        object-fit: contain;
+        color: $gray-500;
+        path {
+          stroke-width: 3;
+        }
+      }
+    }
+  }
+
+  .login_btn {
+    // position: relative;
+    // justify-self: end;
+    // right: 1%;
+    margin: 0 auto;
+    // margin-left: 3rem;
+    height: 3.8rem;
+    border: none;
+    width: 11rem;
+    border-radius: 2rem;
+    background-color: $main-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    // color: white;
+
+    .login_svg {
+      height: 2.8rem;
+      width: 2.8rem;
+      fill: white;
+    }
+    .login_txt {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: $bold;
+    }
+  }
+}

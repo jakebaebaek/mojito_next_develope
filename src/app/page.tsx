@@ -10,27 +10,6 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <div className={`${style.card_page}`}>
-        <Card
-          id="1"
-          name="Cocktail"
-          img_url="https://mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com/0.png"
-        />
-        <br></br>
-        <MemoCard
-          id="2"
-          name="Suwan's Cocktail"
-          img_url="https://mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com/0.png"
-          memo="맛있었당"
-          rate={4}
-        />
-        <br></br>
-        <div className={`${style.btn_aria}`}>
-          <Button text="검색" color="gray" />
-          <Button text="검색" color="orange" />
-        </div>
-        <LoginModal />
-      </div>
     </>
   );
 }

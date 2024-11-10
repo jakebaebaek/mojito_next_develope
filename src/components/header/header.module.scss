@@ -1,0 +1,86 @@
+@import "@/styles/theme";
+
+.header {
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 4rem;
+
+  height: 7rem;
+  width: 100%;
+  background-color: white;
+  border-bottom: 0.1rem solid $main-color;
+  align-items: center;
+  font-weight: $bold;
+  font-size: 1.6rem;
+  white-space: nowrap;
+  z-index: 2;
+
+  .nav_container {
+    display: flex;
+    align-items: center;
+    gap: 10%;
+  }
+
+  .home_btn {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  ul {
+    margin-left: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14rem;
+    position: relative;
+    margin-left: 14rem;
+    margin-right: 12rem;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .search_btn {
+      display: flex;
+      gap: 1rem;
+      .search_svg {
+        height: 2rem;
+        width: 2rem;
+        object-fit: contain;
+        color: $gray-500;
+        path {
+          stroke-width: 3;
+        }
+      }
+    }
+  }
+
+  .login_btn {
+    height: 3.8rem;
+    border: none;
+    width: 11rem;
+    border-radius: 2rem;
+    background-color: $main-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+
+    .login_svg {
+      height: 2.8rem;
+      width: 2.8rem;
+      fill: white;
+    }
+    .login_txt {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: $bold;
+    }
+  }
+}

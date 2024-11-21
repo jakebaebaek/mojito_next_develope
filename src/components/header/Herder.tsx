@@ -14,7 +14,7 @@ export default function Header() {
             <div>모히또에서 몰디브 한 잔</div>
           </Link>
           <ul>
-            <Link href="/find/linkTop100">
+            <Link href="/find">
               <li className={`${style.search_btn}`}>
                 <Search className={`${style.search_svg}`} />
                 <div>칵테일 검색</div>

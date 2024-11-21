@@ -3,9 +3,9 @@ import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
 
 type TCardProps = {
-  id: string;
-  name: string;
-  img_url: string;
+  id?: string;
+  name?: string;
+  img_url?: string;
 };
 export default function Card(props: TCardProps) {
   const { id, name, img_url } = props;

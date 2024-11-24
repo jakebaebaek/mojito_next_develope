@@ -1,0 +1,47 @@
+@import "@/styles/theme";
+
+.top100_section {
+  // text-align: center;
+  padding-bottom: 5rem;
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .title {
+    font-size: 5.5rem;
+    color: $main-color;
+    font-weight: $bold;
+    text-wrap: nowrap;
+  }
+
+  .slide_area {
+    margin-top: 5rem;
+    .cocktail_name {
+      font-size: 3rem;
+      font-weight: $regular;
+    }
+    .slide_wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .slide_btn {
+      display: flex;
+      .right_svg {
+        transform: scaleX(-1);
+      }
+    }
+  }
+
+  .find_top100_btn {
+    border-radius: 2rem;
+    box-shadow: $shadow;
+    height: 5rem;
+    width: 39rem;
+    font-weight: $bold;
+    font-size: 1.8rem;
+    padding: 1rem 0;
+    margin-top: 5rem;
+  }
+}

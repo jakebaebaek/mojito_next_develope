@@ -1,0 +1,43 @@
+@import "@/styles/theme";
+
+.filter_section {
+  width: 100vw;
+  height: 110rem;
+  margin-bottom: 10rem;
+
+  h1 {
+    font-size: 5.5rem;
+    color: $main-color;
+    font-weight: $bold;
+  }
+
+  h3 {
+    font-size: 2.3rem;
+    font-weight: $bold;
+  }
+
+  .filter_box {
+    box-shadow: $shadow;
+    border-radius: 0 2rem 2rem 0;
+    width: 43rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    height: 50rem;
+
+    position: sticky;
+    left: 0rem;
+    top: 7rem;
+  }
+
+  .base {
+  }
+
+  .line {
+    width: 33.2rem;
+    height: 0.2rem;
+    background-color: $gray-100;
+  }
+}

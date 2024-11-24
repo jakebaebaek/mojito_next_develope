@@ -5,11 +5,17 @@ import MemoCard from "@/components/card/MemoCard";
 import Button from "@/components/button/Button";
 import Navigation from "@/components/navigation/Navigation";
 import LoginModal from "@/components/modal/LoginModal";
+import Top100 from "@/components/top100/Top100";
+import Filter from "@/components/filter/Filter";
 
 export default function Home() {
   return (
     <>
       <Navigation />
+      <div className={`${style.main_page}`}>
+        <Top100 />
+        <Filter />
+      </div>
     </>
   );
 }

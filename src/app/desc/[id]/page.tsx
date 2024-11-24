@@ -1,9 +1,11 @@
+import Navigation from "@/components/navigation/Navigation";
 import style from "./Desc.module.scss";
 import Star from "@public/Star.svg";
 
 export default function page() {
   return (
     <div id="desc" className={style.container}>
+      <Navigation />
       <div className={`${style.upper}`}>
         {/* 칵테일 이름 */}
         <div className={style.nametagBox}>

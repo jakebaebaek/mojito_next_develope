@@ -13,9 +13,9 @@ export default function Filter() {
           {/* 테이스팅 노트 체크박스 리스트 */}
           <label>
             <input type="checkbox" />
-            <i></i>
-            <span>테이스팅 노트 이름</span>
-            <img src="" alt="Emoji" />
+            <i className={`${style.checkbox_icon}`}></i>
+            <img className={`${style.checkbox_emoji}`} src="" alt="Emoji" />
+            <span className={`${style.checkbox_txt}`}>테이스팅 노트 이름</span>
           </label>
         </div>
       </div>
@@ -50,10 +50,12 @@ export default function Filter() {
         </div>
       </div>
 
-      <Button text="검색" color="orange"></Button>
-      <div className={`${style.return_btn}`}>
-        <ReturnArrow />
-        <span>초기화</span>
+      <div className={`${style.btn_wrap}`}>
+        <Button text="검색" color="orange"></Button>
+        <div className={`${style.return_btn}`}>
+          <ReturnArrow />
+          <span>초기화</span>
+        </div>
       </div>
     </div>
   );

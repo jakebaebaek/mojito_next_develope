@@ -29,10 +29,17 @@
       display: none;
     }
 
-    .checkbox_icon::before {
-      // content: "";
+    .checkbox_icon {
       display: block;
-      border: 0.1rem solid $main-color;
+      width: 2rem;
+      height: 2rem;
+      border: 0.1rem solid $gray-200;
+      border-radius: 3rem;
+    }
+
+    input:checked + .checkbox_icon {
+      background-color: $main-color;
+      border-color: $main-color;
     }
   }
 }

@@ -1,4 +1,4 @@
-import Navigation from "@/components/navigation/Navigation";
+import Navigation from "@/components/common/navigation/Navigation";
 import style from "./Desc.module.scss";
 import Star from "@public/Star.svg";
 

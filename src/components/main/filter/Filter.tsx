@@ -1,7 +1,8 @@
 import style from "./Filter.module.scss";
-import Card from "../card/Card";
+import Card from "../../common/card/Card";
 import ReturnArrow from "@public/ReturnArrow.svg";
-import Button from "../button/Button";
+import Button from "../../common/button/Button";
+import RangeSlider from "@/components/main/slider/RangeSlider";
 
 export default function Filter() {
   return (
@@ -27,9 +28,9 @@ export default function Filter() {
           {/* 베이스 체크박스 리스트 */}
           <label>
             <input type="checkbox" />
-            <i></i>
-            <span>베이스 이름</span>
+            <i className={`${style.checkbox_icon}`}></i>
             <img src="" alt="Emoji" />
+            <span>베이스 이름</span>
           </label>
         </div>
       </div>
@@ -37,8 +38,7 @@ export default function Filter() {
       <div className={`${style.booziness_wrap}`}>
         <h3>얼마나 취할래</h3>
         <div>
-          {/* 알코올 슬라이더 */}
-          <div></div>
+          <RangeSlider />
         </div>
       </div>
       <div className={`${style.line}`}></div>

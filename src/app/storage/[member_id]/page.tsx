@@ -1,4 +1,4 @@
-import Card from "@/components/card/Card";
+import Card from "@/components/common/card/Card";
 
 export default function storage() {
   return (

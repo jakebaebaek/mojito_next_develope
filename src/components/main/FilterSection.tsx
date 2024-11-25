@@ -1,8 +1,8 @@
 import style from "./FilterSection.module.scss";
-import Card from "../card/Card";
+import Card from "../common/card/Card";
 import ReturnArrow from "@public/ReturnArrow.svg";
-import Button from "../button/Button";
-import Filter from "../filter/Filter";
+import Button from "../common/button/Button";
+import Filter from "./filter/Filter";
 
 export default function FilterSection() {
   return (

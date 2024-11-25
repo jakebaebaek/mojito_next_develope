@@ -6,7 +6,7 @@ import Button from "@/components/button/Button";
 import Navigation from "@/components/navigation/Navigation";
 import LoginModal from "@/components/modal/LoginModal";
 import Top100 from "@/components/top100/Top100";
-import Filter from "@/components/filter/Filter";
+import FilterSection from "@/components/home/FilterSection";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       <Navigation />
       <div className={`${style.main_page}`}>
         <Top100 />
-        <Filter />
+        <FilterSection />
       </div>
     </>
   );

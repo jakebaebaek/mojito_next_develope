@@ -3,11 +3,11 @@ import style from "./MemoCard.module.scss";
 import Link from "next/link";
 
 type TMemoCardProps = {
-  id: string;
-  name: string;
-  img_url: string;
-  memo: string;
-  rate: number;
+  id?: string;
+  name?: string;
+  img_url?: string;
+  memo?: string;
+  rate?: number;
 };
 
 export default function MemoCard(props: TMemoCardProps) {

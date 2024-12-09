@@ -10,8 +10,8 @@ import FilterSection from "@/components/main/FilterSection";
 import { getEmoji } from "@/lib/fetchs/fetchEmoji";
 
 export default async function Home() {
-  const emojis = await getEmoji();
-  console.log("✅", emojis);
+  // const emojis = await getEmoji();
+  // console.log("✅", emojis);
 
   return (
     <>

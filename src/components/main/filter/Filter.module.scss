@@ -29,10 +29,17 @@
       display: none;
     }
 
-    .checkbox_icon::before {
-      // content: "";
+    .checkbox_icon {
       display: block;
-      border: 0.1rem solid $main-color;
+      width: 2rem;
+      height: 2rem;
+      border: 0.1rem solid $gray-200;
+      border-radius: 3rem;
+    }
+
+    input:checked + .checkbox_icon {
+      background-color: $main-color;
+      border-color: $main-color;
     }
   }
 }
@@ -44,7 +51,27 @@
   margin: 4rem 0;
 }
 
+.booziness_wrap {
+  width: 100%;
+}
+.slider_wrap {
+  margin-top: 3.5rem;
+}
+.sweet_wrap {
+  width: 100%;
+}
+
 .btn_wrap {
   width: 100%;
   margin-top: 4rem;
+
+  .return_btn {
+    color: $main-color;
+
+    .return_svg {
+    }
+    .return_txt {
+      color: $main-color;
+    }
+  }
 }

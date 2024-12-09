@@ -1,0 +1,48 @@
+@import "@/styles/theme";
+
+.slider {
+  position: relative;
+  width: 100%;
+  input {
+    -webkit-appearance: none; /* 기본 브라우저 스타일 제거 */
+    appearance: none;
+    background: none;
+    width: 100%;
+    position: relative;
+
+    /* 트랙 스타일 */
+    &::-webkit-slider-runnable-track {
+      background: linear-gradient(90deg, #fff398, $main-color);
+      background-color: gray;
+      height: 1.4rem;
+      border-radius: 1rem;
+    }
+
+    /* 핸들 스타일 */
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 2.2rem;
+      height: 2.2rem;
+      background-color: $main-color;
+      border-radius: 3rem;
+      cursor: grab;
+      box-shadow: none;
+      position: relative;
+      top: -0.4rem;
+      z-index: 2;
+    }
+  }
+
+  .rail {
+    position: absolute;
+    width: 100%;
+    height: 1.4rem;
+    border-radius: 0 1rem 1rem 0;
+    background-color: $gray-100;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+}

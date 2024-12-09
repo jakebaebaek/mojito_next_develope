@@ -1,10 +1,22 @@
+"use client";
+
 import style from "./Filter.module.scss";
 import Card from "../../common/card/Card";
 import ReturnArrow from "@public/ReturnArrow.svg";
 import Button from "../../common/button/Button";
 import RangeSlider from "@/components/main/slider/RangeSlider";
 
+import { useEmojiStore } from "@/lib/store/emojiStore";
+import { useEffect } from "react";
+
 export default function Filter() {
+  //zustand 상태관리
+  const { fetchEmoji, emojiList } = useEmojiStore();
+  useEffect(() => {
+    fetchEmoji();
+  }, []);
+
+  console.log("😈", emojiList);
   return (
     <div className={`${style.filter_box}`}>
       {/* 필터 */}

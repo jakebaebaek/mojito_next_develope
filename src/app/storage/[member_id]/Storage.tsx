@@ -2,8 +2,8 @@
 
 import { useState, useRef } from "react";
 import style from "./Storage.module.scss";
-import Card from "@/components/card/Card";
-import MemoCard from "@/components//card/MemoCard";
+import Card from "@/components/common/card/Card";
+import MemoCard from "@/components/common/card/MemoCard";
 import DropdownArrow from "@public/DropdownArrow.svg";
 // import Dropdown from "@/components/dropdown/DropdownBox";
 

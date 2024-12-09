@@ -6,11 +6,6 @@ import style from "./RangeSlider.module.scss";
 export default function RangeSlider() {
   const [value, setValue] = useState(5);
 
-  const onClickInput = (e) => {
-    console.log("클릭");
-    console.log(e);
-  };
-
   const onClicklevel = (prop: Number) => {
     switch (prop) {
       case 1:
@@ -27,7 +22,7 @@ export default function RangeSlider() {
 
   return (
     <>
-      <div className={`${style.slider}`} onClick={onClickInput}>
+      <div className={`${style.slider}`}>
         <div
           className={`${style.rail}`}
           style={{ width: `${100 - (value / 10) * 100}%` }}

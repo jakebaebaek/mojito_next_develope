@@ -4,7 +4,7 @@ import ReturnArrow from "@public/ReturnArrow.svg";
 import Button from "../common/button/Button";
 import Filter from "./filter/Filter";
 
-export default function FilterSection() {
+export default async function FilterSection() {
   return (
     <div className={`${style.filter_section}`}>
       <h1>Filter Section</h1>

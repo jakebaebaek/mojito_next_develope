@@ -1,0 +1,65 @@
+@import "@/styles/theme";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profile_image {
+  height: 16rem;
+}
+.nickname {
+  margin-bottom: 2rem;
+  h1 {
+    font-weight: $light;
+  }
+}
+.mypage_buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  h4 {
+    font-weight: $light;
+  }
+}
+.button {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black; 
+  border-radius: 2rem;
+  background-color: white;
+  width: 15rem;
+  height: 4rem;
+  padding: 0.5rem 2rem 0.5rem;
+  margin: 2rem;
+  gap: 1rem;
+}
+
+.cocktail_menu {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.favorite_cocktail,
+.recorded_cocktail {
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 4rem 3rem 4rem;
+  background-color: white;
+  border-radius: 2rem;
+  box-shadow: $shadow;
+  position: relative;
+}
+
+.delete_account {
+  margin: 7rem;
+  h4 {
+    color: $gray-300;
+  }
+}

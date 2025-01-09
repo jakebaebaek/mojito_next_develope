@@ -1,8 +1,28 @@
+"use client";
+import { useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useCocktailStore } from "@/lib/store/cocktailStore";
+
 import Navigation from "@/components/common/navigation/Navigation";
 import style from "./Desc.module.scss";
 import Star from "@public/Star.svg";
 
-export default function page() {
+export default function Desc() {
+  const { id } = useParams();
+  // Zustand에서 칵테일 목록 가져오기
+  const { fetchCocktail, cocktailList } = useCocktailStore();
+  useEffect(() => {
+    fetchCocktail();
+  }, []);
+
+  // URL의 ID에 해당하는 칵테일 필터링
+  const cocktail = cocktailList;
+  console.log(cocktailList);
+  // 데이터가 없는 경우 처리
+  if (!cocktail) {
+    return <div>칵테일 정보를 찾을 수 없습니다.</div>;
+  }
+
   return (
     <div id="desc" className={style.container}>
       <Navigation />

@@ -1,9 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import style from "./header.module.scss";
 import Person from "@public/Person.svg";
 import Search from "@public/Search.svg";
 
+import { useSession, signIn, signOut } from "next-auth/react";
+
 export default function Header() {
+  const { data: session } = useSession();
+  const userEmail = session?.user?.email;
+  console.log("💥", session?.user?.email);
   return (
     <>
       <div className={`${style.header}`}>
@@ -26,10 +33,17 @@ export default function Header() {
           </ul>
         </div>
 
-        <button className={`${style.login_btn}`}>
-          <Person className={`${style.login_svg}`} />
-          <div className={`${style.login_txt}`}>login</div>
-        </button>
+        {session?.user ? (
+          <button
+            className={`${style.login_btn}`}
+            onClick={() => signIn("kakao")}
+          >
+            <Person className={`${style.login_svg}`} />
+            <div className={`${style.login_txt}`}>login</div>
+          </button>
+        ) : (
+          <button>mypage</button>
+        )}
       </div>
     </>
   );

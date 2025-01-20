@@ -1,0 +1,22 @@
+@import "@/styles/theme";
+
+.nulldata {
+  font-size: 48px;
+  display: block;
+  text-align: center;
+  color: #ff6347;
+}
+
+.cocktailList {
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); 
+  width: fit-content;
+  justify-items: center;
+  align-items: center;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding-top: 2rem;
+  gap: 3rem;
+  width: 100%;
+  box-sizing: border-box;
+}

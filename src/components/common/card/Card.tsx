@@ -4,11 +4,14 @@ import Heart from "@public/Heart.svg";
 
 type TCardProps = {
   id?: string;
-  name?: string;
+  name?: {
+    ko: string;
+    en: string;
+  };
   img_url?: string;
 };
-export default function Card(props: TCardProps) {
-  const { id, name, img_url } = props;
+export default function Card({ id, name, img_url }: TCardProps) {
+  // const { id, name, img_url } = props;
   // 별 클릭 함수
   // 마우스가 별에 들어올 때 실행되는 함수
   // 마우스가 별에서 나갈 때 실행되는 함수
@@ -19,7 +22,8 @@ export default function Card(props: TCardProps) {
     <>
       <div className={`${style.card}`}>
         <Link className={`${style.desc_link}`} href={`/desc/${id}`}>
-          <div className={`${style.name}`}>{name}</div>
+          <div className={`${style.name}`}>{name?.ko}</div>
+          <div className={`${style.name}`}>{name?.en}</div>
           <img className={`${style.img}`} src={img_url} alt="Cocktail Image" />
         </Link>
         <Heart className={`${style.heart}`} />

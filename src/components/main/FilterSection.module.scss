@@ -1,20 +1,32 @@
 @import "@/styles/theme";
 
+
 .filter_section {
-  width: 100vw;
+  width: 98vw;
   height: 110rem;
   margin-bottom: 10rem;
   text-wrap: nowrap;
 
   h1 {
+    width: fit-content;
     font-size: 5.5rem;
     color: $main-color;
     font-weight: $bold;
+    
   }
 
-  .filter_wrap {
+  .filter_card_wrap {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 3rem;
+    grid-template-columns: 1fr 2.5fr;
+    column-gap: 2rem;
+    width: 100%;
+    padding: 0;
+  }
+  .fitler_wrap {
+    padding-top: 2rem;
+  }
+  .card_wrap {
+    padding-right: 30rem;
+    width: 100%;
   }
 }

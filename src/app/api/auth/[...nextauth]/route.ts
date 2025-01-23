@@ -13,15 +13,18 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
-        token.test = "test";
       }
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user = token;
+      //db정보 session 저장
+      const user = await Member.findOne({ email: token.email });
+      session.user.id = user._id;
+      session.user.nickname = user.nickname;
       return session;
     },
     async signIn({ user, account }) {
@@ -46,7 +49,6 @@ const handler = NextAuth({
             console.log("🔥회원가입 실패", error);
           }
         }
-        //회원 정보 가져오기
       }
 
       return true;

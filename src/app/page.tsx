@@ -11,10 +11,8 @@ import { getEmoji } from "@/lib/fetchs/fetchEmoji";
 import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 
 export default async function Home() {
-  const emojis = await getEmoji();
-  console.log("✅", emojis);
   const initialCocktails = await getCocktail();
-
+  
   return (
     <>
       <Navigation />

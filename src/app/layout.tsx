@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.scss";
 import Header from "@/components/common/header/Herder";
+import AuthSession from "@/app/AuthSession";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={notoSansKr.className}>
-        {children}
-        <Header></Header>
+        <AuthSession>
+          {children}
+          <Header></Header>;
+        </AuthSession>
       </body>
     </html>
   );

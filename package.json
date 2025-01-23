@@ -12,6 +12,7 @@
     "@svgr/webpack": "^8.1.0",
     "mongoose": "^8.6.3",
     "next": "^14.2.16",
+    "next-auth": "^4.24.11",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.80.5",

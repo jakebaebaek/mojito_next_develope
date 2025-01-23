@@ -7,20 +7,22 @@ import Navigation from "@/components/common/navigation/Navigation";
 import LoginModal from "@/components/common/modal/LoginModal";
 import Top100 from "@/components/top100/Top100";
 import FilterSection from "@/components/main/FilterSection";
-
 import { getEmoji } from "@/lib/fetchs/fetchEmoji";
+import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 
 export default async function Home() {
-   const emojis = await getEmoji();
-   console.log("✅", emojis);
+  const emojis = await getEmoji();
+  console.log("✅", emojis);
+  const initialCocktails = await getCocktail();
 
-export default function Home() {
   return (
     <>
       <Navigation />
       <div className={`${style.main_page}`}>
         <Top100 />
-        <FilterSection />
+        <div>
+          <FilterSection initialCocktails={initialCocktails} />
+        </div>
       </div>
     </>
   );

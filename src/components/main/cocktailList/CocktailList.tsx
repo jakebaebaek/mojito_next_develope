@@ -1,23 +1,40 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { useCocktailStore } from "@/lib/store/cocktailStore";
+import { useEffect, useRef, useState } from "react";
+import { TCocktail } from "@/lib/types/TCocktail";
 import Card from "@/components/common/card/Card";
 import style from "./CocktailList.module.scss";
 
-export default function CocktailList() {
-  const { fetchCocktail, cocktailList } = useCocktailStore();
+interface CocktailListProps {
+  cocktailList: TCocktail[];
+  loadMore: () => Promise<void>;
+  loading: boolean;
+}
+
+export default function CocktailList({
+  cocktailList,
+  loadMore,
+  loading,
+}: CocktailListProps) {
+  const observerRef = useRef(null);
 
   useEffect(() => {
-    fetchCocktail();
-  }, []);
+    if (!observerRef.current) return;
 
-  // 데이터가 없을 때 빈 배열로 처리
-  if (!cocktailList || cocktailList.length === 0) {
-    return <h1 className={style.nulldata}>칵테일 정보 가져오는 중...🍸</h1>;
-  }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading) {
+          loadMore();
+        }
+      },
+      { threshold: 1.0 }
+    );
 
-  // 카드 리스트 렌더링
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [loading, loadMore]);
+
   return (
     <div className={`${style.cocktailList}`}>
       {cocktailList.map((cocktail) => (
@@ -28,6 +45,12 @@ export default function CocktailList() {
           img_url={cocktail.img}
         />
       ))}
+      {/* 마지막 카드 뒤에 감지용 div 배치 */}
+      <div
+        ref={observerRef}
+        style={{ height: "50px", background: "transparent" }}
+      />
+      {loading && <p>Loading more...</p>}
     </div>
   );
 }

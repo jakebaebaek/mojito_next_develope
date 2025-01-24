@@ -1,7 +1,8 @@
+import { create } from "zustand";
 import NextAuth from "next-auth";
 import KakaoProvider from "next-auth/providers/kakao";
 import connectDB from "@/lib/db";
-import { Member } from "@/lib/schemas/member";
+import { Member, MemberStore } from "@/lib/schemas/member";
 import { NextResponse } from "next/server";
 
 const handler = NextAuth({
@@ -38,13 +39,20 @@ const handler = NextAuth({
         // 첫 로그인인 경우
         if (!existUser) {
           try {
+            //회원 db 생성
             const newMember = await Member.create({
               name: name,
               email: email,
               provider: provider,
               nickname: name,
             });
-            console.log("📍회원가입 성공", NextResponse.json(newMember));
+
+            //member store db 생성
+            const newStore = await MemberStore.create({
+              userId: newMember.id,
+            });
+
+            console.log("📍회원가입 성공", NextResponse.json(newStore));
           } catch (error) {
             console.log("🔥회원가입 실패", error);
           }

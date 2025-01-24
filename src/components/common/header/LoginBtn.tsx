@@ -1,14 +1,20 @@
 import style from "./Login.module.scss";
 import Person from "@public/Person.svg";
+import Link from "next/link";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginBtn() {
   const { data: session } = useSession();
   console.log("💥", session);
+  const id = session?.user.id;
 
   if (session) {
-    return <button onClick={() => signOut()}>signOut</button>;
+    return (
+      <Link href={`mypage/${id}`} className={`${style.login_btn}`}>
+        my page
+      </Link>
+    );
   }
   return (
     <>

@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={notoSansKr.className}>
         <AuthSession>
           {children}
-          <Header></Header>;
+          <Header></Header>
         </AuthSession>
       </body>
     </html>

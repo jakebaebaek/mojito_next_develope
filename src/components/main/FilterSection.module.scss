@@ -29,4 +29,18 @@
     padding-right: 30rem;
     width: 100%;
   }
+  .nomore_data {
+    font-size: 5rem;
+    color: $main-color;
+    font-weight: $bold;
+    margin-bottom: 5rem;
+    text-align: center;
+  }
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
 }

@@ -38,7 +38,6 @@ export default function FilterSection({
 
   useEffect(() => {
     const storedOffset = sessionStorage.getItem("offset-storage");
-    const storedScrollPosition = sessionStorage.getItem("scroll-position");
 
     const fetchInitialCocktails = async (offsetValue: number) => {
       const newCocktails = await getCocktail(offsetValue, 0);
@@ -52,15 +51,12 @@ export default function FilterSection({
       isLoading.current = false;
     };
 
-    if (storedOffset && storedScrollPosition) {
+    if (storedOffset) {
       try {
         const parsedOffset = JSON.parse(storedOffset);
         const offsetValue = parsedOffset?.state?.offset || 0;
         console.log("파스드 오프셋", parsedOffset, "오프셋 값", offsetValue);
         fetchInitialCocktails(offsetValue);
-        setTimeout(() => {
-          window.scrollTo(0, parseInt(storedScrollPosition, 10));
-        }, 100); // 약간의 지연을 주어 렌더링 완료를 보장
       } catch (error) {
         console.error(
           "SessionStorage에서 offset 값을 가져오는 중 오류 발생 🚑",
@@ -72,22 +68,6 @@ export default function FilterSection({
       setCocktailList(initialCocktails);
       isLoading.current = false;
     }
-    history.scrollRestoration = "manual";
-    return () => {
-      history.scrollRestoration = "auto";
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      sessionStorage.setItem("scroll-position", window.scrollY.toString());
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, []);
 
   if (isLoading.current) {

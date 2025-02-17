@@ -24,10 +24,14 @@
       font-size: 1.6rem;
       font-weight: $light;
       text-align: center;
+      word-break: keep-all;
+      white-space: pre-wrap; 
     }
     .img {
-      height: 14rem;
+      height: 15rem;
       object-fit: contain;
+      position: absolute;
+      top: 30%;
     }
   }
 

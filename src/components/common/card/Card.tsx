@@ -23,7 +23,6 @@ export default function Card({ id, name, img_url }: TCardProps) {
       <div className={`${style.card}`}>
         <Link className={`${style.desc_link}`} href={`/desc/${id}`}>
           <div className={`${style.name}`}>{name?.ko}</div>
-          <div className={`${style.name}`}>{name?.en}</div>
           <img className={`${style.img}`} src={img_url} alt="Cocktail Image" />
         </Link>
         <Heart className={`${style.heart}`} />

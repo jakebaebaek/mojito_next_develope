@@ -30,9 +30,12 @@ const handler = NextAuth({
         try {
           await connectDB();
           const member = await Member.findOne({ email: token.email });
-          const memberStore = await MemberStore.findOne({
-            userId: member._id,
-          });
+          const memberStore = await MemberStore.findOne(
+            {
+              userId: member._id,
+            },
+            "heart memo"
+          );
 
           token.id = member._id;
           token.nickname = member.nickname;

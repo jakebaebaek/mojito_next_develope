@@ -11,15 +11,19 @@ import { getEmoji } from "@/lib/fetchs/fetchEmoji";
 import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 
 export default async function Home() {
-  const initialCocktails = await getCocktail();
-  
+  const response = await getCocktail();
+  const initialCocktails = response.cocktails;
+  const totalCocktailCount = response.totalCount;
   return (
     <>
       <Navigation />
       <div className={`${style.main_page}`}>
         <Top100 />
         <div>
-          <FilterSection initialCocktails={initialCocktails} />
+          <FilterSection
+            initialCocktails={initialCocktails}
+            totalCocktailCount={totalCocktailCount}
+          />
         </div>
       </div>
     </>

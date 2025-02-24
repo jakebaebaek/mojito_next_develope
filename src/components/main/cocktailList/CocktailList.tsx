@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useEffect } from "react";
 import { TCocktail } from "@/lib/types/TCocktail";
 import Card from "@/components/common/card/Card";
 import style from "./CocktailList.module.scss";
@@ -16,7 +16,13 @@ export default function CocktailList({
   loadMore,
   loading,
 }: CocktailListProps) {
-  const observerRef = useRef(null);
+  const observerRef = useRef<HTMLDivElement | null>(null);
+  const renderCount = useRef(0);
+
+  useEffect(() => {
+    renderCount.current += 1;
+    console.log(`CocktailList 리렌더링 횟수: ${renderCount.current}`);
+  });
 
   useEffect(() => {
     if (!observerRef.current) return;
@@ -32,11 +38,15 @@ export default function CocktailList({
 
     observer.observe(observerRef.current);
 
-    return () => observer.disconnect();
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
   }, [loading, loadMore]);
 
   return (
-    <div className={`${style.cocktailList}`}>
+    <div className={style.cocktailList}>
       {cocktailList.map((cocktail) => (
         <Card
           key={cocktail._id}

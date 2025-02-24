@@ -10,6 +10,7 @@ declare module "next-auth" {
       nickname?: string | null;
       id?: any;
       memberStore?: any;
+      firstLogin?: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -23,7 +24,7 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger, session }) {
       if (account) {
         token.accessToken = account.access_token;
 
@@ -40,9 +41,17 @@ const handler = NextAuth({
           token.id = member._id;
           token.nickname = member.nickname;
           token.memberStore = memberStore;
+          token.firstLogin = false;
         } catch (error) {
           console.error("2️⃣ jwt 에러", error);
         }
+      }
+      // firstLogin값이 변경될때 실행
+      if (
+        trigger === "update" &&
+        session?.user.firstLogin !== token.firstLogin
+      ) {
+        token.firstLogin = session.user.firstLogin;
       }
       return token;
     },

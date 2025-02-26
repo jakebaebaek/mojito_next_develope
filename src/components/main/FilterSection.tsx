@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 import { TCocktail } from "@/lib/types/TCocktail";
 import { useOffsetStore } from "@/lib/store/offsetStore";
+import { useCocktailStore } from "@/lib/store/cocktailStore";
 
 import style from "./FilterSection.module.scss";
 import Filter from "./filter/Filter";
@@ -18,23 +19,52 @@ export default function FilterSection({
   initialCocktails,
   totalCocktailCount,
 }: FilterSectionProps) {
-  const [cocktailList, setCocktailList] =
+  const { cocktailList, fetchAllCocktails } = useCocktailStore();
+  const [localCocktailList, setLocalCocktailList] =
     useState<TCocktail[]>(initialCocktails);
   const { offset, setOffset } = useOffsetStore();
   const isLoading = useRef(false);
   const totalCount = totalCocktailCount;
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchAllCocktails();
+    };
+
+    if (cocktailList.length === 0) {
+      fetchData();
+    }
+  }, [fetchAllCocktails, cocktailList.length]);
+
+  useEffect(() => {
+    console.log("모든 칵테일 데이터 들어왔다잉", cocktailList.length);
+  }, [cocktailList]);
   const loadMore = useCallback(async () => {
     if (isLoading.current) return;
-    if (cocktailList.length >= totalCount) return;
+    isLoading.current = true;
 
-    const newCocktails = await getCocktail(25, offset);
-    setCocktailList((prev) => {
-      return [...prev, ...newCocktails.cocktails];
-    });
-    setOffset(offset + 25);
+    if (localCocktailList.length >= totalCount) {
+      isLoading.current = false;
+      return;
+    }
+
+    if (cocktailList.length != 0) {
+      setLocalCocktailList((prev) => {
+        return [...prev, ...cocktailList.slice(prev.length, prev.length + 25)];
+      });
+      setOffset(offset + 25);
+      console.log("이건 모든 칵테일 데이터로부터 옴😍😍😎😎😋");
+    } else {
+      const newCocktails = await getCocktail(25, offset);
+      setLocalCocktailList((prev) => {
+        return [...prev, ...newCocktails.cocktails];
+      });
+      setOffset(offset + 25);
+      console.log("이건 25개 호출 데이터💥💥💥💢");
+    }
+
     isLoading.current = false;
-  }, [offset, cocktailList.length, totalCount, setOffset]);
+  }, [offset, localCocktailList.length, totalCount, setOffset, cocktailList]);
 
   useEffect(() => {
     const storedOffset = sessionStorage.getItem("offset-storage");
@@ -47,7 +77,7 @@ export default function FilterSection({
         "토탈카운트 :",
         newCocktails.totalCount
       );
-      setCocktailList(newCocktails.cocktails);
+      setLocalCocktailList(newCocktails.cocktails);
       isLoading.current = false;
     };
 
@@ -65,7 +95,7 @@ export default function FilterSection({
         isLoading.current = false;
       }
     } else {
-      setCocktailList(initialCocktails);
+      setLocalCocktailList(initialCocktails);
       isLoading.current = false;
     }
   }, []);
@@ -83,11 +113,11 @@ export default function FilterSection({
         </div>
         <div className={`${style.card_wrap}`}>
           <CocktailList
-            cocktailList={cocktailList}
+            cocktailList={localCocktailList}
             loadMore={loadMore}
             loading={isLoading.current}
           />
-          {cocktailList.length >= totalCount && (
+          {localCocktailList.length >= totalCount && (
             <p className={`${style.nomore_data}`}>
               🍹모든 칵테일을 불러왔습니다🍹
             </p>

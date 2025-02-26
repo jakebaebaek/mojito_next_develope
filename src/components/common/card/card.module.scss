@@ -24,10 +24,15 @@
       font-size: 1.6rem;
       font-weight: $light;
       text-align: center;
+      word-break: keep-all;
+      white-space: pre-wrap; 
+      z-index: 1;
     }
     .img {
-      height: 14rem;
+      height: 15rem;
       object-fit: contain;
+      position: absolute;
+      top: 25%;
     }
   }
 

@@ -5,14 +5,16 @@ import { TCocktail } from "@/lib/types/TCocktail";
 
 type TCocktailStore = {
   cocktailList: TCocktail[];
-  fetchCocktail: () => Promise<void>;
+  fetchAllCocktails: () => Promise<void>;
 };
 
-export const useCocktailStore = create<TCocktailStore>((set) => ({
+export const useCocktailStore = create<TCocktailStore>((set, get) => ({
   cocktailList: [],
 
-  fetchCocktail: async () => {
-    const cocktailList = await getCocktail();
-    set({ cocktailList });
+  fetchAllCocktails: async () => {
+    const { cocktailList } = get();
+    if (cocktailList.length > 0) return; 
+    const response = await getCocktail(0, 0); 
+    set({ cocktailList: response.cocktails });
   },
 }));

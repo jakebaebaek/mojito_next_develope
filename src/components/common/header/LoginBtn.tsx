@@ -6,7 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 
 export default function LoginBtn() {
   const { data: session } = useSession();
-  console.log("💥", session);
+
   const id = session?.user.id;
 
   if (session) {

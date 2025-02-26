@@ -4,6 +4,7 @@ import { Noto_Sans_KR } from "next/font/google";
 import "./globals.scss";
 import Header from "@/components/common/header/Herder";
 import AuthSession from "@/app/AuthSession";
+import UpdateStore from "@/components/updateStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={notoSansKr.className}>
         <AuthSession>
+          <UpdateStore />
           {children}
           <Header></Header>
         </AuthSession>

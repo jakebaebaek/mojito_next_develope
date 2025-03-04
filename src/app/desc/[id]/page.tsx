@@ -71,20 +71,20 @@ export default function Desc({}) {
           <div className={style.slider}>
             <span>SWEET</span>
             <input
+              className={`${style.input}`}
               type="range"
               min="1"
               max="10"
               value={cocktail?.sweetness}
-              disabled
             />
             <span>DRY</span>
             <span>GENTLE</span>
             <input
+              className={`${style.input}`}
               type="range"
               min="1"
               max="10"
               value={cocktail?.booziness}
-              disabled
             />
             <span>BOOZY</span>
           </div>

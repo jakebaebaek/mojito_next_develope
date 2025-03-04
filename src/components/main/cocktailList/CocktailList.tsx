@@ -50,7 +50,7 @@ export default function CocktailList({
       {cocktailList.map((cocktail) => (
         <Card
           key={cocktail._id}
-          id={cocktail.name.en}
+          id={cocktail._id}
           name={cocktail.name}
           img_url={cocktail.img}
         />

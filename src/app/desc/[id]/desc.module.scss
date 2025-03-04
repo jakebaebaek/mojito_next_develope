@@ -2,12 +2,10 @@
 
 .container {
   display: grid;
-  // justify-content: center;
   height: 100%;
   width: 100%;
   padding-top: 7rem;
-  grid-template-rows: auto 1fr auto; // 전체 레이아웃을 상단, 중앙, 하단으로 나눔
-
+  grid-template-rows: auto 1fr auto;
 }
 .upper {
   display: flex;
@@ -15,28 +13,30 @@
   align-items: center;
 }
 .nametagBox { 
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   max-height: 30rem;
+  width: 35%;
+  h2 {
+    grid-row: 2;
+  }
 }
 .cocktailName {
   grid-column: 1 / 4;
   grid-row: 1;
   font-size: 5rem;
-  font-weight: 800;
+  font-weight: $bold;
   color: $main-color;
   text-align: left;
-  padding-left: 3rem;
+
 }
 
 .tagsBox {
-  grid-row: 2;
+  grid-row: 3;
   grid-column: 1 / 5;
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding-left: 2rem;
 }
 
 .tagItem {
@@ -57,7 +57,8 @@
 
 .cocktailInfo {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  height: 55rem;
+  grid-template-columns: 1fr 1.5fr;
   grid-template-rows: auto auto;
   gap: 2rem;
   margin-bottom: 2rem;
@@ -65,13 +66,12 @@
 
 .imgBox {
   grid-column: 1 / span 1;
-  grid-row: 1 / span 2; // 두 행을 차지하여 상하로 이어지게  justify-items: center;
+  grid-row: 1 / span 2; 
   display: flex;
   justify-content: center;
   align-items: center;  
-  width: 70%;
-  max-width: 400px; // 이미지 박스의 최대 크기 설정
-  max-height: 600px; // 최대 높이 설정
+  max-width: 35rem; 
+  max-height: 45rem; 
   margin: auto;
   position: relative;
 }
@@ -152,25 +152,32 @@
   justify-items: start;
 }
 
-.recipeTitle, .reviewTitle  {
+.recipeTitle {
   font-size: 2em;
   font-weight: 700;
+  margin-bottom: 2rem;
   color: #000000;
 }
 
 .ingredients {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+  font-weight: 400;
+  li {
+    width: 12rem;
+  }
+}
+.instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 2rem;
   color: #444;
-  font-weight: 600;
+  font-weight: 400;
 }
-
-.ingredients li {
-  margin-bottom: 10px;
-  font-size: 1em;
-}
-
 .mix {
   font-weight: 600;
   color: #444;
@@ -250,7 +257,16 @@
   font-style: $light;
   text-align: center;
 }
-
+.star {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  justify-content: center;
+  :hover {
+    cursor: pointer;
+    color: #444;
+  }
+}
 .saveButton {
   background-color: $main-color;
   color: #ffffff;

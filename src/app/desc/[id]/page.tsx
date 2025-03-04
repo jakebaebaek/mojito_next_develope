@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 
@@ -7,19 +6,17 @@ import Navigation from "@/components/common/navigation/Navigation";
 import style from "./Desc.module.scss";
 import Star from "@public/Star.svg";
 
-export default function Desc() {
+export default function Desc({}) {
   const { id } = useParams();
   // Zustand에서 칵테일 목록 가져오기
-  const { fetchCocktail, cocktailList } = useCocktailStore();
-  useEffect(() => {
-    fetchCocktail();
-  }, []);
+  const { cocktailList } = useCocktailStore();
+  console.log("상세 칵테일 id", id);
 
-  // URL의 ID에 해당하는 칵테일 필터링
-  const cocktail = cocktailList;
-  console.log(cocktailList);
+  const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
+  console.log("상세 칵테일", cocktail);
+
   // 데이터가 없는 경우 처리
-  if (!cocktail) {
+  if (!cocktailList) {
     return <div>칵테일 정보를 찾을 수 없습니다.</div>;
   }
 
@@ -29,14 +26,15 @@ export default function Desc() {
       <div className={`${style.upper}`}>
         {/* 칵테일 이름 */}
         <div className={style.nametagBox}>
-          <h1 className={style.cocktailName}>Tommys Margarita</h1>
+          <h1 className={style.cocktailName}>{cocktail?.name.ko}</h1>
+          <h2>{cocktail?.name.en}</h2>
           {/* 해시태그 */}
           <div className={style.tagsBox}>
             <div className={style.tagItem}>
-              <span>#상큼한맛</span>
+              <span>#{cocktail?.flavor}</span>
               <img
                 className={style.hashEmoji}
-                src="맞는 이미지 넣기"
+                src={"맞는 이미지 넣기"}
                 alt="Hashtag Emoji"
               />
             </div>
@@ -45,10 +43,7 @@ export default function Desc() {
         {/* 칵테일 정보 */}
         <div className={style.cocktailInfo}>
           <div className={style.imgBox}>
-            <img
-              src="https://mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com/0.png"
-              alt="Cocktail Image"
-            />
+            <img src={cocktail?.img} alt="Cocktail Image" />
           </div>
           {/* 베이스 맛 */}
           <div className={style.bf}>
@@ -59,7 +54,7 @@ export default function Desc() {
                 src="맞는 이미지 넣기"
                 alt="Base Image"
               />
-              <div className={style.baseName}>화이트 럼</div>
+              <div className={style.baseName}>{cocktail?.base}</div>
             </div>
             <div className={style.flavor}>
               <span>테이스팅 노트</span>
@@ -68,17 +63,29 @@ export default function Desc() {
                 src="맞는 이미지 넣기"
                 alt="Flavor Image"
               />
-              <div className={style.flavorName}>시트러스</div>
+              <div className={style.flavorName}>{cocktail?.flavor}</div>
             </div>
           </div>
 
           {/* 알콜세기 및 당도 */}
           <div className={style.slider}>
             <span>SWEET</span>
-            <input type="range" min="1" max="10" value="7" disabled />
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={cocktail?.sweetness}
+              disabled
+            />
             <span>DRY</span>
             <span>GENTLE</span>
-            <input type="range" min="1" max="10" value="5" disabled />
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={cocktail?.booziness}
+              disabled
+            />
             <span>BOOZY</span>
           </div>
         </div>
@@ -89,21 +96,28 @@ export default function Desc() {
         {/* 재료 */}
         <div className={style.recipe}>
           <div className={style.recipeTitle}>레시피</div>
+          <h2>재료</h2>
           <ul className={style.ingredients}>
-            <li>화이트 럼(White Rum) 60ml</li>
-            <li>신선한 라임 주스 30ml</li>
-            <li>설탕 시럽 15ml (또는 꿀 + 1 티스푼)</li>
+            {cocktail?.recipe.ingredients.map((item, index) => (
+              <li key={index}>
+                {item.ingredient.ko}
+                <br />
+                {item.ingredient.en}
+                <br />
+                {item.amount}
+              </li>
+            ))}
           </ul>
           <div className={style.mix}>
-            <h4>믹스방법</h4>
-            <ol>
-              <li>쉐이커 준비: 모든 재료를 넣고 칠링된 쉐이커를 준비합니다.</li>
-              <li>
-                잘 섞기: 얼음과 함께 흔들고, 텀블러 스타일의 잔에 부어줍니다.
-              </li>
-              <li>
-                장식: 라임 웨지 또는 꿀을 조금 뿌려서 마무리 장식을 해줍니다.
-              </li>
+            <h2>믹스방법</h2>
+            <ol className={`${style.instructions}`} type="1">
+              {cocktail?.recipe.instructions.map((item, index) => (
+                <li key={index}>
+                  {item.ko}
+                  <br />
+                  {item.en}
+                </li>
+              ))}
             </ol>
           </div>
         </div>

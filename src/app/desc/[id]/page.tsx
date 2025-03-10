@@ -71,20 +71,20 @@ export default function Desc({}) {
           <div className={style.slider}>
             <span>SWEET</span>
             <input
+              className={`${style.input}`}
               type="range"
               min="1"
               max="10"
               value={cocktail?.sweetness}
-              disabled
             />
             <span>DRY</span>
             <span>GENTLE</span>
             <input
+              className={`${style.input}`}
               type="range"
               min="1"
               max="10"
               value={cocktail?.booziness}
-              disabled
             />
             <span>BOOZY</span>
           </div>
@@ -99,11 +99,11 @@ export default function Desc({}) {
           <h2>재료</h2>
           <ul className={style.ingredients}>
             {cocktail?.recipe.ingredients.map((item, index) => (
-              <li key={index}>
+              <li className={`${style.ingredient}`} key={index}>
                 {item.ingredient.ko}
                 <br />
-                {item.ingredient.en}
-                <br />
+                <p className={`${style.subtitle_eng}`}>{item.ingredient.en}</p>
+                <div className={`${style.divider}`}></div>
                 {item.amount}
               </li>
             ))}
@@ -115,7 +115,7 @@ export default function Desc({}) {
                 <li key={index}>
                   {item.ko}
                   <br />
-                  {item.en}
+                  <p className={`${style.subtitle_eng}`}>{item.en}</p>
                 </li>
               ))}
             </ol>

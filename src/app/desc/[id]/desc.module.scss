@@ -17,13 +17,8 @@
   flex-direction: column;
   max-height: 30rem;
   width: 35%;
-  h2 {
-    grid-row: 2;
-  }
 }
 .cocktailName {
-  grid-column: 1 / 4;
-  grid-row: 1;
   font-size: 5rem;
   font-weight: $bold;
   color: $main-color;
@@ -32,11 +27,10 @@
 }
 
 .tagsBox {
-  grid-row: 3;
-  grid-column: 1 / 5;
   display: flex;
   align-items: center;
   gap: 2rem;
+  padding-top: 1rem;
 }
 
 .tagItem {
@@ -166,9 +160,20 @@
   justify-content: center;
   margin-bottom: 3rem;
   font-weight: 400;
-  li {
-    width: 12rem;
+  
+  .ingredient {
+    width: 15rem;
+    padding: 1rem;
+    background-color: rgb(250, 250, 250);
+    border-radius: 2rem;
+    box-shadow: $shadow;
+    position: relative;
   }
+}
+.subtitle_eng {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #444;
 }
 .instructions {
   display: flex;
@@ -177,6 +182,12 @@
   padding-top: 2rem;
   color: #444;
   font-weight: 400;
+  li {
+    width: auto;
+    list-style-type: decimal;
+    list-style-position: inside;
+
+  } 
 }
 .mix {
   font-weight: 600;
@@ -280,5 +291,24 @@
 }
 
 .saveButton:hover {
-  background-color: #e68a00; // 버튼 호버 시 색상 변경
+  background-color: #e68a00;
+}
+
+.input{
+  -webkit-appearance: none; 
+  appearance: none;
+  border-radius: 2rem;
+  outline: none;
+  height: 1rem;
+  opacity: 0.8;
+  pointer-events: none;
+  background: linear-gradient(to right, $main-color, #ff2323);
+}
+.input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: url('/Star.svg') no-repeat;  
+  height: 3rem;
+  width: 3rem;
+  background-size: cover;
 }

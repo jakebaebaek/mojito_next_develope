@@ -1,16 +1,24 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
-
+import { useState } from "react";
 import Navigation from "@/components/common/navigation/Navigation";
 import style from "./Desc.module.scss";
-import Star from "@public/Star.svg";
+import StarRating from "@public/StarRating.svg";
 
 export default function Desc({}) {
   const { id } = useParams();
   // Zustand에서 칵테일 목록 가져오기
   const { cocktailList } = useCocktailStore();
   console.log("상세 칵테일 id", id);
+
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+
+  const handleClick = (index: number) => {
+    // 현재 rating과 클릭한 index + 1이 같다면 rating을 0으로 리셋
+    setRating(rating === index + 1 ? 0 : index + 1);
+  };
 
   const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
   console.log("상세 칵테일", cocktail);
@@ -126,12 +134,18 @@ export default function Desc({}) {
       <div className={`${style.reviewarea}`}>
         <div className={`${style.reviewTitle}`}> 칵테일 리뷰 </div>
         <div className={`${style.reviewBox}`}>
-          <div className={`${style.star}`}>
-            <Star />
-            <Star />
-            <Star />
-            <Star />
-            <Star />
+          <div className={`${style.stars}`}>
+            {[...Array(5)].map((_, index) => (
+              <StarRating
+                key={index}
+                className={`${style.star} ${
+                  index < rating ? style.filled : ""
+                } ${index < hover ? style.hovered : ""}`}
+                onClick={() => (handleClick(index), console.log(rating))}
+                onMouseEnter={() => setHover(index + 1)}
+                onMouseLeave={() => setHover(0)}
+              />
+            ))}
           </div>
           <div className={`${style.divider}`} /> {/* 구분선 */}
           <div className={`${style.reviewText}`}>

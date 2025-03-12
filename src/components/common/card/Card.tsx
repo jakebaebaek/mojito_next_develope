@@ -22,24 +22,28 @@ export default function Card({ id, name, img_url }: TCardProps) {
   // 별 아이콘 렌더링 조건
 
   const { heart, setHeart } = useMemberStore();
+  const [isClicked, setIsClicked] = useState(false);
 
   console.log("🫀");
   const onClickHeart = (id: string) => {
-    setHeart([...heart, id]);
-    console.log("😍", heart);
+    if (isClicked) {
+      setHeart(heart.filter((item) => item != id));
+      console.log("🦷", heart);
+    } else {
+      setHeart([...heart, id]);
+      console.log("😍", heart);
+    }
   };
-
-  const [isClicked, setIsClicked] = useState(false);
 
   const clicked_heart = () => {
     heart.map((item) => {
-      item === id ? setIsClicked(true) : null;
+      item === id ? setIsClicked(true) : setIsClicked(false);
     });
   };
 
   useEffect(() => {
     clicked_heart();
-  }, [heart]);
+  }, [heart, onClickHeart]);
 
   return (
     <>

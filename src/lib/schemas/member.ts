@@ -47,6 +47,9 @@ const memberStoreSchema = new mongoose.Schema(
         memo_txt: {
           type: String,
         },
+        rating: {
+          type: Number,
+        },
       },
     ],
   },

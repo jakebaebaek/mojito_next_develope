@@ -54,7 +54,9 @@ export default function Card({ id, name, img_url }: TCardProps) {
           <img className={`${style.img}`} src={img_url} alt="Cocktail Image" />
         </Link>
         <Heart
-          className={`${isClicked ? style.clicked_heart : style.heart}`}
+          className={`${style.heart} ${
+            isClicked ? style.clicked : style.unClicked
+          }`}
           onClick={() => onClickHeart(id)}
         />
       </div>

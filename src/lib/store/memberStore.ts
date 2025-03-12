@@ -5,7 +5,7 @@ import { Tmemo } from "@/lib/types/TMemo";
 type TMemberStoreStore = {
   heart: string[];
   memo: Tmemo[];
-  setHeart: (data: string[] | ((prev: string[]) => string[])) => void;  
+  setHeart: (data: string[]) => void;
   setMemo: (data: Tmemo[] | ((prev: Tmemo[]) => Tmemo[])) => void;
 };
 export const useMemberStore = create<TMemberStoreStore>()(
@@ -15,7 +15,7 @@ export const useMemberStore = create<TMemberStoreStore>()(
       memo: [],
       setHeart: (data) =>
         set((state) => ({
-          heart: typeof data === "function" ? data(state.heart) : data,
+          heart: data,
         })),
       setMemo: (data) =>
         set((state) => ({

@@ -10,7 +10,6 @@ export default function UpdateStore() {
 
   useEffect(() => {
     if (!session?.user || session.user.firstLogin) return; //세션이 없거나 firstLogin이 true면 실행 안함
-    console.log(session?.user?.firstLogin);
     const sessionHeart = session.user.memberStore.heart;
     const sessionMemo = session.user.memberStore.memo;
 

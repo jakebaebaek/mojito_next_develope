@@ -36,7 +36,15 @@
     stroke: $gray-200;
     stroke-width: 2;
     position: absolute;
-
+    right: 1.5rem;
+    bottom: 2rem;
+    cursor: pointer;
+  }
+  .clicked_heart {
+    fill: $main-color;
+    stroke: $main-color;
+    stroke-width: 2;
+    position: absolute;
     right: 1.5rem;
     bottom: 2rem;
   }

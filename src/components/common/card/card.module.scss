@@ -37,12 +37,20 @@
   }
 
   .heart {
-    fill: white;
-    stroke: $gray-200;
     stroke-width: 2;
     position: absolute;
-
     right: 1.5rem;
     bottom: 2rem;
+    cursor: pointer;
+
+    &.unClicked {
+      fill: white;
+      stroke: $gray-200;
+    }
+
+    &.clicked {
+      fill: $main-color;
+      stroke: $main-color;
+    }
   }
 }

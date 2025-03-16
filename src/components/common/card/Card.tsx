@@ -1,9 +1,12 @@
+"use client";
 import Link from "next/link";
 import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
+import { useMemberStore } from "@/lib/store/memberStore";
+import { useEffect, useState } from "react";
 
 type TCardProps = {
-  id?: string;
+  id: string;
   name?: {
     ko: string;
     en: string;
@@ -18,6 +21,30 @@ export default function Card({ id, name, img_url }: TCardProps) {
 
   // 별 아이콘 렌더링 조건
 
+  const { heart, setHeart } = useMemberStore();
+  const [isClicked, setIsClicked] = useState(false);
+
+  console.log("🫀");
+  const onClickHeart = (id: string) => {
+    if (isClicked) {
+      setHeart(heart.filter((item) => item != id));
+      console.log("🦷", heart);
+    } else {
+      setHeart([...heart, id]);
+      console.log("😍", heart);
+    }
+  };
+
+  const clicked_heart = () => {
+    heart.map((item) => {
+      item === id ? setIsClicked(true) : setIsClicked(false);
+    });
+  };
+
+  useEffect(() => {
+    clicked_heart();
+  }, [heart, onClickHeart]);
+
   return (
     <>
       <div className={`${style.card}`}>
@@ -25,7 +52,12 @@ export default function Card({ id, name, img_url }: TCardProps) {
           <div className={`${style.name}`}>{name?.ko}</div>
           <img className={`${style.img}`} src={img_url} alt="Cocktail Image" />
         </Link>
-        <Heart className={`${style.heart}`} />
+        <Heart
+          className={`${style.heart} ${
+            isClicked ? style.clicked : style.unClicked
+          }`}
+          onClick={() => onClickHeart(id)}
+        />
       </div>
     </>
   );

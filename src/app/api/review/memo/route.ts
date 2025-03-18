@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "유저 정보를 찾을 수 없습니다." }, { status: 404 });
     }
 
-    // ✅ 해당 유저의 특정 칵테일 리뷰 업데이트
+    //칵테일 리뷰 업데이트
     const updatedUserStore = await MemberStore.updateOne(
       { userId, "memo.cocktail_id": body.cocktailId },
       {

@@ -8,7 +8,7 @@ interface CocktailResponse {
 export const getCocktail = async (limit: number = 0,offset: number = 0): Promise<CocktailResponse> => {
   try {
     const query = `?limit=${limit}&offset=${offset}`;
-    const response = await fetch(`http://localhost:3000/api/cocktails${query}`);
+    const response = await fetch(`http://localhost:3000/api/cocktails${query}`, { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }

@@ -1,27 +1,56 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
-import { useState } from "react";
+import { useMemberStore } from "@/lib/store/memberStore";
+import { useRef, useState, useEffect } from "react";
+
+import { postReview, getReviews } from "@/lib/fetchs/fetchReview";
 import Navigation from "@/components/common/navigation/Navigation";
 import style from "./Desc.module.scss";
 import StarRating from "@public/StarRating.svg";
 
 export default function Desc({}) {
   const { id } = useParams();
-  // Zustand에서 칵테일 목록 가져오기
   const { cocktailList } = useCocktailStore();
-  console.log("상세 칵테일 id", id);
-
+  const { memo, setMemo } = useMemberStore();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+  const reviewRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleClick = (index: number) => {
-    // 현재 rating과 클릭한 index + 1이 같다면 rating을 0으로 리셋
+  useEffect(() => {
+    console.log("리뷰 정보", memo);
+  }, [memo]);
+
+  const handleRating = (index: number) => {
     setRating(rating === index + 1 ? 0 : index + 1);
   };
 
+  const handleSaveReview = async () => {
+    const reviewText = reviewRef.current?.value;
+    const newReview = {
+      cocktail_id: id,
+      memo_txt: reviewText,
+    };
+    console.log("리뷰 저장", newReview);
+    console.log("멤버의 정보를 가져오세요", useMemberStore.getState());
+    if (!reviewText) {
+      alert("리뷰를 입력해주세요!");
+      return;
+    }
+    if (!useMemberStore.getState().memo) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    try {
+      postReview(id, reviewText);
+      setMemo({ ...memo, newReview });
+      alert("리뷰가 저장되었습니다.");
+    } catch (error) {
+      console.error("리뷰 저장 실패:", error);
+    }
+  };
+
   const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
-  console.log("상세 칵테일", cocktail);
 
   // 데이터가 없는 경우 처리
   if (!cocktailList) {
@@ -141,18 +170,24 @@ export default function Desc({}) {
                 className={`${style.star} ${
                   index < rating ? style.filled : ""
                 } ${index < hover ? style.hovered : ""}`}
-                onClick={() => (handleClick(index), console.log(rating))}
+                onClick={() => handleRating(index)}
                 onMouseEnter={() => setHover(index + 1)}
                 onMouseLeave={() => setHover(0)}
               />
             ))}
           </div>
-          <div className={`${style.divider}`} /> {/* 구분선 */}
+          <div className={`${style.divider}`} />
           <div className={`${style.reviewText}`}>
-            <textarea placeholder="칵테일 맛이 어땠나요? 리뷰를 남겨보세요."></textarea>
+            <textarea
+              // value={memo. ? memo : ""}
+              ref={reviewRef}
+              placeholder="칵테일 맛이 어땠나요? 리뷰를 남겨보세요."
+            />
           </div>
         </div>
-        <button className={`${style.saveButton}`}>저장</button>
+        <button className={style.saveButton} onClick={handleSaveReview}>
+          저장
+        </button>
       </div>
     </div>
   );

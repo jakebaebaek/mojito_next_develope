@@ -55,7 +55,7 @@
   grid-template-columns: 1fr 1.5fr;
   grid-template-rows: auto auto;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 7rem;
 }
 
 .imgBox {
@@ -290,10 +290,10 @@
   font-weight: $bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
 
-.saveButton:hover {
-  background-color: #e68a00;
+  &:hover {
+    background-color: #ffc293;
+  }
 }
 
 .input{
@@ -304,7 +304,7 @@
   height: 1rem;
   opacity: 0.8;
   pointer-events: none;
-  background: linear-gradient(to right, $main-color, #ff2323);
+  background: #e9e5e5;
 }
 .input::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -312,5 +312,5 @@
   background: url('/Star.svg') no-repeat;  
   height: 3rem;
   width: 3rem;
-  background-size: cover;
+  background-position: center;
 }

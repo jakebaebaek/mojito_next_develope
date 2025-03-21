@@ -1,4 +1,4 @@
-import NextAuth, { DefaultSession } from "next-auth";
+import NextAuth, { NextAuthOptions, DefaultSession } from "next-auth";
 import KakaoProvider from "next-auth/providers/kakao";
 import connectDB from "@/lib/db";
 import { Member, MemberStore } from "@/lib/schemas/member";
@@ -15,9 +15,8 @@ declare module "next-auth" {
   }
 }
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
-    // 카카오 Provider
     KakaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID || "",
       clientSecret: process.env.KAKAO_SECRET || "",
@@ -32,32 +31,34 @@ const handler = NextAuth({
           await connectDB();
           const member = await Member.findOne({ email: token.email });
           const memberStore = await MemberStore.findOne(
-            {
-              userId: member._id,
-            },
+            { userId: member?._id },
             "heart memo"
           );
 
-          token.id = member._id;
-          token.nickname = member.nickname;
-          token.memberStore = memberStore;
-          token.firstLogin = false;
+          if (member) {
+            token.id = member._id;
+            token.nickname = member.nickname;
+            token.memberStore = memberStore ? JSON.parse(JSON.stringify(memberStore)) : null; // JSON 변환 추가
+            token.firstLogin = false;
+          }
         } catch (error) {
           console.error("2️⃣ jwt 에러", error);
         }
       }
-      // firstLogin값이 변경될때 실행
-      if (
-        trigger === "update" &&
-        session?.user.firstLogin !== token.firstLogin
-      ) {
+
+      if (trigger === "update" && session?.user.firstLogin !== token.firstLogin) {
         token.firstLogin = session.user.firstLogin;
       }
       return token;
     },
     async session({ session, token }) {
-      session.user = token;
-
+      session.user = {
+        name: token.name,
+        email: token.email,
+        nickname: token.nickname as string | null | undefined,
+        memberStore: token.memberStore,
+        firstLogin: token.firstLogin as boolean,
+      };
       return session;
     },
     async signIn({ user, account }) {
@@ -69,18 +70,15 @@ const handler = NextAuth({
           await connectDB();
           const existUser = await Member.findOne({ email });
 
-          // 첫 로그인인 경우
           if (!existUser) {
             try {
-              //회원 db 생성
               const newMember = await Member.create({
-                name: name,
-                email: email,
-                provider: provider,
+                name,
+                email,
+                provider,
                 nickname: name,
               });
 
-              //member store db 생성
               const newStore = await MemberStore.create({
                 userId: newMember.id,
               });
@@ -98,5 +96,8 @@ const handler = NextAuth({
       }
     },
   },
-});
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

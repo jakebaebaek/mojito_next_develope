@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useRef, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 import { postReview, getReviews } from "@/lib/fetchs/fetchReview";
 import Navigation from "@/components/common/navigation/Navigation";
@@ -16,14 +17,33 @@ export default function Desc({}) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const reviewRef = useRef<HTMLTextAreaElement>(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    console.log("리뷰 정보", memo);
-  }, [memo]);
+    console.log("세션 정보", session);
+  }, [session]);
 
   const handleRating = (index: number) => {
     setRating(rating === index + 1 ? 0 : index + 1);
   };
+
+  {
+    /*
+    이 부분은 API로 리뷰 저장하는 부분입니다.
+    리뷰 저장을 위해서는 로그인이 필요합니다.
+    로그인이 안되어있을 경우, alert 로 로그인 필요 메시지가 뜹니다. 
+    리뷰를 입력하지 않았을 경우, alert 로 리뷰를 입력해주세요 메시지가 뜹니다.
+    리뷰가 성공적으로 저장되었을 경우, alert 로 리뷰가 저장되었습니다 메시지가 뜹니다.
+    리뷰가 저장되면서 동시에 db 에 업데이트가 됩니다. 
+    db 업데이트는 다음과 같이 이루어집니다.
+    1. 해당 유저의 MemberStore 문서를 찾습니다.
+    2. 해당 유저의 MemberStore 문서에 해당 칵테일의 리뷰가 있는지 확인합니다.
+    3. 해당 유저의 MemberStore 문서에 해당 칵테일의 리뷰가 있으면 업데이트를 합니다.
+    4. 해당 유저의 MemberStore 문서에 해당 칵테일의 리뷰가 없으면 새로운 리뷰를 추가합니다.
+    그와 동시에 zustand의 memberStore 에도 업데이트가 됩니다. -- 추후 구현예정입니다.
+    memberStore 에도 역시 db에 저장된 형식과 같은 형식의 데이터가 저장됩니다.
+  */
+  }
 
   const handleSaveReview = async () => {
     const reviewText = reviewRef.current?.value;

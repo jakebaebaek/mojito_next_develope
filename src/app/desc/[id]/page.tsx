@@ -52,12 +52,11 @@ export default function Desc({}) {
       memo_txt: reviewText,
     };
     console.log("리뷰 저장", newReview);
-    console.log("멤버의 정보를 가져오세요", useMemberStore.getState());
     if (!reviewText) {
       alert("리뷰를 입력해주세요!");
       return;
     }
-    if (!useMemberStore.getState().memo) {
+    if (!session) {
       alert("로그인이 필요합니다.");
       return;
     }

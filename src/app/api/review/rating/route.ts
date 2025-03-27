@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   try {
     connectDB();
     const body = await request.json();
-    const { reviewText, cocktailId } = body;
+    const { rating, cocktailId } = body;
     console.log("request 값입니다.",body);
 
     // getToken 사전준비 header에서 cookie 가져오기
@@ -35,27 +35,14 @@ export async function POST(request: Request) {
       { userId, "memo.cocktail_id": cocktailId },
       {
         $set: {
-          ...(reviewText && { "memo.$.memo_txt": reviewText }),
-        }, 
+          "memo.$.rating": rating, // 항상 업데이트
+        },
       }
-    );
-    // 칵테일 리뷰가 없으면 새로 추가
-    if (updatedUserStore.modifiedCount === 0) {
-      await MemberStore.updateOne(
-        { userId }, // userId가 일치하는 문서를 찾음
-        {
-          $push: {
-            memo: {
-              cocktail_id: cocktailId,
-              memo_txt: reviewText,
-            },
-          },
-        }
-      );
-    }    
-    return Response.json({ message: "성공적으로 리뷰가 업데이트 되었습니다" });
+    );   
+ 
+    return Response.json({ message: "성공적으로 별점이 업데이트 되었습니다" });
   } catch (error) {
-    console.error("❌POST요청 처리 중 에러 발생:", error);
+    console.error("❌rating POST요청 처리 중 에러 발생:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -94,7 +81,7 @@ export async function GET(request: Request) {
     );
     return Response.json(getUserReview);
   } catch (error) {
-    console.error("❌ GET요청 처리 중 에러 발생:", error);
+    console.error("❌rating GET요청 처리 중 에러 발생:", error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

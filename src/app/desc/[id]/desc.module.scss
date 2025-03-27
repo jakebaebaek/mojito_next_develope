@@ -260,7 +260,9 @@
   background-color:$gray-100; // 구분선 색상
   margin: 1rem 0;
 }
-
+.reviewText {
+  text-align: center;
+}
 .reviewText textarea  {
   width: 100%;
   padding: 3rem;

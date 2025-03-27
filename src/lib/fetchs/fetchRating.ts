@@ -1,13 +1,13 @@
 
-export const postReview = async (cocktailId: string | string[], reviewText: string) => {
+export const postRating = async (cocktailId: string | string[], rating: number) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/memo`, {
+    const response = await fetch(`http://localhost:3000/api/review/rating`, {
       method: 'POST',
       cache : "no-store",
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ cocktailId, reviewText }),
+      body: JSON.stringify({ cocktailId, rating }),
     });
 
     if (!response.ok) {
@@ -20,9 +20,9 @@ export const postReview = async (cocktailId: string | string[], reviewText: stri
     throw error;
   }
 };
-export const getReview = async (cocktailId: string | string[]) => {
+export const getRating = async (cocktailId: string | string[]) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/memo?cocktailId=${cocktailId}`, {
+    const response = await fetch(`http://localhost:3000/api/review/rating?cocktailId=${cocktailId}`, {
       method: 'GET',
       cache : "no-store",
       headers: {

@@ -5,12 +5,14 @@ import { useMemberStore } from "@/lib/store/memberStore";
 import { useRef, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-import { postReview, getReviews } from "@/lib/fetchs/fetchReview";
+import { postReview, getReview } from "@/lib/fetchs/fetchReview";
+import { postRating, getRating } from "@/lib/fetchs/fetchRating";
 import Navigation from "@/components/common/navigation/Navigation";
 import style from "./Desc.module.scss";
 import StarRating from "@public/StarRating.svg";
 
 export default function Desc({}) {
+  console.log("🔁 Desc 컴포넌트 렌더링됨");
   const { id } = useParams();
   const { cocktailList } = useCocktailStore();
   const { memo, setMemo } = useMemberStore();
@@ -18,40 +20,52 @@ export default function Desc({}) {
   const [hover, setHover] = useState(0);
   const reviewRef = useRef<HTMLTextAreaElement>(null);
   const { data: session } = useSession();
+  const [isEditing, setIsEditing] = useState(false);
+  const matchedMemo = Array.isArray(memo)
+    ? memo.find((item: any) => item && item.cocktail_id === id)
+    : null;
 
   useEffect(() => {
-    console.log("세션 정보", session);
-  }, [session]);
+    if (matchedMemo?.rating) {
+      setRating(matchedMemo.rating);
+    }
+  }, [matchedMemo]);
 
-  const handleRating = (index: number) => {
-    setRating(rating === index + 1 ? 0 : index + 1);
+  const handleRating = async (index: number) => {
+    if (!session) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    const newRating = rating === index + 1 ? 0 : index + 1;
+    setRating(newRating);
+    try {
+      const res = await postRating(id, newRating);
+      const { memo } = await res;
+      alert("🌟별점이 저장되었습니다🌟");
+
+      setMemo((prev) => {
+        const safePrev = Array.isArray(prev) ? prev : [];
+        return [...safePrev.filter((m) => m && m.cocktail_id !== id), memo];
+      });
+      const current = useMemberStore.getState().memo;
+      console.log("⭐️ 최신 별점:", current);
+    } catch (error) {
+      console.error("⭐️ 별점 저장 실패:", error);
+    }
   };
-
-  {
-    /*
+  /*
     이 부분은 API로 리뷰 저장하는 부분입니다.
     리뷰 저장을 위해서는 로그인이 필요합니다.
     로그인이 안되어있을 경우, alert 로 로그인 필요 메시지가 뜹니다. 
-    리뷰를 입력하지 않았을 경우, alert 로 리뷰를 입력해주세요 메시지가 뜹니다.
+    리뷰 값이 없고 저장 버튼을 누를 경우, alert 로 리뷰를 입력해주세요 메시지가 뜹니다.
     리뷰가 성공적으로 저장되었을 경우, alert 로 리뷰가 저장되었습니다 메시지가 뜹니다.
     리뷰가 저장되면서 동시에 db 에 업데이트가 됩니다. 
-    db 업데이트는 다음과 같이 이루어집니다.
-    1. 해당 유저의 MemberStore 문서를 찾습니다.
-    2. 해당 유저의 MemberStore 문서에 해당 칵테일의 리뷰가 있는지 확인합니다.
-    3. 해당 유저의 MemberStore 문서에 해당 칵테일의 리뷰가 있으면 업데이트를 합니다.
-    4. 해당 유저의 MemberStore 문서에 해당 칵테일의 리뷰가 없으면 새로운 리뷰를 추가합니다.
-    그와 동시에 zustand의 memberStore 에도 업데이트가 됩니다. -- 추후 구현예정입니다.
+    기존 리뷰가 있을 경우, "저장" 버튼 대신 "수정" 버튼이 뜹니다.
     memberStore 에도 역시 db에 저장된 형식과 같은 형식의 데이터가 저장됩니다.
+    memberStore 값은 useLayout.tsx 에서 페이지 처음 로딩될때 업데이트 됩니다.
   */
-  }
-
   const handleSaveReview = async () => {
     const reviewText = reviewRef.current?.value;
-    const newReview = {
-      cocktail_id: id,
-      memo_txt: reviewText,
-    };
-    console.log("리뷰 저장", newReview);
     if (!reviewText) {
       alert("리뷰를 입력해주세요!");
       return;
@@ -61,18 +75,42 @@ export default function Desc({}) {
       return;
     }
     try {
-      postReview(id, reviewText);
-      setMemo({ ...memo, newReview });
+      const res = await postReview(id, reviewText);
+      const { memo } = await res;
+
+      setMemo((prev) => {
+        const safePrev = Array.isArray(prev) ? prev : [];
+        return [...safePrev.filter((m) => m && m.cocktail_id !== id), memo];
+      });
+      setIsEditing(false); // 다시 읽기 모드로 전환
+
       alert("리뷰가 저장되었습니다.");
     } catch (error) {
       console.error("리뷰 저장 실패:", error);
     }
   };
+  /* 
+    이 부분은 API로 리뷰 삭제하는 부분입니다.
+    리뷰 삭제를 위해서는 로그인이 필요합니다.
+    아직 진행중..
+ */
+  // const handleDeleteReview = async () => {
+  //   if (!session) {
+  //     alert("로그인이 필요합니다.");
+  //     return;
+  //   }
+  //   const confirmDelete = confirm("정말 리뷰를 삭제하시겠어요?");
+  //   if (!confirmDelete) return;
+  //   try {
+  //     const res = await fetch(`/api/review/memo?cocktailId=${id}`, {
+  //       method: "DELETE",
+  //     });
+
+  //     if (!res.ok) throw new Error("리뷰 삭제 실패");
 
   const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
-
   // 데이터가 없는 경우 처리
-  if (!cocktailList) {
+  if (!cocktail) {
     return <div>칵테일 정보를 찾을 수 없습니다.</div>;
   }
 
@@ -127,6 +165,7 @@ export default function Desc({}) {
           <div className={style.slider}>
             <span>SWEET</span>
             <input
+              readOnly
               className={`${style.input}`}
               type="range"
               min="1"
@@ -136,6 +175,7 @@ export default function Desc({}) {
             <span>DRY</span>
             <span>GENTLE</span>
             <input
+              readOnly
               className={`${style.input}`}
               type="range"
               min="1"
@@ -184,29 +224,62 @@ export default function Desc({}) {
         <div className={`${style.reviewBox}`}>
           <div className={`${style.stars}`}>
             {[...Array(5)].map((_, index) => (
-              <StarRating
-                key={index}
-                className={`${style.star} ${
-                  index < rating ? style.filled : ""
-                } ${index < hover ? style.hovered : ""}`}
-                onClick={() => handleRating(index)}
-                onMouseEnter={() => setHover(index + 1)}
-                onMouseLeave={() => setHover(0)}
-              />
-            ))}
+              <div
+                key={`star-wrapper-${index}`}
+                onClick={() => {
+                  handleRating(index);
+                }}
+              >
+                <StarRating
+                  key={{ index }}
+                  className={`${style.star} ${
+                    index < rating ? style.filled : ""
+                  } ${index < hover ? style.hovered : ""}`}
+                  onMouseEnter={() => setHover(index + 1)}
+                  onMouseLeave={() => setHover(0)}
+                />
+              </div>
+            ))}{" "}
           </div>
           <div className={`${style.divider}`} />
           <div className={`${style.reviewText}`}>
-            <textarea
-              // value={memo. ? memo : ""}
-              ref={reviewRef}
-              placeholder="칵테일 맛이 어땠나요? 리뷰를 남겨보세요."
-            />
+            <div className={style.reviewText}>
+              {matchedMemo && !isEditing ? (
+                <div>{matchedMemo.memo_txt}</div>
+              ) : (
+                <textarea
+                  ref={reviewRef}
+                  defaultValue={matchedMemo?.memo_txt || ""}
+                  placeholder="칵테일 맛이 어땠나요? 리뷰를 남겨보세요."
+                />
+              )}
+            </div>{" "}
           </div>
         </div>
-        <button className={style.saveButton} onClick={handleSaveReview}>
-          저장
-        </button>
+        {matchedMemo ? (
+          isEditing ? (
+            <>
+              <button className={style.saveButton} onClick={handleSaveReview}>
+                저장
+              </button>
+              <button className={style.deleteButton}>삭제</button>
+            </>
+          ) : (
+            <>
+              <button
+                className={style.saveButton}
+                onClick={() => setIsEditing(true)}
+              >
+                수정
+              </button>
+              <button className={style.deleteButton}>삭제</button>
+            </>
+          )
+        ) : (
+          <button className={style.saveButton} onClick={handleSaveReview}>
+            저장
+          </button>
+        )}
       </div>
     </div>
   );

@@ -53,17 +53,27 @@ export async function POST(request: Request) {
         }
       );
     }    
-    return Response.json({ message: "성공적으로 리뷰가 업데이트 되었습니다" });
-  } catch (error) {
-    console.error("❌POST요청 처리 중 에러 발생:", error);
-    return Response.json({ error: "Internal Server Error" }, { status: 500 });
+
+    const latestReview = await MemberStore.findOne(
+      { userId },
+        {
+          memo: { $elemMatch: { cocktail_id: cocktailId } },
+        }
+    );
+    
+      return NextResponse.json({
+          message: "성공적으로 리뷰가 업데이트 되었습니다.",
+          memo: latestReview?.memo?.[0] || null, 
+        });
+      } catch (error) {
+        console.error("❌POST요청 처리 중 에러 발생:", error);
+        return Response.json({ error: "Internal Server Error" }, { status: 500 });
+      }
   }
-}
 
 export async function GET(request: Request) {
   try {
     connectDB();
-    // 쿼리에서 cocktailId 추출
     const { searchParams } = new URL(request.url);
     const cocktailId = searchParams.get("cocktailId");
     console.log("✅ 쿼리로 받은 cocktailId:", cocktailId);

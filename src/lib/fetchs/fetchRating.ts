@@ -13,8 +13,8 @@ export const postRating = async (cocktailId: string | string[], rating: number) 
     if (!response.ok) {
       throw new Error('리뷰 저장에 실패했습니다.');
     }
-
-    return;
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("리뷰 저장 에러:", error);
     throw error;

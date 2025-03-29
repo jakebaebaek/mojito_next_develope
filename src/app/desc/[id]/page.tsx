@@ -255,7 +255,7 @@ export default function Desc({}) {
           <div className={`${style.divider}`} />
           <div className={`${style.reviewText}`}>
             <div className={style.reviewText}>
-              {matchedMemo && !isEditing ? (
+              {matchedMemo?.memo_txt && !isEditing ? (
                 <div>{matchedMemo.memo_txt}</div>
               ) : (
                 <textarea
@@ -267,7 +267,7 @@ export default function Desc({}) {
             </div>
           </div>
         </div>
-        {matchedMemo ? (
+        {matchedMemo?.memo_txt ? (
           isEditing ? (
             <>
               <button className={style.saveButton} onClick={handleSaveReview}>

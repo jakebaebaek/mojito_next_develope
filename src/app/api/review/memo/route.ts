@@ -95,7 +95,7 @@ export async function DELETE(request: Request) {
         { userId },
           {
             $unset: {
-              "memo.$[elem].memo_txt": "", 
+              "memo.$[elem].memo_txt": 1, // 리뷰 삭제 - 값에다 1을 넣어주면 삭제됨 
             },
           },
         {

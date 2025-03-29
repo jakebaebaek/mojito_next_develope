@@ -20,6 +20,26 @@ export const postReview = async (cocktailId: string | string[], reviewText: stri
     throw error;
   }
 };
+export const deleteReview = async (cocktailId: string | string[]) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/review/memo?cocktailId=${cocktailId}`, {
+      method: 'DELETE',
+      cache : "no-store",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('리뷰 삭제에 실패했습니다.');
+    }
+    return response; 
+  }
+  catch (error) {
+    console.error("리뷰 삭제 에러:", error);
+    throw error;
+  }
+}
+
 export const getReview = async (cocktailId: string | string[]) => {
   try {
     const response = await fetch(`http://localhost:3000/api/review/memo?cocktailId=${cocktailId}`, {

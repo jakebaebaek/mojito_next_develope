@@ -5,7 +5,7 @@ import { useMemberStore } from "@/lib/store/memberStore";
 import { useRef, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-import { postReview, getReview } from "@/lib/fetchs/fetchReview";
+import { postReview, getReview, deleteReview } from "@/lib/fetchs/fetchReview";
 import { postRating, getRating } from "@/lib/fetchs/fetchRating";
 import Navigation from "@/components/common/navigation/Navigation";
 import style from "./Desc.module.scss";
@@ -83,7 +83,7 @@ export default function Desc({}) {
         return [...safePrev.filter((m) => m && m.cocktail_id !== id), memo];
       });
       setIsEditing(false); // 다시 읽기 모드로 전환
-
+      console.log("store 최신 리뷰", useMemberStore.getState().memo);
       alert("리뷰가 저장되었습니다.");
     } catch (error) {
       console.error("리뷰 저장 실패:", error);
@@ -94,20 +94,31 @@ export default function Desc({}) {
     리뷰 삭제를 위해서는 로그인이 필요합니다.
     아직 진행중..
  */
-  // const handleDeleteReview = async () => {
-  //   if (!session) {
-  //     alert("로그인이 필요합니다.");
-  //     return;
-  //   }
-  //   const confirmDelete = confirm("정말 리뷰를 삭제하시겠어요?");
-  //   if (!confirmDelete) return;
-  //   try {
-  //     const res = await fetch(`/api/review/memo?cocktailId=${id}`, {
-  //       method: "DELETE",
-  //     });
+  const handleDeleteReview = async () => {
+    if (!session) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    const confirmDelete = confirm("정말 리뷰를 삭제하시겠어요?");
+    if (!confirmDelete) return;
+    try {
+      const res = await deleteReview(id);
+      console.log("🔍 삭제 응답 상태 코드:", res.status);
+      if (!res.ok) throw new Error("리뷰 삭제 실패");
+      setMemo((prev) => {
+        const safePrev = Array.isArray(prev) ? prev : [];
+        return safePrev.map((m) =>
+          m && m.cocktail_id === id ? { ...m, memo_txt: undefined } : m
+        );
+      });
+      console.log("store 최신 리뷰", useMemberStore.getState().memo);
 
-  //     if (!res.ok) throw new Error("리뷰 삭제 실패");
-
+      setIsEditing(true);
+      alert("🔥⛄🔥리뷰가 삭제되었습니다.");
+    } catch (error) {
+      console.error("리뷰 삭제 실패:", error);
+    }
+  };
   const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
   // 데이터가 없는 경우 처리
   if (!cocktail) {
@@ -239,7 +250,7 @@ export default function Desc({}) {
                   onMouseLeave={() => setHover(0)}
                 />
               </div>
-            ))}{" "}
+            ))}
           </div>
           <div className={`${style.divider}`} />
           <div className={`${style.reviewText}`}>
@@ -253,7 +264,7 @@ export default function Desc({}) {
                   placeholder="칵테일 맛이 어땠나요? 리뷰를 남겨보세요."
                 />
               )}
-            </div>{" "}
+            </div>
           </div>
         </div>
         {matchedMemo ? (
@@ -262,18 +273,22 @@ export default function Desc({}) {
               <button className={style.saveButton} onClick={handleSaveReview}>
                 저장
               </button>
-              <button className={style.deleteButton}>삭제</button>
             </>
           ) : (
-            <>
+            <div className={`${style.buttonBox}`}>
               <button
                 className={style.saveButton}
                 onClick={() => setIsEditing(true)}
               >
                 수정
               </button>
-              <button className={style.deleteButton}>삭제</button>
-            </>
+              <button
+                className={style.deleteButton}
+                onClick={handleDeleteReview}
+              >
+                삭제
+              </button>
+            </div>
           )
         ) : (
           <button className={style.saveButton} onClick={handleSaveReview}>

@@ -282,8 +282,17 @@
   font-style: $light;
   text-align: center;
 }
-.saveButton {
-  background-color: $main-color;
+.buttonBox {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+// 공통 버튼 스타일
+.buttonBase {
   color: #ffffff;
   border: none;
   border-radius: 2rem;
@@ -292,9 +301,21 @@
   font-weight: $bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+.saveButton {
+  @extend .buttonBase;
+  background-color: $main-color;
 
   &:hover {
     background-color: #ffc293;
+  }
+}
+.deleteButton {
+  @extend .buttonBase;
+  background-color: #f33939;
+
+  &:hover {
+    background-color: #ff888a;
   }
 }
 

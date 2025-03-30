@@ -2,6 +2,7 @@
 import { useParams } from "next/navigation";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { useMemberStore } from "@/lib/store/memberStore";
+import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useRef, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
@@ -18,6 +19,7 @@ export default function Desc({}) {
   const { id } = useParams();
   const { cocktailList } = useCocktailStore();
   const { memo, setMemo } = useMemberStore();
+  const { emojiList, fetchEmoji } = useEmojiStore();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const reviewRef = useRef<HTMLTextAreaElement>(null);
@@ -33,6 +35,10 @@ export default function Desc({}) {
       setRating(matchedMemo.rating);
     }
   }, [matchedMemo]);
+
+  useEffect(() => {
+    fetchEmoji();
+  }, []);
 
   const handleRating = async (index: number) => {
     if (!session) {
@@ -122,7 +128,18 @@ export default function Desc({}) {
       console.error("리뷰 삭제 실패:", error);
     }
   };
+  // 수많은 칵테일 중 id에 해당하는 칵테일을 찾기
   const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
+  // 해당 칵테일의 데이터와 이모지를 매칭하기
+  const cocktailBase = emojiList.find((emoji) =>
+    emoji.value.includes(cocktail?.base)
+  );
+  const cocktailFlavor = emojiList.find((emoji) =>
+    emoji.value.includes(cocktail?.flavor)
+  );
+  console.log("🍹 cocktailFlavor", cocktailFlavor);
+  console.log("🍹 baseAndTastingnote", cocktailBase);
+  console.log("🍹 cocktail", cocktail);
   // 데이터가 없는 경우 처리
   if (!cocktail) {
     return <div>칵테일 정보를 찾을 수 없습니다.</div>;
@@ -159,19 +176,23 @@ export default function Desc({}) {
               <span>베이스</span>
               <img
                 className={style.baseImg}
-                src="맞는 이미지 넣기"
+                src={cocktailBase?.url || emojiList[1].url}
                 alt="Base Image"
               />
-              <div className={style.baseName}>{cocktail?.base}</div>
+              <div className={style.baseName}>
+                {cocktail?.base || "준비 중"}
+              </div>
             </div>
             <div className={style.flavor}>
               <span>테이스팅 노트</span>
               <img
                 className={style.flavorImg}
-                src="맞는 이미지 넣기"
+                src={cocktailFlavor?.url || emojiList[1].url}
                 alt="Flavor Image"
               />
-              <div className={style.flavorName}>{cocktail?.flavor}</div>
+              <div className={style.flavorName}>
+                {cocktail?.flavor || "준비 중"}
+              </div>
             </div>
           </div>
 

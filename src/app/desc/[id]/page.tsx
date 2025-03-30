@@ -7,7 +7,9 @@ import { useSession } from "next-auth/react";
 
 import { postReview, getReview, deleteReview } from "@/lib/fetchs/fetchReview";
 import { postRating, getRating } from "@/lib/fetchs/fetchRating";
+import LoginModal from "@/components/common/modal/LoginModal";
 import Navigation from "@/components/common/navigation/Navigation";
+import Button from "@/components/common/button/Button";
 import style from "./Desc.module.scss";
 import StarRating from "@public/StarRating.svg";
 
@@ -21,6 +23,7 @@ export default function Desc({}) {
   const reviewRef = useRef<HTMLTextAreaElement>(null);
   const { data: session } = useSession();
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const matchedMemo = Array.isArray(memo)
     ? memo.find((item: any) => item && item.cocktail_id === id)
     : null;
@@ -33,7 +36,7 @@ export default function Desc({}) {
 
   const handleRating = async (index: number) => {
     if (!session) {
-      alert("로그인이 필요합니다.");
+      setIsLoginOpen(true);
       return;
     }
     const newRating = rating === index + 1 ? 0 : index + 1;
@@ -67,11 +70,11 @@ export default function Desc({}) {
   const handleSaveReview = async () => {
     const reviewText = reviewRef.current?.value;
     if (!reviewText) {
-      alert("리뷰를 입력해주세요!");
+      alert("리뷰를 입력해주세요.");
       return;
     }
     if (!session) {
-      alert("로그인이 필요합니다.");
+      setIsLoginOpen(true);
       return;
     }
     try {
@@ -96,7 +99,7 @@ export default function Desc({}) {
  */
   const handleDeleteReview = async () => {
     if (!session) {
-      alert("로그인이 필요합니다.");
+      setIsLoginOpen(true);
       return;
     }
     const confirmDelete = confirm("정말 리뷰를 삭제하시겠어요?");
@@ -269,33 +272,39 @@ export default function Desc({}) {
         </div>
         {matchedMemo?.memo_txt ? (
           isEditing ? (
-            <>
-              <button className={style.saveButton} onClick={handleSaveReview}>
-                저장
-              </button>
-            </>
+            <Button
+              text="저장"
+              color="orange"
+              className={`${style.saveButton}`}
+              onClick={handleSaveReview}
+            />
           ) : (
             <div className={`${style.buttonBox}`}>
-              <button
-                className={style.saveButton}
+              <Button
+                text="수정"
+                color="orange"
+                className={`${style.saveButton}`}
                 onClick={() => setIsEditing(true)}
-              >
-                수정
-              </button>
-              <button
-                className={style.deleteButton}
+              />
+              <Button
+                text="삭제"
+                color="red"
+                className={`${style.deleteButton}`}
                 onClick={handleDeleteReview}
-              >
-                삭제
-              </button>
+              />
             </div>
           )
         ) : (
-          <button className={style.saveButton} onClick={handleSaveReview}>
-            저장
-          </button>
+          <Button
+            text="저장"
+            color="orange"
+            className={`${style.saveButton}`}
+            onClick={handleSaveReview}
+          />
         )}
       </div>
+      {/* 로그인 요청 알림 모달 */}
+      {isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
     </div>
   );
 }

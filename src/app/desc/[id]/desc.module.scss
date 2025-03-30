@@ -282,6 +282,8 @@
   font-style: $light;
   text-align: center;
 }
+
+// 수정 & 삭제 버튼 같이 들어갈 div 스타일
 .buttonBox {
   display: flex;
   flex-direction: row;
@@ -291,28 +293,16 @@
   gap: 2rem;
   margin-top: 3rem;
 }
-// 공통 버튼 스타일
-.buttonBase {
-  color: #ffffff;
-  border: none;
-  border-radius: 2rem;
-  padding: 1rem 5rem;
-  font-size: 2rem;
-  font-weight: $bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+// 버튼 스타일
 .saveButton {
-  @extend .buttonBase;
-  background-color: $main-color;
-
+  cursor: pointer;
+  
   &:hover {
     background-color: #ffc293;
   }
 }
 .deleteButton {
-  @extend .buttonBase;
-  background-color: #f33939;
+  cursor: pointer;
 
   &:hover {
     background-color: #ff888a;
@@ -336,4 +326,23 @@
   height: 3rem;
   width: 3rem;
   background-position: center;
+}
+.loginModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // 어두운 배경
+  box-shadow: $shadow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; // 다른 요소보다 위에
+
+  // .close {
+  //   position: absolute;
+  //   top: 2rem;
+  //   right: 2rem;
+  // }
 }

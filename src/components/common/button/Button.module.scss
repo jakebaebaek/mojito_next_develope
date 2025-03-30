@@ -1,13 +1,13 @@
 @import "@/styles/theme";
 
 .button {
-  width: 100%;
   font-size: 1.6rem;
   border-radius: 3rem;
   border: none;
   height: 4.6rem;
   padding: 0 6rem;
-  font-weight: $regular;
+  font-weight: $bold;
+  transition: background-color 0.3s ease;
 }
 .orange_button {
   background-color: $main-color;
@@ -16,4 +16,8 @@
 .gray_button {
   background-color: $gray-100;
   color: $gray-400;
+}
+.red_button {
+  background-color: #e74141;
+  color: white;
 }

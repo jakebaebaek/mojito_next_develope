@@ -1,26 +1,26 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-type Tmemo = {
-  cocktail_id: string;
-  memo_txt: string;
-  rating: number;
-};
+import { Tmemo } from "@/lib/types/TMemo";
 
 type TMemberStoreStore = {
   heart: string[];
   memo: Tmemo[];
-  setHeart: (data: any) => void;
-  setMemo: (data: any) => void;
+  setHeart: (data: string[] | ((prev: string[]) => string[])) => void;  
+  setMemo: (data: Tmemo[] | ((prev: Tmemo[]) => Tmemo[])) => void;
 };
-
 export const useMemberStore = create<TMemberStoreStore>()(
   persist(
     (set) => ({
       heart: [],
       memo: [],
-      setHeart: (data) => set({ heart: data }),
-      setMemo: (data) => set({ memo: data }),
+      setHeart: (data) =>
+        set((state) => ({
+          heart: typeof data === "function" ? data(state.heart) : data,
+        })),
+      setMemo: (data) =>
+        set((state) => ({
+          memo: typeof data === "function" ? data(state.memo) : data,
+        })),
     }),
     { name: "mamberStore-strage" }
   )

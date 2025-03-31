@@ -2,23 +2,26 @@ import style from "./Button.module.scss";
 
 type TBtnProps = {
   text: string;
-  color: "orange" | "gray";
+  color: "orange" | "gray" | "red";
+  className?: string;
+  onClick?: () => void;
 };
 
 export default function Button(props: TBtnProps) {
-  const { text, color } = props;
+  const { text, color, className, onClick } = props;
+
+  const baseClass =
+    color === "orange"
+      ? style.orange_button
+      : color === "gray"
+      ? style.gray_button
+      : style.red_button;
   return (
-    <>
-      {color === "orange" && (
-        <button className={`${style.orange_button} ${style.button}`}>
-          {text}
-        </button>
-      )}
-      {color === "gray" && (
-        <button className={`${style.gray_button} ${style.button}`}>
-          {text}
-        </button>
-      )}
-    </>
+    <button
+      className={`${style.button} ${baseClass} ${className}`}
+      onClick={onClick}
+    >
+      {text}
+    </button>
   );
 }

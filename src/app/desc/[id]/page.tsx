@@ -1,6 +1,9 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useCocktailStore } from "@/lib/store/cocktailStore";
+import {
+  useCocktailStore,
+  useCocktailDetailStore,
+} from "@/lib/store/cocktailStore";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useRef, useState, useEffect } from "react";
@@ -16,9 +19,11 @@ import StarRating from "@public/StarRating.svg";
 
 export default function Desc({}) {
   console.log("🔁 Desc 컴포넌트 렌더링됨");
-  const { id } = useParams();
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const { cocktailList } = useCocktailStore();
   const { memo, setMemo } = useMemberStore();
+  const { cocktailDetail, setCocktailDetail } = useCocktailDetailStore();
   const { emojiList, fetchEmoji } = useEmojiStore();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -39,6 +44,12 @@ export default function Desc({}) {
   useEffect(() => {
     fetchEmoji();
   }, []);
+
+  useEffect(() => {
+    if (cocktailList.length === 0) return;
+    const found = cocktailList.find((c) => c._id === id);
+    if (found) setCocktailDetail(id, found);
+  }, [id]);
 
   const handleRating = async (index: number) => {
     if (!session) {
@@ -129,7 +140,9 @@ export default function Desc({}) {
     }
   };
   // 수많은 칵테일 중 id에 해당하는 칵테일을 찾기
-  const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
+  // const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
+  const cocktail = cocktailDetail[id];
+
   // 해당 칵테일의 데이터와 이모지를 매칭하기
   const cocktailBase = emojiList.find((emoji) =>
     emoji.value.includes(cocktail?.base)

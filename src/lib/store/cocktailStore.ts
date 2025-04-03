@@ -21,23 +21,19 @@ export const useCocktailStore = create<TCocktailStore>((set, get) => ({
   },
 }));
 
-type CocktailDetailStore = {
-  cocktailDetail: { [id: string]: TCocktail };
-  setCocktailDetail: (id: string, data: TCocktail) => void;
+type TCocktailDetailStore = {
+  cocktailDetail: TCocktail | null;
+  setCocktailDetail: (cocktail: TCocktail) => void;
 };
 
-export const useCocktailDetailStore = create<CocktailDetailStore>()(
-  persist(
-    (set, get) => ({
-      cocktailDetail: {},
-      setCocktailDetail: (id, data) =>
-        set({
-          cocktailDetail: {
-            ...get().cocktailDetail,
-            [id]: data,
-          },
-        }),
+export const useCocktailDetailStore = create(
+  persist<TCocktailDetailStore>(
+    (set) => ({
+      cocktailDetail: null,
+      setCocktailDetail: (cocktail) => set({ cocktailDetail: cocktail }),
     }),
-    { name: "cocktail-detail-store" }
+    {
+      name: "cocktail-detail-storage", 
+    }
   )
 );

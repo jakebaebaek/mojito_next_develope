@@ -20,12 +20,13 @@ export default function Card({ id, name, img_url }: TCardProps) {
 
   const onClickHeart = (id: string) => {
     if (isClicked) {
-      setHeart(heart.filter((item) => item != id));
-      console.log("🦷", heart);
+      const removeHeart = heart.filter((item) => item != id);
+      setHeart(removeHeart);
+      postHeart(removeHeart);
     } else {
-      setHeart([...heart, id]);
-      console.log("😍", heart);
-      postHeart(heart);
+      const addHeartList = [...heart, id];
+      setHeart(addHeartList);
+      postHeart(addHeartList);
     }
   };
 

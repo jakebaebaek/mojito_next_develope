@@ -5,11 +5,10 @@ export const postHeart = async (heartList: string[]) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ heartList }),
+      body: JSON.stringify(heartList),
     });
 
-    response.json();
-    return response;
+    return response.json();
   } catch (error) {
     console.error("즐겨찾기 post 에러:", error);
     throw error;

@@ -1,6 +1,9 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useCocktailStore } from "@/lib/store/cocktailStore";
+import {
+  useCocktailStore,
+  useCocktailDetailStore,
+} from "@/lib/store/cocktailStore";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useRef, useState, useEffect } from "react";
@@ -16,9 +19,11 @@ import StarRating from "@public/StarRating.svg";
 
 export default function Desc({}) {
   console.log("🔁 Desc 컴포넌트 렌더링됨");
-  const { id } = useParams();
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const { cocktailList } = useCocktailStore();
   const { memo, setMemo } = useMemberStore();
+  const { cocktailDetail, setCocktailDetail } = useCocktailDetailStore();
   const { emojiList, fetchEmoji } = useEmojiStore();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -39,6 +44,14 @@ export default function Desc({}) {
   useEffect(() => {
     fetchEmoji();
   }, []);
+
+  useEffect(() => {
+    if (cocktailList.length === 0) return;
+    const found = cocktailList.find((c) => c._id === id);
+    if (found) {
+      setCocktailDetail(found);
+    }
+  }, [id, cocktailList]);
 
   const handleRating = async (index: number) => {
     if (!session) {
@@ -129,17 +142,30 @@ export default function Desc({}) {
     }
   };
   // 수많은 칵테일 중 id에 해당하는 칵테일을 찾기
-  const cocktail = cocktailList.find((cocktail) => cocktail._id === id);
+  // const cocktail = cocktailList.find((cocktail) => cocktail._id === id);\
+  console.log("칵테일 디테일 정보입니다. set 으로 만들어진.", cocktailDetail);
+  const cocktail = cocktailDetail;
+
   // 해당 칵테일의 데이터와 이모지를 매칭하기
   const cocktailBase = emojiList.find((emoji) =>
-    emoji.value.includes(cocktail?.base)
+    emoji.value.includes(
+      cocktail?.base && cocktail?.base.length === 0 ? null : cocktail?.base
+    )
   );
   const cocktailFlavor = emojiList.find((emoji) =>
     emoji.value.includes(cocktail?.flavor)
   );
   console.log("🍹 cocktailFlavor", cocktailFlavor);
-  console.log("🍹 baseAndTastingnote", cocktailBase);
-  console.log("🍹 cocktail", cocktail);
+  console.log("🍹 cocktailBase", cocktailBase);
+  console.log("🍹 cocktail의 base", cocktail?.base);
+  console.log("base 타입 확인:", typeof cocktail?.base, cocktail?.base);
+  console.log(
+    "emoji의 value ",
+    emojiList[0].value,
+    "emoji의 타입",
+    typeof emojiList[0].value
+  );
+  // console.log("이게 무슨 일이야", "top100".includes(cocktail?.base));]));
   // 데이터가 없는 경우 처리
   if (!cocktail) {
     return <div>칵테일 정보를 찾을 수 없습니다.</div>;
@@ -180,7 +206,7 @@ export default function Desc({}) {
                 alt="Base Image"
               />
               <div className={style.baseName}>
-                {cocktail?.base || "준비 중"}
+                {cocktail?.base.length ? cocktail?.base : "준비 중"}
               </div>
             </div>
             <div className={style.flavor}>

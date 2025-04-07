@@ -4,6 +4,7 @@ import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useEffect, useState } from "react";
+import { postHeart } from "@/lib/fetchs/fetchHeart";
 
 type TCardProps = {
   id: string;
@@ -14,36 +15,28 @@ type TCardProps = {
   img_url?: string;
 };
 export default function Card({ id, name, img_url }: TCardProps) {
-  // const { id, name, img_url } = props;
-  // 별 클릭 함수
-  // 마우스가 별에 들어올 때 실행되는 함수
-  // 마우스가 별에서 나갈 때 실행되는 함수
-
-  // 별 아이콘 렌더링 조건
-
   const { heart, setHeart } = useMemberStore();
   const [isClicked, setIsClicked] = useState(false);
 
-  console.log("🫀");
   const onClickHeart = (id: string) => {
     if (isClicked) {
-      setHeart(heart.filter((item) => item != id));
-      console.log("🦷", heart);
+      const removeHeart = heart.filter((item) => item != id);
+      setHeart(removeHeart);
+      postHeart(removeHeart);
     } else {
-      setHeart([...heart, id]);
-      console.log("😍", heart);
+      const addHeartList = [...heart, id];
+      setHeart(addHeartList);
+      postHeart(addHeartList);
     }
   };
 
   const clicked_heart = () => {
-    heart.map((item) => {
-      item === id ? setIsClicked(true) : setIsClicked(false);
-    });
+    setIsClicked(heart.includes(id));
   };
 
   useEffect(() => {
     clicked_heart();
-  }, [heart, onClickHeart]);
+  }, [heart]);
 
   return (
     <>

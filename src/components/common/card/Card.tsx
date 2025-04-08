@@ -15,16 +15,23 @@ type TCardProps = {
 };
 export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const isClicked = useMemo(() => heart.includes(id), [heart, id]);
 
   const onClickHeart = (id: string) => {
-    if (isClicked) {
-      const removeHeart = heart.filter((item) => item != id);
-      setHeart(removeHeart);
-    } else {
-      const addHeartList = [...heart, id];
-      setHeart(addHeartList);
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      const updateHerat = isClicked
+        ? heart.filter((item) => item != id)
+        : [...heart, id];
+
+      setHeart(updateHerat);
+    } catch (error) {
+      console.error("🚨 즐겨찾기 저장 실패", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

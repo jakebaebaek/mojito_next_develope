@@ -3,8 +3,7 @@ import Link from "next/link";
 import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
-import { useEffect, useState } from "react";
-import { postHeart } from "@/lib/fetchs/fetchHeart";
+import { useMemo, useState } from "react";
 
 type TCardProps = {
   id: string;
@@ -16,27 +15,25 @@ type TCardProps = {
 };
 export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();
-  const [isClicked, setIsClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const isClicked = useMemo(() => heart.includes(id), [heart, id]);
 
   const onClickHeart = (id: string) => {
-    if (isClicked) {
-      const removeHeart = heart.filter((item) => item != id);
-      setHeart(removeHeart);
-      postHeart(removeHeart);
-    } else {
-      const addHeartList = [...heart, id];
-      setHeart(addHeartList);
-      postHeart(addHeartList);
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      const updateHerat = isClicked
+        ? heart.filter((item) => item != id)
+        : [...heart, id];
+
+      setHeart(updateHerat);
+    } catch (error) {
+      console.error("🚨 즐겨찾기 저장 실패", error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  const clicked_heart = () => {
-    setIsClicked(heart.includes(id));
-  };
-
-  useEffect(() => {
-    clicked_heart();
-  }, [heart]);
 
   return (
     <>

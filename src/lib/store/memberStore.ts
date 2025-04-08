@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Tmemo } from "@/lib/types/TMemo";
+import { postHeart } from "@/lib/fetchs/fetchHeart";
 
 type TMemberStoreStore = {
   heart: string[];
@@ -13,10 +14,10 @@ export const useMemberStore = create<TMemberStoreStore>()(
     (set) => ({
       heart: [],
       memo: [],
-      setHeart: (data) =>
-        set((state) => ({
-          heart: data,
-        })),
+      setHeart: (data) => {
+        set({ heart: data });
+        postHeart(data);
+      },
       setMemo: (data) =>
         set((state) => ({
           memo: typeof data === "function" ? data(state.memo) : data,

@@ -3,7 +3,7 @@ import Link from "next/link";
 import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { postHeart } from "@/lib/fetchs/fetchHeart";
 
 type TCardProps = {
@@ -16,7 +16,8 @@ type TCardProps = {
 };
 export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();
-  const [isClicked, setIsClicked] = useState(false);
+
+  const isClicked = useMemo(() => heart.includes(id), [heart, id]);
 
   const onClickHeart = (id: string) => {
     if (isClicked) {
@@ -29,14 +30,6 @@ export default function Card({ id, name, img_url }: TCardProps) {
       postHeart(addHeartList);
     }
   };
-
-  const clicked_heart = () => {
-    setIsClicked(heart.includes(id));
-  };
-
-  useEffect(() => {
-    clicked_heart();
-  }, [heart]);
 
   return (
     <>

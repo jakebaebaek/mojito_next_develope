@@ -15,9 +15,7 @@ export const useMemberStore = create<TMemberStoreStore>()(
       heart: [],
       memo: [],
       setHeart: (data) => {
-        set((state) => ({
-          heart: data,
-        }));
+        set({ heart: data });
         postHeart(data);
       },
       setMemo: (data) =>

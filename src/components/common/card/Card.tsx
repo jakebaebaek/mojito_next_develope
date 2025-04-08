@@ -4,7 +4,6 @@ import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useMemo, useState } from "react";
-import { postHeart } from "@/lib/fetchs/fetchHeart";
 
 type TCardProps = {
   id: string;
@@ -23,11 +22,9 @@ export default function Card({ id, name, img_url }: TCardProps) {
     if (isClicked) {
       const removeHeart = heart.filter((item) => item != id);
       setHeart(removeHeart);
-      postHeart(removeHeart);
     } else {
       const addHeartList = [...heart, id];
       setHeart(addHeartList);
-      postHeart(addHeartList);
     }
   };
 

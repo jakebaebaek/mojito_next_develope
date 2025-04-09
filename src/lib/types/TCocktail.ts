@@ -6,6 +6,7 @@ export type TCocktail = {
   };
   base: string[];
   flavor: string[];
+  hashtag: string[];
   booziness: number;
   sweetness: number;
   img: string;

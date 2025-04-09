@@ -147,16 +147,16 @@ export default function Desc({}) {
   const cocktail = cocktailDetail;
 
   // 해당 칵테일의 데이터와 이모지를 매칭하기
-  const cocktailBase = emojiList.find((emoji) =>
+  const cocktailBaseEmoji = emojiList.find((emoji) =>
     emoji.value.includes(
       cocktail?.base && cocktail?.base.length === 0 ? null : cocktail?.base
     )
   );
-  const cocktailFlavor = emojiList.find((emoji) =>
+  const cocktailFlavorEmoji = emojiList.find((emoji) =>
     emoji.value.includes(cocktail?.flavor)
   );
-  console.log("🍹 cocktailFlavor", cocktailFlavor);
-  console.log("🍹 cocktailBase", cocktailBase);
+  console.log("🍹 cocktailFlavorEmoji", cocktailFlavorEmoji);
+  console.log("🍹 cocktailBaseEmoji", cocktailBaseEmoji);
   console.log("🍹 cocktail의 base", cocktail?.base);
   console.log("base 타입 확인:", typeof cocktail?.base, cocktail?.base);
   console.log(
@@ -181,14 +181,22 @@ export default function Desc({}) {
           <h2>{cocktail?.name.en}</h2>
           {/* 해시태그 */}
           <div className={style.tagsBox}>
-            <div className={style.tagItem}>
-              <span>#{cocktail?.flavor}</span>
-              <img
-                className={style.hashEmoji}
-                src={"맞는 이미지 넣기"}
-                alt="Hashtag Emoji"
-              />
-            </div>
+            {cocktail?.hashtag?.map((tag, index) => {
+              const matchedEmoji = emojiList.find((emoji) =>
+                emoji.value.includes(tag)
+              );
+
+              return (
+                <div key={index} className={style.tagItem}>
+                  <span>#{tag}</span>
+                  <img
+                    className={style.hashEmoji}
+                    src={matchedEmoji?.url || emojiList[1]?.url}
+                    alt="Hashtag Emoji"
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
         {/* 칵테일 정보 */}
@@ -202,7 +210,7 @@ export default function Desc({}) {
               <span>베이스</span>
               <img
                 className={style.baseImg}
-                src={cocktailBase?.url || emojiList[1].url}
+                src={cocktailBaseEmoji?.url || emojiList[1].url}
                 alt="Base Image"
               />
               <div className={style.baseName}>
@@ -213,7 +221,7 @@ export default function Desc({}) {
               <span>테이스팅 노트</span>
               <img
                 className={style.flavorImg}
-                src={cocktailFlavor?.url || emojiList[1].url}
+                src={cocktailFlavorEmoji?.url || emojiList[1].url}
                 alt="Flavor Image"
               />
               <div className={style.flavorName}>

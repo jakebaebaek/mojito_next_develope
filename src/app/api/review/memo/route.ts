@@ -3,6 +3,7 @@ import { MemberStore } from "@/lib/schemas/member";
 import { NextResponse, NextRequest  } from 'next/server';
 import { headers } from "next/headers";
 import { getToken } from "next-auth/jwt";
+import { TMemberStore } from "@/lib/types/TMemberStore";
 
 
 
@@ -31,18 +32,22 @@ export async function POST(request: Request) {
     const userId = token.id;
 
     //칵테일 리뷰 업데이트
-    const updatedUserStore = await MemberStore.updateOne(
+    const updatedUser = await MemberStore.findOneAndUpdate(
       { userId, "memo.cocktail_id": cocktailId },
       {
-        $set: {
-          ...(reviewText && { "memo.$.memo_txt": reviewText }),
-        }, 
+        $set: { "memo.$.memo_txt": reviewText },
+      },
+      {
+        new: true, // 업데이트 후 문서 반환
       }
     );
-    // 칵테일 리뷰가 없으면 새로 추가
-    if (updatedUserStore.modifiedCount === 0) {
-      await MemberStore.updateOne(
-        { userId }, // userId가 일치하는 문서를 찾음
+    console.log("리뷰 업데이트 결과:", updatedUser);
+    // 만약 해당 리뷰가 없다면 새로 추가
+    let latestReview;
+    
+    if (!updatedUser) {
+      const addedUser = await MemberStore.findOneAndUpdate(
+        { userId },
         {
           $push: {
             memo: {
@@ -50,20 +55,20 @@ export async function POST(request: Request) {
               memo_txt: reviewText,
             },
           },
+        },
+        {
+          new: true,
         }
       );
-    }    
-
-    const latestReview = await MemberStore.findOne(
-      { userId },
-        {
-          memo: { $elemMatch: { cocktail_id: cocktailId } },
-        }
-    );
-    
+    console.log("리뷰 추가 결과:", addedUser);
+      latestReview = addedUser.memo.find((item:TMemberStore['memo'][number] ) => item.cocktail_id.toString() === cocktailId);
+    } else {
+      latestReview = updatedUser.memo.find((item:TMemberStore['memo'][number]) => item.cocktail_id.toString() === cocktailId);
+    }
+    console.log("🤎💜💥리뷰가 없어서 추가했습니다.", latestReview);
       return NextResponse.json({
           message: "성공적으로 리뷰가 업데이트 되었습니다.",
-          memo: latestReview?.memo?.[0] || null, 
+          memo: latestReview || null, 
         });
       } catch (error) {
         console.error("❌POST요청 처리 중 에러 발생:", error);

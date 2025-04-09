@@ -4,8 +4,12 @@ import Link from "next/link";
 import style from "./header.module.scss";
 import Search from "@public/Search.svg";
 import LoginBtn from "./LoginBtn";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
+  const { data: session } = useSession();
+  const memberName = session?.user?.name;
+
   return (
     <>
       <div className={`${style.header}`}>
@@ -22,7 +26,7 @@ export default function Header() {
                 <div>칵테일 검색</div>
               </li>
             </Link>
-            <Link href="/storage">
+            <Link href={`/storage/${memberName}`}>
               <li className={`${style.storage_btn}`}>내 칵테일 창고</li>
             </Link>
           </ul>

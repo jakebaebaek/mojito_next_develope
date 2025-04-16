@@ -49,9 +49,6 @@ const Storage = () => {
   // 최신순 칵테일 카드 배열
   const sortedMemoList = useMemo(() => {
     return [...cocktailCardList].sort((a, b) => {
-      const memoA = memoMap.get(a._id.toString());
-      const memoB = memoMap.get(b._id.toString());
-
       if (filterOption === "최신순") {
         if (activeTab === "recorded") {
           const memoA = memo.find(

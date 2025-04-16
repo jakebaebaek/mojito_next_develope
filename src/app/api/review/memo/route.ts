@@ -17,32 +17,31 @@ export async function POST(request: Request) {
     // getToken 사전준비 header에서 cookie 가져오기
     const reqHeaders = headers();
     const cookie = reqHeaders.get("cookie") || "";
-
-    // NextRequest 객체 생성
     const req = new NextRequest("http://localhost", { headers: { cookie } });
-
     // `getToken()`을 사용하여 JWT 토큰 데이터 가져오기
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET! });
-
-    console.log("🔑 서버 컴포넌트에서 가져온 토큰:", token);
 
     if (!token) {
       return NextResponse.json({ error: "유저 정보를 찾을 수 없습니다." }, { status: 404 });
     }
     const userId = token.id;
-
-    //칵테일 리뷰 업데이트
+    // 리뷰 업데이트 시 updatedAt 필드도 갱신
     const updatedUser = await MemberStore.findOneAndUpdate(
       { userId, "memo.cocktail_id": cocktailId },
       {
-        $set: { "memo.$.memo_txt": reviewText },
+        $set: {
+          "memo.$.memo_txt": reviewText,
+          "memo.$.updatedAt": new Date(),
+        },
       },
-      {
-        new: true, // 업데이트 후 문서 반환
-      }
+      { new: true }
     );
-    console.log("리뷰 업데이트 결과:", updatedUser);
-    // 만약 해당 리뷰가 없다면 새로 추가
+    if (!updatedUser) {
+      console.log("📛 업데이트할 메모가 없어서 추가로 넘어감");
+    } else {
+      console.log("리뷰 업데이트 결과", JSON.stringify(updatedUser.memo, null, 2));
+    }
+
     let latestReview;
     
     if (!updatedUser) {
@@ -53,6 +52,8 @@ export async function POST(request: Request) {
             memo: {
               cocktail_id: cocktailId,
               memo_txt: reviewText,
+              createdAt: new Date(),
+              updatedAt: new Date(),
             },
           },
         },
@@ -60,19 +61,19 @@ export async function POST(request: Request) {
           new: true,
         }
       );
-    console.log("리뷰 추가 결과:", addedUser);
+    console.log("🤎💜💥리뷰가 없어서 추가했습니다.", addedUser);
       latestReview = addedUser.memo.find((item:TMemberStore['memo'][number] ) => item.cocktail_id.toString() === cocktailId);
     } else {
       latestReview = updatedUser.memo.find((item:TMemberStore['memo'][number]) => item.cocktail_id.toString() === cocktailId);
     }
-    console.log("🤎💜💥리뷰가 없어서 추가했습니다.", latestReview);
+    console.log("리뷰 추가 결과", latestReview);
       return NextResponse.json({
           message: "성공적으로 리뷰가 업데이트 되었습니다.",
           memo: latestReview || null, 
         });
       } catch (error) {
         console.error("❌POST요청 처리 중 에러 발생:", error);
-        return Response.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
       }
   }
 

@@ -36,6 +36,7 @@ export async function POST(request: Request) {
       { userId, "memo.cocktail_id": cocktailId },
       {
         $set: {"memo.$.rating": rating},
+        "memo.$.updatedAt": new Date(),
       },
       {
         new: true, // 업데이트 후 문서 반환
@@ -53,6 +54,8 @@ export async function POST(request: Request) {
             memo: {
               cocktail_id: cocktailId,
               rating: rating,
+              createdAt: new Date(),
+              updatedAt: new Date(),
             },
           },
         },

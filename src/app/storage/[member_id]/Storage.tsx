@@ -1,30 +1,90 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useMemo, useEffect } from "react";
 import style from "./Storage.module.scss";
 import Card from "@/components/common/card/Card";
 import MemoCard from "@/components/common/card/MemoCard";
 import DropdownArrow from "@public/DropdownArrow.svg";
-// import Dropdown from "@/components/dropdown/DropdownBox";
+import { useMemberStore } from "@/lib/store/memberStore";
+import { useCocktailStore } from "@/lib/store/cocktailStore";
 
-interface DropdownProps {
-  options: string[];
-  defaultOption: string;
-  onChange: (value: string) => void;
-}
-
-const Storage = ({ recordedCocktails, favoriteCocktails }: any) => {
+const Storage = () => {
   const [activeTab, setActiveTab] = useState<string>("recorded");
   const [filterOption, setFilterOption] = useState<string>("별점순");
+  const { heart, memo } = useMemberStore();
+  const { cocktailList } = useCocktailStore();
+  const memoMap = useMemo(() => {
+    const map = new Map();
+    memo.forEach((m) => map.set(m.cocktail_id.toString(), m));
+    return map;
+  }, [memo]);
+
+  console.log("Member Store:", memo);
 
   const handleFilterChange = (value: string) => {
     console.log("Selected Filter:", value);
     setFilterOption(value);
   };
 
-  // 활성화된 탭에 따른 데이터 결정
-  const cocktails =
-    activeTab === "recorded" ? recordedCocktails : favoriteCocktails;
+  // 필터링한 리뷰한 칵테일 카드들
+  const memoCocktailCardList = cocktailList.filter((cocktail) =>
+    memo.some((item) => item.cocktail_id === cocktail._id && item.memo_txt)
+  );
+  // 필터링한 찜한 칵테일 카드들
+  const favoriteCocktailCardList = cocktailList.filter((cocktail) =>
+    heart.some((item) => item.id === cocktail._id.toString())
+  );
+
+  const cocktailCardList = useMemo(
+    () =>
+      activeTab === "recorded"
+        ? memoCocktailCardList
+        : favoriteCocktailCardList,
+    [activeTab, memo, heart, cocktailList]
+  );
+  useEffect(() => {
+    console.log("칵테일 정렬 리스트 확인용", sortedMemoList);
+  }, [filterOption, activeTab]);
+
+  // 최신순 칵테일 카드 배열
+  const sortedMemoList = useMemo(() => {
+    return [...cocktailCardList].sort((a, b) => {
+      const memoA = memoMap.get(a._id.toString());
+      const memoB = memoMap.get(b._id.toString());
+
+      if (filterOption === "최신순") {
+        if (activeTab === "recorded") {
+          const memoA = memo.find(
+            (m) => m.cocktail_id.toString() === a._id.toString()
+          );
+          const memoB = memo.find(
+            (m) => m.cocktail_id.toString() === b._id.toString()
+          );
+          return (
+            new Date(memoB?.updatedAt || 0).getTime() -
+            new Date(memoA?.updatedAt || 0).getTime()
+          );
+        } else if (activeTab === "favorite") {
+          const heartA = heart.find((h) => h.id === a._id.toString());
+          const heartB = heart.find((h) => h.id === b._id.toString());
+          return (
+            new Date(heartB?.addedAt || 0).getTime() -
+            new Date(heartA?.addedAt || 0).getTime()
+          );
+        }
+      }
+      if (filterOption === "별점순") {
+        const memoA = memo.find(
+          (m) => m.cocktail_id.toString() === a._id.toString()
+        );
+        const memoB = memo.find(
+          (m) => m.cocktail_id.toString() === b._id.toString()
+        );
+        return (memoB?.rating || 0) - (memoA?.rating || 0);
+      }
+      return 0;
+    });
+  }, [cocktailCardList, filterOption, memoMap]);
 
   return (
     <div className={style.container}>
@@ -51,15 +111,38 @@ const Storage = ({ recordedCocktails, favoriteCocktails }: any) => {
       {/* 드롭다운 필터 */}
       <div className={`${style.filterBox}`}>
         <DropdownArrow className={`${style.dropdownArrow}`} />
-        <select className={`${style.select}`}>
-          <option> 별점순 </option>
-          <option> 최신순 </option>
+        <select
+          className={`${style.select}`}
+          onChange={(e) => handleFilterChange(e.target.value)}
+        >
+          <option value="별점순"> 별점순 </option>
+          <option value="최신순"> 최신순 </option>
         </select>
       </div>
 
       {/* 렌더링 영역 */}
       <div className={style.card_container}>
-        {activeTab === "recorded" ? <MemoCard /> : <Card />}
+        {activeTab === "recorded" && memoCocktailCardList
+          ? sortedMemoList.map((cocktail) => (
+              <MemoCard
+                key={cocktail._id}
+                id={cocktail._id}
+                name={cocktail.name.ko}
+                img_url={cocktail.img}
+                memo={
+                  memo.find((item) => item.cocktail_id === cocktail._id)
+                    ?.memo_txt
+                }
+              />
+            ))
+          : sortedMemoList.map((cocktail) => (
+              <Card
+                key={cocktail._id}
+                id={cocktail._id}
+                name={cocktail.name}
+                img_url={cocktail.img}
+              />
+            ))}
       </div>
     </div>
   );

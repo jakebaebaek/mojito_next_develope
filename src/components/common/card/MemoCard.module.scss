@@ -22,6 +22,7 @@
 
     .info_wrap {
       display: flex;
+      align-items: center;
       flex-direction: column;
       width: 19rem;
 
@@ -32,8 +33,10 @@
         text-align: center;
       }
       .img {
-        height: 14rem;
+        height: 15rem;
         object-fit: contain;
+        position: absolute;
+        top: 25%;
       }
     }
 
@@ -48,9 +51,8 @@
       padding: 2rem 2.5rem;
       width: 24.9rem;
 
-      .star {
-      }
       .memo {
+        text-align: center;
         font-size: 1.6rem;
         padding-top: 1rem;
         height: 13rem;
@@ -64,5 +66,22 @@
         -webkit-box-orient: vertical;
       }
     }
+  }
+}
+.heart {
+  stroke-width: 2;
+  position: absolute;
+  right: 1.5rem;
+  bottom: 2rem;
+  cursor: pointer;
+
+  &.unClicked {
+    fill: white;
+    stroke: $gray-200;
+  }
+
+  &.clicked {
+    fill: $main-color;
+    stroke: $main-color;
   }
 }

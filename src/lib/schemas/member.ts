@@ -22,7 +22,33 @@ const memberSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
+const memoSubSchema = new mongoose.Schema(
+  {
+    cocktail_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cocktails",
+      required: true,
+    },
+    memo_txt: {
+      type: String,
+    },
+    rating: {
+      type: Number,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    _id: true,
+    timestamps: true, 
+  }
+);
 const memberStoreSchema = new mongoose.Schema(
   {
     userId: {
@@ -32,26 +58,18 @@ const memberStoreSchema = new mongoose.Schema(
     },
     heart: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Cocktails",
-        required: true,
-      },
-    ],
-    memo: [
-      {
-        cocktail_id: {
+        id: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Cocktails",
           required: true,
         },
-        memo_txt: {
-          type: String,
-        },
-        rating: {
-          type: Number,
+        addedAt: {
+          type: Date,
+          default: Date.now,
         },
       },
-    ],
+    ],    
+    memo: [memoSubSchema], 
   },
   {
     timestamps: true,

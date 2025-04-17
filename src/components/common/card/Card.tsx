@@ -17,16 +17,17 @@ export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();
   const [isLoading, setIsLoading] = useState(false);
 
-  const isClicked = useMemo(() => heart.includes(id), [heart, id]);
-
+  const isClicked = useMemo(
+    () => heart.some((item) => item.id === id),
+    [heart, id]
+  );
   const onClickHeart = (id: string) => {
     if (isLoading) return;
     setIsLoading(true);
     try {
       const updateHerat = isClicked
-        ? heart.filter((item) => item != id)
-        : [...heart, id];
-
+        ? heart.filter((item) => item.id != id)
+        : [...heart, { id, addedAt: new Date().toISOString() }];
       setHeart(updateHerat);
     } catch (error) {
       console.error("🚨 즐겨찾기 저장 실패", error);

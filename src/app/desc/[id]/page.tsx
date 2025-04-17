@@ -98,6 +98,7 @@ export default function Desc({}) {
     }
     try {
       const res = await postReview(id, reviewText);
+      console.log("🔍 저장 응답:", res);
       const { memo } = await res;
 
       setMemo((prev) => {
@@ -129,9 +130,13 @@ export default function Desc({}) {
       if (!res.ok) throw new Error("리뷰 삭제 실패");
       setMemo((prev) => {
         const safePrev = Array.isArray(prev) ? prev : [];
-        return safePrev.map((m) =>
-          m && m.cocktail_id === id ? { ...m, memo_txt: undefined } : m
-        );
+        return safePrev.map((m) => {
+          if (m && m.cocktail_id === id) {
+            const { memo_txt, ...rest } = m; // memo_txt를 제외한 나머지 속성만 남김
+            return rest;
+          }
+          return m;
+        });
       });
       console.log("store 최신 리뷰", useMemberStore.getState().memo);
 

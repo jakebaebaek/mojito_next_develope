@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   try {
     connectDB();
     const heartList = await request.json();
-
+    console.log("heartList", heartList);
     const reqHeaders = headers();
     const cookie = reqHeaders.get("cookie") || "";
     const req = new NextRequest("http://localhost", { headers: { cookie } });
@@ -32,9 +32,13 @@ export async function POST(request: Request) {
       { $set: { heart: heartList } },
       { new: true }
     );
-    console.log("👑", updateMemberStore);
+    // console.log("👑", updateMemberStore);
     return NextResponse.json(updateMemberStore);
   } catch (error) {
     console.error("heart POST 에러", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

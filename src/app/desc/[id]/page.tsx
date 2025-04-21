@@ -24,7 +24,7 @@ export default function Desc({}) {
   const { cocktailList } = useCocktailStore();
   const { memo, setMemo } = useMemberStore();
   const { cocktailDetail, setCocktailDetail } = useCocktailDetailStore();
-  const { emojiList, fetchEmoji } = useEmojiStore();
+  const { emojiList } = useEmojiStore();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const reviewRef = useRef<HTMLTextAreaElement>(null);
@@ -40,10 +40,6 @@ export default function Desc({}) {
       setRating(matchedMemo.rating);
     }
   }, [matchedMemo]);
-
-  useEffect(() => {
-    fetchEmoji();
-  }, []);
 
   useEffect(() => {
     if (cocktailList.length === 0) return;

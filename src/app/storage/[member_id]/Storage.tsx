@@ -32,7 +32,7 @@ const Storage = () => {
   );
   // 필터링한 찜한 칵테일 카드들
   const favoriteCocktailCardList = cocktailList.filter((cocktail) =>
-    heart.some((item) => item.id === cocktail._id.toString())
+    heart.some((item) => item.cocktail_id === cocktail._id.toString())
   );
 
   const cocktailCardList = useMemo(
@@ -62,8 +62,8 @@ const Storage = () => {
             new Date(memoA?.updatedAt || 0).getTime()
           );
         } else if (activeTab === "favorite") {
-          const heartA = heart.find((h) => h.id === a._id.toString());
-          const heartB = heart.find((h) => h.id === b._id.toString());
+          const heartA = heart.find((h) => h.cocktail_id === a._id.toString());
+          const heartB = heart.find((h) => h.cocktail_id === b._id.toString());
           return (
             new Date(heartB?.addedAt || 0).getTime() -
             new Date(heartA?.addedAt || 0).getTime()

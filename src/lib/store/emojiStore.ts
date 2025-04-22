@@ -1,23 +1,18 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { getEmoji } from "../fetchs/fetchEmoji";
+import { TEmoji } from "@/lib/types/Temoji";
 
 type TEmojiStore = {
-  emojiList: any[];
-  fetchEmoji: () => Promise<void>;
+  emojiList: TEmoji[];
+  setEmoji: (data: TEmoji[]) => void;
 };
 
 export const useEmojiStore = create<TEmojiStore>()(
   persist(
     (set, get) => ({
       emojiList: [],
-
-      fetchEmoji: async () => {
-        const current = get().emojiList;
-        if (current.length > 0) return; 
-
-        const emojiList = await getEmoji();
-        set({ emojiList });
+      setEmoji: (data) => {
+        set({ emojiList: data });
       },
     }),
     {
@@ -28,4 +23,3 @@ export const useEmojiStore = create<TEmojiStore>()(
 function get() {
   throw new Error("Function not implemented.");
 }
-

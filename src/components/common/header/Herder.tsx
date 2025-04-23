@@ -5,10 +5,22 @@ import style from "./header.module.scss";
 import Search from "@public/Search.svg";
 import LoginBtn from "./LoginBtn";
 import { useSession } from "next-auth/react";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Header() {
   const { data: session } = useSession();
   const memberName = session?.user?.name;
+  console.log("🚨", session);
+  const router = useRouter();
+
+  const goToStorage = () => {
+    if (!session) {
+      alert("로그인 후 이용해주세요.");
+    } else {
+      if (!memberName) return;
+      router.push("/storage");
+    }
+  };
 
   return (
     <>
@@ -26,9 +38,9 @@ export default function Header() {
                 <div>칵테일 검색</div>
               </li>
             </Link>
-            <Link href={`/storage/${memberName}`}>
-              <li className={`${style.storage_btn}`}>내 칵테일 창고</li>
-            </Link>
+            <li className={`${style.storage_btn}`} onClick={goToStorage}>
+              내 칵테일 창고
+            </li>
           </ul>
         </div>
         <LoginBtn />

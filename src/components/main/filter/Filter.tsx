@@ -41,16 +41,19 @@ export default function Filter() {
 
       <div className={`${style.base_wrap}`}>
         <h3>베이스</h3>
-        <div>
+        <div className={`${style.item_wrap}`}>
           {filterList.base.map((item) => (
             <label>
               <input type="checkbox" />
-              <i className={`${style.checkbox_icon}`}></i>
-              <img
-                src={emojiList.find((emoji) => emoji.name === item.emoji)?.url}
-                alt="Emoji"
-              />
-              <span>{item.name}</span>
+              <div className={style.checkbox_content}>
+                <img
+                  src={
+                    emojiList.find((emoji) => emoji.name === item.emoji)?.url
+                  }
+                  alt="Emoji"
+                />
+                <span>{item.name}</span>
+              </div>
             </label>
           ))}
         </div>

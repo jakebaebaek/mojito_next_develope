@@ -7,19 +7,28 @@ import MemoCard from "@/components/common/card/MemoCard";
 import DropdownArrow from "@public/DropdownArrow.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
+import { THeartItem } from "@/lib/types/THeart";
+import { TMemo } from "@/lib/types/TMemo";
 
-const Storage = () => {
+type StorageProps = {
+  heartList: THeartItem[];
+  memoList: TMemo[];
+};
+
+const Storage = ({ heartList, memoList }: StorageProps) => {
   const [activeTab, setActiveTab] = useState<string>("recorded");
   const [filterOption, setFilterOption] = useState<string>("별점순");
-  const { heart, memo } = useMemberStore();
+  const { heart, memo, setHeart, setMemo } = useMemberStore();
   const { cocktailList } = useCocktailStore();
-  const memoMap = useMemo(() => {
-    const map = new Map();
-    memo.forEach((m) => map.set(m.cocktail_id.toString(), m));
-    return map;
-  }, [memo]);
+  const [hydrated, setHydrated] = useState(false);
 
-  console.log("Member Store:", memo);
+  useEffect(() => {
+    if (!hydrated) {
+      setHeart(heartList); // SSR 받은 heartList 로 zustand 초기화
+      setMemo(memoList); // SSR 받은 memoList 로 zustand 초기화
+      setHydrated(true); // 이제부터는 CSR 모드로
+    }
+  }, [heartList, memoList, setHeart, setMemo, hydrated]);
 
   const handleFilterChange = (value: string) => {
     console.log("Selected Filter:", value);
@@ -32,7 +41,7 @@ const Storage = () => {
   );
   // 필터링한 찜한 칵테일 카드들
   const favoriteCocktailCardList = cocktailList.filter((cocktail) =>
-    heart.some((item) => item.id === cocktail._id.toString())
+    heart.some((item) => item.cocktail_id === cocktail._id.toString())
   );
 
   const cocktailCardList = useMemo(
@@ -49,9 +58,6 @@ const Storage = () => {
   // 최신순 칵테일 카드 배열
   const sortedMemoList = useMemo(() => {
     return [...cocktailCardList].sort((a, b) => {
-      const memoA = memoMap.get(a._id.toString());
-      const memoB = memoMap.get(b._id.toString());
-
       if (filterOption === "최신순") {
         if (activeTab === "recorded") {
           const memoA = memo.find(
@@ -65,8 +71,8 @@ const Storage = () => {
             new Date(memoA?.updatedAt || 0).getTime()
           );
         } else if (activeTab === "favorite") {
-          const heartA = heart.find((h) => h.id === a._id.toString());
-          const heartB = heart.find((h) => h.id === b._id.toString());
+          const heartA = heart.find((h) => h.cocktail_id === a._id.toString());
+          const heartB = heart.find((h) => h.cocktail_id === b._id.toString());
           return (
             new Date(heartB?.addedAt || 0).getTime() -
             new Date(heartA?.addedAt || 0).getTime()
@@ -84,7 +90,7 @@ const Storage = () => {
       }
       return 0;
     });
-  }, [cocktailCardList, filterOption, memoMap]);
+  }, [cocktailCardList, filterOption]);
 
   return (
     <div className={style.container}>

@@ -38,11 +38,15 @@
     position: relative;
     margin-left: 14rem;
     margin-right: 12rem;
-
     li {
+      cursor: pointer;
       display: flex;
       flex-direction: row;
       align-items: center;
+    }
+    li:hover {
+      color: $gray-400;
+      transition: all 0.2s ease-in-out;
     }
 
     .search_btn {

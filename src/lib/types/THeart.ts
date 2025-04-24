@@ -1,4 +1,4 @@
 export type THeartItem = {
-  id: string;
+  cocktail_id: string;
   addedAt: string; 
 };

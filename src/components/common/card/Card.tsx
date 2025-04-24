@@ -18,7 +18,7 @@ export default function Card({ id, name, img_url }: TCardProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const isClicked = useMemo(
-    () => heart.some((item) => item.id === id),
+    () => heart.some((item) => item.cocktail_id === id),
     [heart, id]
   );
   const onClickHeart = (id: string) => {
@@ -26,8 +26,8 @@ export default function Card({ id, name, img_url }: TCardProps) {
     setIsLoading(true);
     try {
       const updateHerat = isClicked
-        ? heart.filter((item) => item.id != id)
-        : [...heart, { id, addedAt: new Date().toISOString() }];
+        ? heart.filter((item) => item.cocktail_id != id)
+        : [...heart, { cocktail_id: id, addedAt: new Date().toISOString() }];
       setHeart(updateHerat);
     } catch (error) {
       console.error("🚨 즐겨찾기 저장 실패", error);

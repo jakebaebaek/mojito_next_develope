@@ -7,10 +7,12 @@ import Button from "../../common/button/Button";
 import RangeSlider from "@/components/main/slider/RangeSlider";
 
 import { useEmojiStore } from "@/lib/store/emojiStore";
+import { filterList } from "@/lib/mokdata/filterList";
 
 export default function Filter() {
   //zustand 상태관리
   const { emojiList } = useEmojiStore();
+  console.log(emojiList);
 
   return (
     <div className={`${style.filter_box}`}>
@@ -18,13 +20,18 @@ export default function Filter() {
       <div className={`${style.tasting_wrap}`}>
         <h3>테이스팅 노트</h3>
         <div>
-          {/* 테이스팅 노트 체크박스 리스트 */}
-          <label>
-            <input type="checkbox" />
-            <i className={`${style.checkbox_icon}`}></i>
-            <img className={`${style.checkbox_emoji}`} src="" alt="Emoji" />
-            <span className={`${style.checkbox_txt}`}>테이스팅 노트 이름</span>
-          </label>
+          {filterList.tasting.map((item) => (
+            <label>
+              <input type="checkbox" />
+              <i className={`${style.checkbox_icon}`}></i>
+              <img
+                className={`${style.checkbox_emoji}`}
+                src={emojiList.find((emoji) => emoji.name === item.emoji)?.url}
+                alt="Emoji"
+              />
+              <span className={`${style.checkbox_txt}`}>{item.name}</span>
+            </label>
+          ))}
         </div>
       </div>
       <div className={`${style.line}`}></div>
@@ -32,13 +39,17 @@ export default function Filter() {
       <div className={`${style.base_wrap}`}>
         <h3>베이스</h3>
         <div>
-          {/* 베이스 체크박스 리스트 */}
-          <label>
-            <input type="checkbox" />
-            <i className={`${style.checkbox_icon}`}></i>
-            <img src="" alt="Emoji" />
-            <span>베이스 이름</span>
-          </label>
+          {filterList.base.map((item) => (
+            <label>
+              <input type="checkbox" />
+              <i className={`${style.checkbox_icon}`}></i>
+              <img
+                src={emojiList.find((emoji) => emoji.name === item.emoji)?.url}
+                alt="Emoji"
+              />
+              <span>{item.name}</span>
+            </label>
+          ))}
         </div>
       </div>
       <div className={`${style.line}`}></div>

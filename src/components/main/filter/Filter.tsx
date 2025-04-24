@@ -19,17 +19,20 @@ export default function Filter() {
       {/* 필터 */}
       <div className={`${style.tasting_wrap}`}>
         <h3>테이스팅 노트</h3>
-        <div>
+        <div className={`${style.item_wrap}`}>
           {filterList.tasting.map((item) => (
             <label>
               <input type="checkbox" />
-              <i className={`${style.checkbox_icon}`}></i>
-              <img
-                className={`${style.checkbox_emoji}`}
-                src={emojiList.find((emoji) => emoji.name === item.emoji)?.url}
-                alt="Emoji"
-              />
-              <span className={`${style.checkbox_txt}`}>{item.name}</span>
+              <div className={style.checkbox_content}>
+                <img
+                  className={`${style.checkbox_emoji}`}
+                  src={
+                    emojiList.find((emoji) => emoji.name === item.emoji)?.url
+                  }
+                  alt="Emoji"
+                />
+                <span className={`${style.checkbox_txt}`}>{item.name}</span>
+              </div>
             </label>
           ))}
         </div>

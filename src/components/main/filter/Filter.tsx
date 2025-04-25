@@ -37,7 +37,6 @@ export default function Filter() {
           ))}
         </div>
       </div>
-      <div className={`${style.line}`}></div>
 
       <div className={`${style.base_wrap}`}>
         <h3>베이스</h3>
@@ -58,14 +57,14 @@ export default function Filter() {
           ))}
         </div>
       </div>
-      <div className={`${style.line}`}></div>
+
       <div className={`${style.booziness_wrap}`}>
         <h3>얼마나 취할래?</h3>
         <div className={`${style.slider_wrap}`}>
           <RangeSlider />
         </div>
       </div>
-      <div className={`${style.line}`}></div>
+
       <div className={`${style.sweet_wrap}`}>
         <h3>Sweet or Dry?</h3>
         <div>
@@ -76,7 +75,11 @@ export default function Filter() {
       </div>
 
       <div className={`${style.btn_wrap}`}>
-        <Button text="검색" color="orange"></Button>
+        <Button
+          className={`${style.search_btn}`}
+          text="검색"
+          color="orange"
+        ></Button>
         <div className={`${style.return_btn}`}>
           <ReturnArrow className={`${style.return_svg}`} />
           <span className={`${style.return_txt}`}>초기화</span>

@@ -1,4 +1,4 @@
-const filterList = {
+export const filterList = {
   tasting: [
     { name: "아이셔", emoji: "Lemon" },
     { name: "허브", emoji: "Seedling" },
@@ -9,7 +9,7 @@ const filterList = {
   base: [
     { name: "진", emoji: "Flag: United Kingdom" },
     { name: "데킬라", emoji: "Cactus" },
-    { name: "보드카", emoji: "vodka" },
+    { name: "보드카", emoji: "Snowman Without Snow" },
     { name: "위스키", emoji: "Tumbler Glass" },
     { name: "브랜디", emoji: "Wine Glass" },
     { name: "럼", emoji: "Desert Island" },

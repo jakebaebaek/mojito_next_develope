@@ -5,17 +5,20 @@ import style from "./header.module.scss";
 import Search from "@public/Search.svg";
 import LoginBtn from "./LoginBtn";
 import { useSession } from "next-auth/react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useModalStore } from "@/lib/store/modalStore";
 
 export default function Header() {
   const { data: session } = useSession();
+  const { open } = useModalStore();
+
   const memberName = session?.user?.name;
   console.log("🚨", session);
   const router = useRouter();
 
   const goToStorage = () => {
     if (!session) {
-      alert("로그인 후 이용해주세요.");
+      open();
     } else {
       if (!memberName) return;
       router.push("/storage");

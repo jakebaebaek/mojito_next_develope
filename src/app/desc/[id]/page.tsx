@@ -6,12 +6,12 @@ import {
 } from "@/lib/store/cocktailStore";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useEmojiStore } from "@/lib/store/emojiStore";
+import { useModalStore } from "@/lib/store/modalStore";
 import { useRef, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-import { postReview, getReview, deleteReview } from "@/lib/fetchs/fetchReview";
-import { postRating, getRating } from "@/lib/fetchs/fetchRating";
-import LoginModal from "@/components/common/modal/LoginModal";
+import { postReview, deleteReview } from "@/lib/fetchs/fetchReview";
+import { postRating } from "@/lib/fetchs/fetchRating";
 import Navigation from "@/components/common/navigation/Navigation";
 import Button from "@/components/common/button/Button";
 import style from "./Desc.module.scss";
@@ -25,12 +25,12 @@ export default function Desc({}) {
   const { memo, setMemo } = useMemberStore();
   const { cocktailDetail, setCocktailDetail } = useCocktailDetailStore();
   const { emojiList } = useEmojiStore();
+  const { open } = useModalStore();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const reviewRef = useRef<HTMLTextAreaElement>(null);
   const { data: session } = useSession();
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const matchedMemo = Array.isArray(memo)
     ? memo.find((item: any) => item && item.cocktail_id === id)
     : null;
@@ -51,7 +51,7 @@ export default function Desc({}) {
 
   const handleRating = async (index: number) => {
     if (!session) {
-      setIsLoginOpen(true);
+      open();
       return;
     }
     const newRating = rating === index + 1 ? 0 : index + 1;
@@ -89,7 +89,7 @@ export default function Desc({}) {
       return;
     }
     if (!session) {
-      setIsLoginOpen(true);
+      open();
       return;
     }
     try {
@@ -115,8 +115,7 @@ export default function Desc({}) {
  */
   const handleDeleteReview = async () => {
     if (!session) {
-      setIsLoginOpen(true);
-      return;
+      open();
     }
     const confirmDelete = confirm("정말 리뷰를 삭제하시겠어요?");
     if (!confirmDelete) return;
@@ -148,14 +147,20 @@ export default function Desc({}) {
   const cocktail = cocktailDetail;
 
   // 해당 칵테일의 데이터와 이모지를 매칭하기
-  const cocktailBaseEmoji = emojiList.find((emoji) =>
-    emoji.value.includes(
-      cocktail?.base && cocktail?.base.length === 0 ? null : cocktail?.base
-    )
-  );
-  const cocktailFlavorEmoji = emojiList.find((emoji) =>
-    emoji.value.includes(cocktail?.flavor)
-  );
+  const cocktailBaseEmoji = emojiList.find((emoji) => {
+    if (!cocktail?.base) return false;
+
+    if (Array.isArray(cocktail.base)) {
+      return cocktail.base.some((b) => emoji.value.includes(b));
+    }
+  });
+
+  const cocktailFlavorEmoji = emojiList.find((emoji) => {
+    if (!cocktail?.flavor) return false;
+
+    return cocktail.flavor.some((f) => emoji.value.includes(f));
+  });
+
   console.log("🍹 cocktailFlavorEmoji", cocktailFlavorEmoji);
   console.log("🍹 cocktailBaseEmoji", cocktailBaseEmoji);
   console.log("🍹 cocktail의 base", cocktail?.base);
@@ -359,8 +364,6 @@ export default function Desc({}) {
           />
         )}
       </div>
-      {/* 로그인 요청 알림 모달 */}
-      {isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
     </div>
   );
 }

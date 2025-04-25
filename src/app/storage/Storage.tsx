@@ -7,28 +7,12 @@ import MemoCard from "@/components/common/card/MemoCard";
 import DropdownArrow from "@public/DropdownArrow.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
-import { THeartItem } from "@/lib/types/THeart";
-import { TMemo } from "@/lib/types/TMemo";
 
-type StorageProps = {
-  heartList: THeartItem[];
-  memoList: TMemo[];
-};
-
-const Storage = ({ heartList, memoList }: StorageProps) => {
+const Storage = () => {
   const [activeTab, setActiveTab] = useState<string>("recorded");
   const [filterOption, setFilterOption] = useState<string>("별점순");
-  const { heart, memo, setHeart, setMemo } = useMemberStore();
+  const { heart, memo } = useMemberStore();
   const { cocktailList } = useCocktailStore();
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    if (!hydrated) {
-      setHeart(heartList); // SSR 받은 heartList 로 zustand 초기화
-      setMemo(memoList); // SSR 받은 memoList 로 zustand 초기화
-      setHydrated(true); // 이제부터는 CSR 모드로
-    }
-  }, [heartList, memoList, setHeart, setMemo, hydrated]);
 
   const handleFilterChange = (value: string) => {
     console.log("Selected Filter:", value);

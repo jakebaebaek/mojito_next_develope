@@ -7,11 +7,9 @@ import { signIn, useSession } from "next-auth/react";
 export default function LoginBtn() {
   const { data: session } = useSession();
 
-  const id = session?.user.id;
-
   if (session) {
     return (
-      <Link href={`mypage/${id}`} className={`${style.login_btn}`}>
+      <Link href={`mypage`} className={`${style.login_btn}`}>
         my page
       </Link>
     );

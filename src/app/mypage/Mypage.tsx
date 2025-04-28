@@ -7,7 +7,7 @@ import Logout from "@public/Logout.svg";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function mypage() {
+export default function Mypage() {
   const router = useRouter();
 
   return (

@@ -171,7 +171,6 @@ export default function Desc({}) {
     "emoji의 타입",
     typeof emojiList[0].value
   );
-  // console.log("이게 무슨 일이야", "top100".includes(cocktail?.base));]));
   // 데이터가 없는 경우 처리
   if (!cocktail) {
     return <div>칵테일 정보를 찾을 수 없습니다.</div>;

@@ -9,7 +9,7 @@ export default function LoginBtn() {
 
   if (session) {
     return (
-      <Link href={`mypage`} className={`${style.login_btn}`}>
+      <Link href="/mypage" className={`${style.login_btn}`}>
         my page
       </Link>
     );

@@ -7,6 +7,7 @@ import Logout from "@public/Logout.svg";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useMemberStore } from "@/lib/store/memberStore";
+import Link from "next/link";
 
 export default function Mypage() {
   const router = useRouter();
@@ -40,14 +41,18 @@ export default function Mypage() {
         </button>
       </div>
       <div className={`${style.cocktail_menu}`}>
-        <div className={`${style.favorite_cocktail}`}>
-          <h3> {heart.length ? heart.length : 0} </h3>
-          <h3> 찜한 칵테일 </h3>
-        </div>
-        <div className={`${style.recorded_cocktail}`}>
-          <h3> {memo.length ? memo.length : 0} </h3>
-          <h3> 칵테일 기록 </h3>
-        </div>
+        <Link href="/storage?tab=favorite">
+          <div className={`${style.favorite_cocktail}`}>
+            <h3> {heart.length ? heart.length : 0} </h3>
+            <h3> 찜한 칵테일 </h3>
+          </div>
+        </Link>
+        <Link href="/storage?tab=recorded">
+          <div className={`${style.recorded_cocktail}`}>
+            <h3> {memo.length ? memo.length : 0} </h3>
+            <h3> 칵테일 기록 </h3>
+          </div>
+        </Link>
       </div>
       <div className={`${style.delete_account}`}>
         <h4>회원탈퇴</h4>

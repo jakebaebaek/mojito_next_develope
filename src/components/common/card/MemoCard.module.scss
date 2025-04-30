@@ -65,6 +65,16 @@
         display: -webkit-box;
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
+
+        .noMemo {
+          position: absolute;
+          top: 42%;
+          right: 4rem;
+          font-size: 1.5rem;
+          span {
+            color: $gray-300;
+          }
+        }
       }
     }
   }

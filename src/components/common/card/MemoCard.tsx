@@ -22,7 +22,7 @@ export default function MemoCard(props: TMemoCardProps) {
     () => heart.some((item) => item.cocktail_id === id),
     [heart, id]
   );
-
+  console.log("memo 데이터 입니다", memo);
   const onClickHeart = (id: string) => {
     if (isLoading) return;
     setIsLoading(true);
@@ -57,7 +57,17 @@ export default function MemoCard(props: TMemoCardProps) {
           </div>
           <div className={`${style.line}`}></div>
           <div className={`${style.memo_wrap}`}>
-            <div className={`${style.memo}`}>{memo}</div>
+            <div className={`${style.memo}`}>
+              {!memo || memo.trim() === "" ? (
+                <div className={`${style.noMemo}`}>
+                  <span>별점만 남긴 칵테일이에요.</span>
+                  <br />
+                  <span>메모도 함께 남겨보세요!</span>
+                </div>
+              ) : (
+                <p>{memo}</p>
+              )}
+            </div>
           </div>
         </Link>
         <div className={`${style.heartAndStar_wrap}`}>

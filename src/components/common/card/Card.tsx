@@ -25,10 +25,10 @@ export default function Card({ id, name, img_url }: TCardProps) {
     if (isLoading) return;
     setIsLoading(true);
     try {
-      const updateHerat = isClicked
+      const updateHeart = isClicked
         ? heart.filter((item) => item.cocktail_id != id)
         : [...heart, { cocktail_id: id, addedAt: new Date().toISOString() }];
-      setHeart(updateHerat);
+      setHeart(updateHeart);
     } catch (error) {
       console.error("🚨 즐겨찾기 저장 실패", error);
     } finally {

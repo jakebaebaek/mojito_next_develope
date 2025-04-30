@@ -6,9 +6,11 @@ import Logout from "@public/Logout.svg";
 
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useMemberStore } from "@/lib/store/memberStore";
 
 export default function Mypage() {
   const router = useRouter();
+  const { heart, memo } = useMemberStore();
 
   return (
     <div className={`${style.container}`}>
@@ -26,6 +28,9 @@ export default function Mypage() {
         <button
           className={`${style.button}`}
           onClick={() => {
+            localStorage.removeItem("memberStore-storage");
+            sessionStorage.removeItem("offset-storage");
+
             signOut({ callbackUrl: "/" });
             router.replace("/");
           }}
@@ -36,11 +41,11 @@ export default function Mypage() {
       </div>
       <div className={`${style.cocktail_menu}`}>
         <div className={`${style.favorite_cocktail}`}>
-          <h3> 32 </h3>
+          <h3> {heart.length ? heart.length : 0} </h3>
           <h3> 찜한 칵테일 </h3>
         </div>
         <div className={`${style.recorded_cocktail}`}>
-          <h3> 8 </h3>
+          <h3> {memo.length ? memo.length : 0} </h3>
           <h3> 칵테일 기록 </h3>
         </div>
       </div>

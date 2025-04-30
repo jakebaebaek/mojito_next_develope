@@ -21,7 +21,7 @@ const Storage = () => {
 
   // 필터링한 리뷰한 칵테일 카드들
   const memoCocktailCardList = cocktailList.filter((cocktail) =>
-    memo.some((item) => item.cocktail_id === cocktail._id && item.memo_txt)
+    memo.some((item) => item.cocktail_id === cocktail._id && item.rating)
   );
   // 필터링한 찜한 칵테일 카드들
   const favoriteCocktailCardList = cocktailList.filter((cocktail) =>
@@ -122,6 +122,9 @@ const Storage = () => {
                 memo={
                   memo.find((item) => item.cocktail_id === cocktail._id)
                     ?.memo_txt
+                }
+                rating={
+                  memo.find((item) => item.cocktail_id === cocktail._id)?.rating
                 }
               />
             ))

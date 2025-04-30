@@ -22,6 +22,7 @@
 
     .info_wrap {
       display: flex;
+      position: relative;
       align-items: center;
       flex-direction: column;
       width: 19rem;
@@ -68,11 +69,48 @@
     }
   }
 }
+
+.heartAndStar_wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  gap: 2rem;
+}
+.star_wrap {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom:-0.5rem;
+  right: 2.5rem;
+
+  span, svg {
+    position: absolute;
+  }
+}
+
+.rating_number {
+  z-index: 2;
+  color: black; // 필요시 조절
+  font-size: 1.7rem;
+  pointer-events: none;
+}
+
+.star {
+  z-index: 1;
+  fill: white;
+  transition: fill 0.2s;
+
+  &.filled, &.hovered {
+    fill: orange;
+  }
+}
 .heart {
   stroke-width: 2;
-  position: absolute;
-  right: 1.5rem;
-  bottom: 2rem;
   cursor: pointer;
 
   &.unClicked {

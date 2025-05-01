@@ -38,6 +38,12 @@
   padding: 0.5rem 2rem 0.5rem;
   margin: 2rem;
   gap: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray-100;
+    transition: 0.3s;
+  }
 }
 
 .cocktail_menu {

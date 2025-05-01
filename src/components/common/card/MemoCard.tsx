@@ -1,4 +1,5 @@
 import Heart from "@public/Heart.svg";
+import StarRating from "@public/StarRating.svg";
 import style from "./MemoCard.module.scss";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -9,27 +10,27 @@ type TMemoCardProps = {
   name?: string;
   img_url?: string;
   memo?: string;
-  rate?: number;
+  rating?: number;
 };
 
 export default function MemoCard(props: TMemoCardProps) {
-  const { id, name, img_url, memo, rate } = props;
+  const { id, name, img_url, memo, rating } = props;
   const { heart, setHeart } = useMemberStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const isClicked = useMemo(
-    () => heart.some((item) => item.id === id),
+    () => heart.some((item) => item.cocktail_id === id),
     [heart, id]
   );
-
+  console.log("memo 데이터 입니다", memo);
   const onClickHeart = (id: string) => {
     if (isLoading) return;
     setIsLoading(true);
     try {
-      const updateHerat = isClicked
-        ? heart.filter((item) => item.id !== id)
-        : [...heart, { id, addedAt: new Date().toISOString() }];
-      setHeart(updateHerat);
+      const updateHeart = isClicked
+        ? heart.filter((item) => item.cocktail_id !== id)
+        : [...heart, { cocktail_id: id, addedAt: new Date().toISOString() }];
+      setHeart(updateHeart);
     } catch (error) {
       console.error("🚨 즐겨찾기 저장 실패", error);
     } finally {
@@ -47,18 +48,36 @@ export default function MemoCard(props: TMemoCardProps) {
               src={img_url}
               alt="Cocktail Image"
             />
+            <div className={style.star_wrap}>
+              <span className={style.rating_number}>
+                {rating ? rating : ""}
+              </span>
+              <StarRating className={`${style.star}`} />
+            </div>
           </div>
           <div className={`${style.line}`}></div>
           <div className={`${style.memo_wrap}`}>
-            <div className={`${style.memo}`}>{memo}</div>
+            <div className={`${style.memo}`}>
+              {!memo || memo.trim() === "" ? (
+                <div className={`${style.noMemo}`}>
+                  <span>별점만 남긴 칵테일이에요.</span>
+                  <br />
+                  <span>메모도 함께 남겨보세요!</span>
+                </div>
+              ) : (
+                <p>{memo}</p>
+              )}
+            </div>
           </div>
         </Link>
-        <Heart
-          className={`${style.heart} ${
-            isClicked ? style.clicked : style.unClicked
-          }`}
-          onClick={() => onClickHeart(id)}
-        />
+        <div className={`${style.heartAndStar_wrap}`}>
+          <Heart
+            className={`${style.heart} ${
+              isClicked ? style.clicked : style.unClicked
+            }`}
+            onClick={() => onClickHeart(id)}
+          />
+        </div>
       </div>
     </>
   );

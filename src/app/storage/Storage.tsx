@@ -7,12 +7,17 @@ import MemoCard from "@/components/common/card/MemoCard";
 import DropdownArrow from "@public/DropdownArrow.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const Storage = () => {
-  const [activeTab, setActiveTab] = useState<string>("recorded");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const defaultTab = searchParams.get("tab") || "recorded";
+
   const [filterOption, setFilterOption] = useState<string>("별점순");
   const { heart, memo } = useMemberStore();
   const { cocktailList } = useCocktailStore();
+  const [activeTab, setActiveTab] = useState<string>(defaultTab);
 
   const handleFilterChange = (value: string) => {
     console.log("Selected Filter:", value);
@@ -21,7 +26,7 @@ const Storage = () => {
 
   // 필터링한 리뷰한 칵테일 카드들
   const memoCocktailCardList = cocktailList.filter((cocktail) =>
-    memo.some((item) => item.cocktail_id === cocktail._id && item.memo_txt)
+    memo.some((item) => item.cocktail_id === cocktail._id && item.rating)
   );
   // 필터링한 찜한 칵테일 카드들
   const favoriteCocktailCardList = cocktailList.filter((cocktail) =>
@@ -84,7 +89,10 @@ const Storage = () => {
           className={`${style.cocktail_recorded} ${
             activeTab === "recorded" ? style.active : ""
           }`}
-          onClick={() => setActiveTab("recorded")} // "칵테일 기록" 클릭
+          onClick={() => {
+            setActiveTab("recorded");
+            router.replace("?tab=recorded");
+          }} // "칵테일 기록" 클릭
         >
           <h3>칵테일 기록</h3>
         </div>
@@ -92,7 +100,10 @@ const Storage = () => {
           className={`${style.cocktail_favorite} ${
             activeTab === "favorite" ? style.active : ""
           }`}
-          onClick={() => setActiveTab("favorite")} // "찜한 칵테일" 클릭
+          onClick={() => {
+            setActiveTab("favorite");
+            router.replace("?tab=favorite"); // URL에 탭 정보 유지
+          }} // "찜한 칵테일" 클릭
         >
           <h3>찜한 칵테일</h3>
         </div>
@@ -122,6 +133,9 @@ const Storage = () => {
                 memo={
                   memo.find((item) => item.cocktail_id === cocktail._id)
                     ?.memo_txt
+                }
+                rating={
+                  memo.find((item) => item.cocktail_id === cocktail._id)?.rating
                 }
               />
             ))

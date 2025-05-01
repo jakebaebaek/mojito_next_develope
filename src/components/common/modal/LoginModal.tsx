@@ -8,12 +8,12 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 
 export default function LoginModal() {
-  const { isOpen, close } = useModalStore();
+  const { loginModalOpen, closeLoginModal } = useModalStore();
 
-  if (!isOpen) return null;
+  if (!loginModalOpen) return null;
 
   return (
-    <div className={style.overlay} onClick={close}>
+    <div className={style.overlay} onClick={closeLoginModal}>
       <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div>로그인이 필요한 서비스입니다</div>
 
@@ -24,9 +24,9 @@ export default function LoginModal() {
           width={200}
           height={50}
         />
-      </div>
-      <div onClick={close} className={style.close_button}>
-        <Close className={style.close} />
+        <div onClick={closeLoginModal} className={style.close_button}>
+          <Close className={style.close} />
+        </div>
       </div>
     </div>
   );

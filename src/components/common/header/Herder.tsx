@@ -10,7 +10,7 @@ import { useModalStore } from "@/lib/store/modalStore";
 
 export default function Header() {
   const { data: session } = useSession();
-  const { open } = useModalStore();
+  const { openLoginModal } = useModalStore();
 
   const memberName = session?.user?.name;
   console.log("🚨", session);
@@ -18,7 +18,7 @@ export default function Header() {
 
   const goToStorage = () => {
     if (!session) {
-      open();
+      openLoginModal();
     } else {
       if (!memberName) return;
       router.push("/storage");

@@ -1,13 +1,21 @@
 import { create } from 'zustand';
 
 type ModalStore = {
-  isOpen: boolean;
-  open: () => void;
-  close: () => void;
+  loginModalOpen: boolean;
+  profileModalOpen: boolean;
+  openLoginModal: () => void;
+  closeLoginModal: () => void;
+  openProfileModal: () => void;
+  closeProfileModal: () => void;
 };
 
 export const useModalStore = create<ModalStore>((set) => ({
-  isOpen: false,
-  open: () => set({ isOpen: true }),
-  close: () => set({ isOpen: false }),
+  loginModalOpen: false,
+  profileModalOpen: false,
+
+  openLoginModal: () => set({ loginModalOpen: true }),
+  closeLoginModal: () => set({ loginModalOpen: false }),
+
+  openProfileModal: () => set({ profileModalOpen: true }),
+  closeProfileModal: () => set({ profileModalOpen: false }),
 }));

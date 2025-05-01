@@ -25,7 +25,7 @@ export default function Desc({}) {
   const { memo, setMemo } = useMemberStore();
   const { cocktailDetail, setCocktailDetail } = useCocktailDetailStore();
   const { emojiList } = useEmojiStore();
-  const { open } = useModalStore();
+  const { openLoginModal } = useModalStore();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const reviewRef = useRef<HTMLTextAreaElement>(null);
@@ -51,7 +51,7 @@ export default function Desc({}) {
 
   const handleRating = async (index: number) => {
     if (!session) {
-      open();
+      openLoginModal();
       return;
     }
     const newRating = rating === index + 1 ? 0 : index + 1;
@@ -89,7 +89,7 @@ export default function Desc({}) {
       return;
     }
     if (!session) {
-      open();
+      openLoginModal();
       return;
     }
     try {
@@ -115,7 +115,7 @@ export default function Desc({}) {
  */
   const handleDeleteReview = async () => {
     if (!session) {
-      open();
+      openLoginModal();
     }
     const confirmDelete = confirm("정말 리뷰를 삭제하시겠어요?");
     if (!confirmDelete) return;

@@ -4,6 +4,8 @@ import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useMemo, useState } from "react";
+import { useModalStore } from "@/lib/store/modalStore";
+import { useSession } from "next-auth/react";
 
 type TCardProps = {
   id: string;
@@ -16,12 +18,17 @@ type TCardProps = {
 export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();
   const [isLoading, setIsLoading] = useState(false);
-
+  const { data: session } = useSession();
+  const { openLoginModal, closeLoginModal } = useModalStore();
   const isClicked = useMemo(
     () => heart.some((item) => item.cocktail_id === id),
     [heart, id]
   );
   const onClickHeart = (id: string) => {
+    if (!session) {
+      openLoginModal();
+      return;
+    }
     if (isLoading) return;
     setIsLoading(true);
     try {

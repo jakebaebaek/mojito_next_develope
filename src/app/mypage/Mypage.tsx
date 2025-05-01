@@ -3,15 +3,18 @@ import style from "./Mypage.module.scss";
 import Person from "@public/Person.svg";
 import Setting from "@public/Setting.svg";
 import Logout from "@public/Logout.svg";
+import ProfileSettingModal from "@/components/common/modal/profileSetting";
 
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useMemberStore } from "@/lib/store/memberStore";
+import { useModalStore } from "@/lib/store/modalStore";
 import Link from "next/link";
 
 export default function Mypage() {
   const router = useRouter();
   const { heart, memo } = useMemberStore();
+  const { openProfileModal, closeProfileModal } = useModalStore();
 
   return (
     <div className={`${style.container}`}>
@@ -22,7 +25,7 @@ export default function Mypage() {
         <h1>Zl존일짱경호</h1>
       </div>
       <div className={`${style.mypage_buttons}`}>
-        <button className={`${style.button}`}>
+        <button className={`${style.button}`} onClick={openProfileModal}>
           <Setting className={`${style.svgIcon}`} />
           <h4> 프로필 수정 </h4>
         </button>
@@ -57,6 +60,7 @@ export default function Mypage() {
       <div className={`${style.delete_account}`}>
         <h4>회원탈퇴</h4>
       </div>
+      <ProfileSettingModal />
     </div>
   );
 }

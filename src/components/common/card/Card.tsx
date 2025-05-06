@@ -19,7 +19,7 @@ export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
-  const { openLoginModal, closeLoginModal } = useModalStore();
+  const { openLoginModal } = useModalStore();
   const isClicked = useMemo(
     () => heart.some((item) => item.cocktail_id === id),
     [heart, id]

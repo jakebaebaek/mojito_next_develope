@@ -1,13 +1,12 @@
-import { THeartItem } from "../types/THeart";
 
-export const postHeart = async (heartList: THeartItem[]) => {
+export const postNickname = async (nickname: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/heart`, {
+    const response = await fetch(`http://localhost:3000/api/nickname`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(heartList),
+      body: JSON.stringify({nickname}),
     });
     return response.json();
   } catch (error) {

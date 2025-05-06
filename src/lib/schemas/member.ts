@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const memberSchema = new mongoose.Schema(
   {
     email: {
@@ -16,6 +17,14 @@ const memberSchema = new mongoose.Schema(
     provider: {
       type: String,
       required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
     },
   },
   {

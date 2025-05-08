@@ -6,6 +6,7 @@ import { useMemberStore } from "@/lib/store/memberStore";
 import { useMemo, useState } from "react";
 import { useModalStore } from "@/lib/store/modalStore";
 import { useSession } from "next-auth/react";
+import { useLockButton } from "@/lib/hooks/useLockButton";
 
 type TCardProps = {
   id: string;
@@ -17,9 +18,9 @@ type TCardProps = {
 };
 export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();
-  const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const { openLoginModal } = useModalStore();
+  const { run } = useLockButton("heart");
   const isClicked = useMemo(
     () => heart.some((item) => item.cocktail_id === id),
     [heart, id]
@@ -29,18 +30,16 @@ export default function Card({ id, name, img_url }: TCardProps) {
       openLoginModal();
       return;
     }
-    if (isLoading) return;
-    setIsLoading(true);
-    try {
-      const updateHeart = isClicked
-        ? heart.filter((item) => item.cocktail_id != id)
-        : [...heart, { cocktail_id: id, addedAt: new Date().toISOString() }];
-      setHeart(updateHeart);
-    } catch (error) {
-      console.error("🚨 즐겨찾기 저장 실패", error);
-    } finally {
-      setIsLoading(false);
-    }
+    run(async () => {
+      try {
+        const updateHeart = isClicked
+          ? heart.filter((item) => item.cocktail_id != id)
+          : [...heart, { cocktail_id: id, addedAt: new Date().toISOString() }];
+        setHeart(updateHeart);
+      } catch (error) {
+        console.error("🚨 즐겨찾기 저장 실패", error);
+      }
+    });
   };
 
   return (

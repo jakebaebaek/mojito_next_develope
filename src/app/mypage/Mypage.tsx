@@ -6,22 +6,20 @@ import Logout from "@public/Logout.svg";
 import ProfileSettingModal from "@/components/common/modal/profileSettingModal";
 
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useModalStore } from "@/lib/store/modalStore";
 import { useUserStore } from "@/lib/store/userStore";
 import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useLockButton } from "@/lib/hooks/useLockButton";
 import Link from "next/link";
-import { set } from "mongoose";
 
 export default function Mypage() {
-  const router = useRouter();
   const { heart, memo } = useMemberStore();
   const { openProfileModal } = useModalStore();
   const { data: session } = useSession();
   const { nickname, setNickname } = useUserStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const { locked, run } = useLockButton("logout");
 
   useEffect(() => {
     if (session?.user?.nickname && nickname === "") {
@@ -29,6 +27,21 @@ export default function Mypage() {
     }
   }, [session]);
 
+  const handleLogout = async () => {
+    if (locked) return;
+    run(async () => {
+      try {
+        console.log("로그아웃 시도");
+        localStorage.removeItem("memberStore-storage");
+        localStorage.removeItem("userStore");
+        sessionStorage.removeItem("offset-storage");
+        signOut({ callbackUrl: "/" });
+      } catch (error) {
+        alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
+        console.error("🚨 로그아웃 실패", error);
+      }
+    });
+  };
   return (
     <div className={`${style.container}`}>
       <div>
@@ -43,25 +56,9 @@ export default function Mypage() {
           <h4> 프로필 수정 </h4>
         </button>
         <button
-          disabled={isLoading}
+          disabled={locked}
           className={`${style.button}`}
-          onClick={() => {
-            if (isLoading) return;
-            try {
-              console.log("로그아웃 클릭");
-              setIsLoading(true);
-              isLoading && alert("잠시만 기다려주세요.");
-              localStorage.removeItem("memberStore-storage");
-              localStorage.removeItem("userStore");
-              sessionStorage.removeItem("offset-storage");
-              signOut({ callbackUrl: "/" });
-              router.replace("/");
-            } catch (error) {
-              console.error("🚨 로그아웃 실패", error);
-            } finally {
-              setIsLoading(false);
-            }
-          }}
+          onClick={handleLogout}
         >
           <Logout className={`${style.svgIcon}`} />
           <h4> 로그아웃 </h4>

@@ -19,7 +19,7 @@ export default function ProfileSettingModal() {
   const { nickname, setNickname } = useUserStore();
 
   const buttonsaveNickname = (name: string) => {
-    if (name.length < 1) {
+    if (name.length < 1 || name.trim() === "") {
       alert("닉네임을 입력해주세요.");
       return;
     }
@@ -39,7 +39,7 @@ export default function ProfileSettingModal() {
   if (!profileModalOpen) return null;
 
   return (
-    <div className={style.overlay} onClick={closeProfileModal}>
+    <div className={style.overlay}>
       <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div className={`${style.modal_inner}`}>
           <div className={`${style.modal_upper}`}>
@@ -47,9 +47,7 @@ export default function ProfileSettingModal() {
               text="완료"
               color="orange"
               className={`${style.confirm_button}`}
-              onClick={() => {
-                console.log("이미지 변경 클릭");
-              }}
+              onClick={closeProfileModal}
             ></Button>
 
             <h1 className={`${style.profile_title}`}>프로필 설정</h1>

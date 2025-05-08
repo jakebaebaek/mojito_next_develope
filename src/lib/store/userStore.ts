@@ -1,4 +1,3 @@
-// lib/store/userStore.ts
 import { create } from "zustand";
 import { postNickname } from "@/lib/fetchs/fetchNickname";
 import { persist } from "zustand/middleware";

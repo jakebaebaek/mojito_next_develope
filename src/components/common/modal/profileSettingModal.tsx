@@ -1,6 +1,6 @@
 "use client";
 
-import style from "./profileSettingModal.module.scss";
+import style from "./ProfileSettingModal.module.scss";
 import Button from "../button/Button";
 import Person from "@public/Person.svg";
 

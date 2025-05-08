@@ -3,7 +3,8 @@ import style from "./Mypage.module.scss";
 import Person from "@public/Person.svg";
 import Setting from "@public/Setting.svg";
 import Logout from "@public/Logout.svg";
-import ProfileSettingModal from "@/components/common/modal/profileSettingModal";
+import ProfileSettingModal from "@/components/common/modal/ProfileSettingModal";
+import DeleteAccountConfirmModal from "@/components/common/modal/DeleteAccountConfirmModal";
 
 import { signOut } from "next-auth/react";
 import { useMemberStore } from "@/lib/store/memberStore";
@@ -16,7 +17,7 @@ import Link from "next/link";
 
 export default function Mypage() {
   const { heart, memo } = useMemberStore();
-  const { openProfileModal } = useModalStore();
+  const { openProfileModal, openDeleteAccountModal } = useModalStore();
   const { data: session } = useSession();
   const { nickname, setNickname } = useUserStore();
   const { locked, run } = useLockButton("logout");
@@ -79,10 +80,14 @@ export default function Mypage() {
           </div>
         </Link>
       </div>
-      <div className={`${style.delete_account}`}>
+      <div
+        className={`${style.delete_account}`}
+        onClick={openDeleteAccountModal}
+      >
         <h4>회원탈퇴</h4>
       </div>
       <ProfileSettingModal />
+      <DeleteAccountConfirmModal />
     </div>
   );
 }

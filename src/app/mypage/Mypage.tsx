@@ -3,26 +3,53 @@ import style from "./Mypage.module.scss";
 import Person from "@public/Person.svg";
 import Setting from "@public/Setting.svg";
 import Logout from "@public/Logout.svg";
-import ProfileSettingModal from "@/components/common/modal/profileSetting";
+import ProfileSettingModal from "@/components/common/modal/ProfileSettingModal";
+import DeleteAccountConfirmModal from "@/components/common/modal/DeleteAccountConfirmModal";
 
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useModalStore } from "@/lib/store/modalStore";
+import { useUserStore } from "@/lib/store/userStore";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useLockButton } from "@/lib/hooks/useLockButton";
 import Link from "next/link";
 
 export default function Mypage() {
-  const router = useRouter();
   const { heart, memo } = useMemberStore();
-  const { openProfileModal, closeProfileModal } = useModalStore();
+  const { openProfileModal, openDeleteAccountModal } = useModalStore();
+  const { data: session } = useSession();
+  const { nickname, setNickname } = useUserStore();
+  const { locked, run } = useLockButton("logout");
 
+  useEffect(() => {
+    if (session?.user?.nickname && nickname === "") {
+      setNickname(session.user.nickname);
+    }
+  }, [session]);
+
+  const handleLogout = async () => {
+    if (locked) return;
+    run(async () => {
+      try {
+        console.log("로그아웃 시도");
+        localStorage.removeItem("memberStore-storage");
+        localStorage.removeItem("userStore");
+        sessionStorage.removeItem("offset-storage");
+        signOut({ callbackUrl: "/" });
+      } catch (error) {
+        alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
+        console.error("🚨 로그아웃 실패", error);
+      }
+    });
+  };
   return (
     <div className={`${style.container}`}>
       <div>
         <Person className={`${style.profile_image}`} />
       </div>
       <div className={`${style.nickname}`}>
-        <h1>Zl존일짱경호</h1>
+        <h1>{nickname}</h1>
       </div>
       <div className={`${style.mypage_buttons}`}>
         <button className={`${style.button}`} onClick={openProfileModal}>
@@ -30,19 +57,15 @@ export default function Mypage() {
           <h4> 프로필 수정 </h4>
         </button>
         <button
+          disabled={locked}
           className={`${style.button}`}
-          onClick={() => {
-            localStorage.removeItem("memberStore-storage");
-            sessionStorage.removeItem("offset-storage");
-
-            signOut({ callbackUrl: "/" });
-            router.replace("/");
-          }}
+          onClick={handleLogout}
         >
           <Logout className={`${style.svgIcon}`} />
           <h4> 로그아웃 </h4>
         </button>
       </div>
+
       <div className={`${style.cocktail_menu}`}>
         <Link href="/storage?tab=recorded">
           <div className={`${style.recorded_cocktail}`}>
@@ -57,10 +80,14 @@ export default function Mypage() {
           </div>
         </Link>
       </div>
-      <div className={`${style.delete_account}`}>
+      <div
+        className={`${style.delete_account}`}
+        onClick={openDeleteAccountModal}
+      >
         <h4>회원탈퇴</h4>
       </div>
       <ProfileSettingModal />
+      <DeleteAccountConfirmModal />
     </div>
   );
 }

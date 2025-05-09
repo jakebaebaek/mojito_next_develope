@@ -13,7 +13,6 @@ export default function Header() {
   const { openLoginModal } = useModalStore();
 
   const memberName = session?.user?.name;
-  console.log("🚨", session);
   const router = useRouter();
 
   const goToStorage = () => {

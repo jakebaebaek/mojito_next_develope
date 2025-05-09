@@ -15,7 +15,7 @@ export const useLockButton = (key: string) => {
         await fn();
       } finally {
         // 1초 대기
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         unlock(key);
       }
     },

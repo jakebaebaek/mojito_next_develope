@@ -80,7 +80,7 @@ const Storage = () => {
       return 0;
     });
   }, [cocktailCardList, filterOption]);
-
+  console.log(style);
   return (
     <div className={style.container}>
       {/* 탭 메뉴 */}
@@ -123,30 +123,38 @@ const Storage = () => {
 
       {/* 렌더링 영역 */}
       <div className={style.card_container}>
-        {activeTab === "recorded" && memoCocktailCardList
-          ? sortedMemoList.map((cocktail) => (
-              <MemoCard
-                key={cocktail._id}
-                id={cocktail._id}
-                name={cocktail.name.ko}
-                img_url={cocktail.img}
-                memo={
-                  memo.find((item) => item.cocktail_id === cocktail._id)
-                    ?.memo_txt
-                }
-                rating={
-                  memo.find((item) => item.cocktail_id === cocktail._id)?.rating
-                }
-              />
-            ))
-          : sortedMemoList.map((cocktail) => (
-              <Card
-                key={cocktail._id}
-                id={cocktail._id}
-                name={cocktail.name}
-                img_url={cocktail.img}
-              />
-            ))}
+        {sortedMemoList.length === 0 ? (
+          <div className={`${style.empty_message}`}>
+            <h3>
+              저장된 칵테일이 없습니다. 칵테일마다 리뷰와 별점을 남겨주세요
+            </h3>
+          </div>
+        ) : // 필터링한 칵테일 카드들 렌더
+        activeTab === "recorded" && memoCocktailCardList ? (
+          sortedMemoList.map((cocktail) => (
+            <MemoCard
+              key={cocktail._id}
+              id={cocktail._id}
+              name={cocktail.name.ko}
+              img_url={cocktail.img}
+              memo={
+                memo.find((item) => item.cocktail_id === cocktail._id)?.memo_txt
+              }
+              rating={
+                memo.find((item) => item.cocktail_id === cocktail._id)?.rating
+              }
+            />
+          ))
+        ) : (
+          sortedMemoList.map((cocktail) => (
+            <Card
+              key={cocktail._id}
+              id={cocktail._id}
+              name={cocktail.name}
+              img_url={cocktail.img}
+            />
+          ))
+        )}
       </div>
     </div>
   );

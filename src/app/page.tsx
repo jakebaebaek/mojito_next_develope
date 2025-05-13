@@ -7,11 +7,7 @@ import { getEmoji } from "@/lib/fetchs/fetchEmoji";
 import EmojiClient from "@/components/render/EmojiClient";
 
 export default async function Home() {
-  const response25 = await getCocktail(25, 0);
-  const initialCocktails = response25.cocktails;
-  const totalCocktailCount = response25.totalCount;
   const emoji = await getEmoji();
-
   return (
     <>
       <Navigation />
@@ -19,10 +15,7 @@ export default async function Home() {
       <div className={`${style.main_page}`}>
         <Top100 />
         <div>
-          <FilterSection
-            initialCocktails={initialCocktails}
-            totalCocktailCount={totalCocktailCount}
-          />
+          <FilterSection />
         </div>
       </div>
     </>

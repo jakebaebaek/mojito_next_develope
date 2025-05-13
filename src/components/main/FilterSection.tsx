@@ -5,49 +5,32 @@ import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 import { TCocktail } from "@/lib/types/TCocktail";
 import { useOffsetStore } from "@/lib/store/offsetStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
+import { useSmartScrollRestore } from "@/lib/hooks/useScrollRestoration";
 
 import style from "./FilterSection.module.scss";
 import Filter from "./filter/Filter";
 import CocktailList from "@/components/main/cocktailList/CocktailList";
 
-interface FilterSectionProps {
-  initialCocktails: TCocktail[];
-  totalCocktailCount: number;
-}
-
-export default function FilterSection({
-  initialCocktails,
-  totalCocktailCount,
-}: FilterSectionProps) {
-  const { cocktailList, fetchAllCocktails } = useCocktailStore();
-  const [localCocktailList, setLocalCocktailList] =
-    useState<TCocktail[]>(initialCocktails);
+export default function FilterSection() {
+  const { cocktailList, totalCount } = useCocktailStore();
+  const [localCocktailList, setLocalCocktailList] = useState<TCocktail[]>([]);
   const { offset, setOffset } = useOffsetStore();
   const isLoading = useRef(false);
-  const totalCount = totalCocktailCount;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetchAllCocktails();
-    };
+  // useSmartScrollRestore();
 
-    if (cocktailList.length === 0) {
-      fetchData();
-    }
-  }, [fetchAllCocktails, cocktailList.length]);
-
-  useEffect(() => {
-    console.log("모든 칵테일 데이터 들어왔다잉", cocktailList.length);
-  }, [cocktailList]);
+  //스크롤 바가 아래로 내려가면 실행될 loadMore 함수, 이 메서드는 cocktailList 컴포넌트로 넘겨준다.
   const loadMore = useCallback(async () => {
+    //isLoading.current가 true면 return
     if (isLoading.current) return;
     isLoading.current = true;
 
+    //칵테일이 모두 렌더링 된다면 isLoading.current를 false로 바꿔주어 loadMore가 실행되지 않도록 한다.
     if (localCocktailList.length >= totalCount) {
       isLoading.current = false;
       return;
     }
-
+    // 모든 칵테일 데이터가 들어왔다면 zustand 칵테일 데이터 기반으로 렌더링한다.
     if (cocktailList.length != 0) {
       setLocalCocktailList((prev) => {
         return [...prev, ...cocktailList.slice(prev.length, prev.length + 25)];
@@ -55,6 +38,7 @@ export default function FilterSection({
       setOffset(offset + 25);
       console.log("이건 모든 칵테일 데이터로부터 옴😍😍😎😎😋");
     } else {
+      //칵테일 데이터가 없을 때 db에서 25개씩 불러온다.
       const newCocktails = await getCocktail(25, offset);
       setLocalCocktailList((prev) => {
         return [...prev, ...newCocktails.cocktails];
@@ -66,18 +50,16 @@ export default function FilterSection({
     isLoading.current = false;
   }, [offset, localCocktailList.length, totalCount, setOffset, cocktailList]);
 
+  // 이미 렌더링된 칵테일 카드가 있다면, sessionStorage에서 offset 값을 가져와서 그 값만큼 칵테일을 불러온다.
   useEffect(() => {
     const storedOffset = sessionStorage.getItem("offset-storage");
+    console.log("세션 스토리지에서 가져온 오프셋 값 : ", storedOffset);
 
-    const fetchInitialCocktails = async (offsetValue: number) => {
-      const newCocktails = await getCocktail(offsetValue, 0);
-      console.log(
-        "가져온 칵테일 카드 개수 : ",
-        newCocktails.cocktails.length,
-        "토탈카운트 :",
-        newCocktails.totalCount
-      );
-      setLocalCocktailList(newCocktails.cocktails);
+    const restoreVisibleCocktails = async (offsetValue: number) => {
+      const newCocktails = cocktailList.slice(0, offsetValue);
+      setLocalCocktailList(() => {
+        return [...newCocktails];
+      });
       isLoading.current = false;
     };
 
@@ -86,15 +68,19 @@ export default function FilterSection({
         const parsedOffset = JSON.parse(storedOffset);
         const offsetValue = parsedOffset?.state?.offset || 0;
         console.log("파스드 오프셋", parsedOffset, "오프셋 값", offsetValue);
-        fetchInitialCocktails(offsetValue);
       } catch (error) {
         console.error(
           "SessionStorage에서 offset 값을 가져오는 중 오류 발생 🚑",
           error
         );
         isLoading.current = false;
+      } finally {
+        // sessionStorage에서 가져온 offset 값으로 칵테일을 불러온다.
+        restoreVisibleCocktails(offset);
       }
     } else {
+      const initialCocktails = cocktailList.slice(0, 25);
+      window.scrollTo(0, 0);
       setLocalCocktailList(initialCocktails);
       isLoading.current = false;
     }

@@ -5,7 +5,6 @@ import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 import { TCocktail } from "@/lib/types/TCocktail";
 import { useOffsetStore } from "@/lib/store/offsetStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
-import { useSmartScrollRestore } from "@/lib/hooks/useScrollRestoration";
 
 import style from "./FilterSection.module.scss";
 import Filter from "./filter/Filter";
@@ -16,8 +15,6 @@ export default function FilterSection() {
   const [localCocktailList, setLocalCocktailList] = useState<TCocktail[]>([]);
   const { offset, setOffset } = useOffsetStore();
   const isLoading = useRef(false);
-
-  // useSmartScrollRestore();
 
   //스크롤 바가 아래로 내려가면 실행될 loadMore 함수, 이 메서드는 cocktailList 컴포넌트로 넘겨준다.
   const loadMore = useCallback(async () => {

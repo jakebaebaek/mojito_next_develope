@@ -22,7 +22,7 @@ export const useCocktailStore = create<TCocktailStore>((set, get) => ({
   hashtagCocktails: [],
   filterdCocktailList: [],
   selectedFilter: {},
-
+  totalCount: 0,
   fetchAllCocktails: async () => {
     const { cocktailList } = get();
     if (cocktailList.length > 0) return;

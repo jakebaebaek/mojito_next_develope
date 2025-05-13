@@ -20,7 +20,6 @@ const Storage = () => {
   const [activeTab, setActiveTab] = useState<string>(defaultTab);
 
   const handleFilterChange = (value: string) => {
-    console.log("Selected Filter:", value);
     setFilterOption(value);
   };
 
@@ -40,9 +39,6 @@ const Storage = () => {
         : favoriteCocktailCardList,
     [activeTab, memo, heart, cocktailList]
   );
-  useEffect(() => {
-    console.log("칵테일 정렬 리스트 확인용", sortedMemoList);
-  }, [filterOption, activeTab]);
 
   // 최신순 칵테일 카드 배열
   const sortedMemoList = useMemo(() => {
@@ -80,7 +76,6 @@ const Storage = () => {
       return 0;
     });
   }, [cocktailCardList, filterOption]);
-  console.log(style);
   return (
     <div className={style.container}>
       {/* 탭 메뉴 */}

@@ -11,6 +11,7 @@ import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 import style from "./Find.module.scss";
 import FindSearchBar from "@/components/find_search_bar/FindSearchBar";
 import CocktailList from "@/components/main/cocktailList/CocktailList";
+import Navigation from "@/components/common/navigation/Navigation";
 
 type FindProps = {
   hashtagList: THashtag[];
@@ -72,6 +73,7 @@ export default function FilterWrapper() {
 
   return (
     <div className={`${style.body}`}>
+      <Navigation />
       <FindSearchBar
         hashtagList={hashtags}
         onInputChange={setInputValue}

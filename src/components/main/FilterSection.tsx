@@ -5,6 +5,7 @@ import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 import { TCocktail } from "@/lib/types/TCocktail";
 import { useOffsetStore } from "@/lib/store/offsetStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
+import { useSmartScrollRestore } from "@/lib/hooks/useScrollRestoration";
 
 import style from "./FilterSection.module.scss";
 import Filter from "./filter/Filter";
@@ -47,7 +48,9 @@ export default function FilterSection() {
     isLoading.current = false;
   }, [offset, localCocktailList.length, totalCount, setOffset, cocktailList]);
 
+  // 이미 렌더링된 칵테일 카드가 있다면, sessionStorage에서 offset 값을 가져와서 그 값만큼 칵테일을 불러온다.
   useEffect(() => {
+<<<<<<< HEAD
     const handleScroll = () => {
       sessionStorage.setItem("scrollY", String(window.scrollY));
       sessionStorage.setItem("offset", JSON.stringify(offset));
@@ -85,6 +88,39 @@ export default function FilterSection() {
     if (performance.navigation.type !== 2) {
       sessionStorage.removeItem("offset");
       sessionStorage.removeItem("scrollY");
+=======
+    const storedOffset = sessionStorage.getItem("offset-storage");
+    console.log("세션 스토리지에서 가져온 오프셋 값 : ", storedOffset);
+
+    const restoreVisibleCocktails = async (offsetValue: number) => {
+      const newCocktails = cocktailList.slice(0, offsetValue);
+      setLocalCocktailList(() => {
+        return [...newCocktails];
+      });
+      isLoading.current = false;
+    };
+
+    if (storedOffset) {
+      try {
+        const parsedOffset = JSON.parse(storedOffset);
+        const offsetValue = parsedOffset?.state?.offset || 0;
+        console.log("파스드 오프셋", parsedOffset, "오프셋 값", offsetValue);
+      } catch (error) {
+        console.error(
+          "SessionStorage에서 offset 값을 가져오는 중 오류 발생 🚑",
+          error
+        );
+        isLoading.current = false;
+      } finally {
+        // sessionStorage에서 가져온 offset 값으로 칵테일을 불러온다.
+        restoreVisibleCocktails(offset);
+      }
+    } else {
+      const initialCocktails = cocktailList.slice(0, 25);
+      window.scrollTo(0, 0);
+      setLocalCocktailList(initialCocktails);
+      isLoading.current = false;
+>>>>>>> 4652e86 (🆕 [plus feat] SSR 을 포기하고 zustand 에 모든 칵테일 저장 및 렌더링)
     }
   }, []);
   if (isLoading.current) {

@@ -11,7 +11,7 @@ export default function EmojiClient({ emoji }: { emoji: TEmoji[] }) {
     setEmoji(emoji);
   }, [emoji]);
 
-  console.log("👽", emojiList);
+  // console.log("👽", emojiList);
 
   return null;
 }

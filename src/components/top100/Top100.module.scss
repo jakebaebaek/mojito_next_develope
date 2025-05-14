@@ -1,7 +1,6 @@
 @import "@/styles/theme";
 
 .top100_section {
-  // text-align: center;
   padding-bottom: 5rem;
   margin-top: 5rem;
   display: flex;
@@ -17,17 +16,17 @@
   }
 
   .slide_area {
-    margin-top: 5rem;
-    .cocktail_name {
-      font-size: 3rem;
-      font-weight: $regular;
-    }
-    .slide_wrap {
-      display: flex;
-      justify-content: center;
-    }
+    width: 100%;
+    height: 35rem;
+    justify-content: center;
+    margin-top: 10rem;
+    display: flex;
+    flex-direction: row;
+    gap: 10rem;
     .slide_btn {
       display: flex;
+      align-items: center;
+      cursor: pointer;
       .right_svg {
         transform: scaleX(-1);
       }
@@ -42,6 +41,39 @@
     font-weight: $bold;
     font-size: 1.8rem;
     padding: 1rem 0;
-    margin-top: 5rem;
   }
+}
+.slide_viewport {
+  position: relative;
+
+}
+.slide_inner {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  width: 70vw;
+  transition: transform 0.5s ease;
+}
+.active {
+  box-shadow: $shadow;
+  border-radius: 4rem;
+  color: $main-color;
+}
+.center_name_ko {
+  font-weight: $medium;
+  font-size: x-large;
+  position: relative;
+  justify-content: center;
+  text-align: center;
+}
+.center_name_en {
+  color: $gray-400;
+}
+.card {
+  outline: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  width: 28rem;
+  flex-shrink: 0;
+  padding: 1rem;
 }

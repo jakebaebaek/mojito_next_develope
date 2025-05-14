@@ -100,10 +100,14 @@ export default function FilterSection() {
             loadMore={loadMore}
             loading={isLoading.current}
           />
-          {localCocktailList.length >= totalCount && (
-            <p className={`${style.nomore_data}`}>
-              🍹모든 칵테일을 불러왔습니다🍹
-            </p>
+          {localCocktailList.length === 0 ? (
+            <p className={`${style.nomore_data}`}>🍹잠시만 기다려주세요.🍹</p>
+          ) : (
+            localCocktailList.length >= totalCount && (
+              <p className={`${style.nomore_data}`}>
+                🍹모든 칵테일을 불러왔습니다🍹
+              </p>
+            )
           )}
         </div>
       </div>

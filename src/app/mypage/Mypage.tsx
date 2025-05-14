@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useLockButton } from "@/lib/hooks/useLockButton";
 import Link from "next/link";
+import Navigation from "@/components/common/navigation/Navigation";
 
 export default function Mypage() {
   const { heart, memo } = useMemberStore();
@@ -45,6 +46,7 @@ export default function Mypage() {
   };
   return (
     <div className={`${style.container}`}>
+      <Navigation />
       <div>
         <Person className={`${style.profile_image}`} />
       </div>

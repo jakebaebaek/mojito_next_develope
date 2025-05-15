@@ -1,13 +1,11 @@
 @import "@/styles/theme";
 
 .top100_section {
-  padding-bottom: 5rem;
   margin-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-
   .title {
     font-size: 5.5rem;
     color: $main-color;
@@ -16,13 +14,13 @@
   }
 
   .slide_area {
-    width: 100%;
-    height: 35rem;
+    width: 85%;
+    height: 40rem;
     justify-content: center;
-    margin-top: 10rem;
+    margin-top: 7rem;
     display: flex;
     flex-direction: row;
-    gap: 10rem;
+    gap: 5rem;
     .slide_btn {
       display: flex;
       align-items: center;
@@ -34,6 +32,9 @@
   }
 
   .find_top100_btn {
+    outline: none;
+    user-select: none;
+    -webkit-user-drag: none;
     border-radius: 2rem;
     box-shadow: $shadow;
     height: 5rem;
@@ -41,39 +42,75 @@
     font-weight: $bold;
     font-size: 1.8rem;
     padding: 1rem 0;
+    position: relative;
+    margin-top: 20rem;
+    cursor: pointer;
+    &:hover {
+      background-color: $gray-100;
+      transition: 0.2s ease-in;
+    }
   }
 }
-.slide_viewport {
-  position: relative;
-
+.top100_swiper {
+  width: 70vw; 
+  max-width: 70vw;
+  height: 48rem;
+  overflow: visible;
 }
-.slide_inner {
-  justify-content: center;
+.slider_wrap {
+  padding: 10rem;
+}
+.swiper-slide {
   display: flex;
-  flex-direction: row;
-  width: 70vw;
-  transition: transform 0.5s ease;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  :global(.swiper-wrapper) {
+    overflow: visible !important;
+  }
+  // width 주지 마세요 ❌
 }
 .active {
-  box-shadow: $shadow;
-  border-radius: 4rem;
-  color: $main-color;
+  .cocktailBox {
+    padding: 1rem;
+    position: absolute;
+    top: 2rem;
+    box-shadow: $shadow;
+    border-radius: 3rem;
+  }
+  img {
+    position: relative;
+    transform: scale(1.15); 
+    transition: transform 0.3s ease;
+  }
+  p {
+    transition: color 0.3s ease;
+    color: $main-color;
+    font-size: medium;
+  }
 }
 .center_name_ko {
   font-weight: $medium;
-  font-size: x-large;
+  font-size: small;
   position: relative;
   justify-content: center;
   text-align: center;
-}
-.center_name_en {
-  color: $gray-400;
-}
-.card {
   outline: none;
   user-select: none;
   -webkit-user-drag: none;
-  width: 28rem;
+
+}
+.center_name_en {
+  color: $gray-400;
+  outline: none;
+  user-select: none;
+  -webkit-user-drag: none;
+
+}
+.cocktailImage {
+  outline: none;
+  user-select: none;
+  -webkit-user-drag: none;
   flex-shrink: 0;
   padding: 1rem;
 }

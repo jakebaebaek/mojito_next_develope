@@ -6,7 +6,7 @@ import style from "./Top100.module.scss";
 import LeftSlide from "@public/LeftSlide.svg";
 import RightSlide from "@public/LeftSlide.svg";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { TCocktail } from "@/lib/types/TCocktail";
 
@@ -17,18 +17,22 @@ export default function Top100() {
 
   // ✅ 한 번만 실행되는 랜덤 칵테일 저장
   const randomCocktailsRef = useRef<TCocktail[]>([]);
+
   if (randomCocktailsRef.current.length === 0 && cocktailList.length > 0) {
+    const top100Cocktails = cocktailList.filter(
+      (item) => item.hashtag?.length !== 0
+    );
+    console.log("해시태그 있는거", top100Cocktails);
     const indexes = Array.from(
       new Set(
-        Array.from({ length: 20 }, () =>
-          Math.floor(Math.random() * cocktailList.length)
+        Array.from({ length: 15 }, () =>
+          Math.floor(Math.random() * top100Cocktails.length)
         )
       )
     )
-      .filter((i) => i < cocktailList.length)
+      .filter((i) => i < top100Cocktails.length)
       .slice(0, 10);
-
-    randomCocktailsRef.current = indexes.map((i) => cocktailList[i]);
+    randomCocktailsRef.current = indexes.map((i) => top100Cocktails[i]);
   }
 
   const [startIndex, setStartIndex] = useState(0);

@@ -15,12 +15,12 @@
 
   .slide_area {
     width: 85%;
-    height: 40rem;
+    height: 30rem;
     justify-content: center;
     margin-top: 7rem;
     display: flex;
     flex-direction: row;
-    gap: 5rem;
+    gap: 1rem;
     .slide_btn {
       display: flex;
       align-items: center;
@@ -59,34 +59,56 @@
 }
 .slider_wrap {
   padding: 10rem;
+  cursor: pointer;
 }
 .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  :global(.swiper-wrapper) {
-    overflow: visible !important;
-  }
   // width 주지 마세요 ❌
 }
 .active {
   .cocktailBox {
-    padding: 1rem;
+    padding: 1.5rem;
     position: absolute;
     top: 2rem;
+    left: 1rem;
     box-shadow: $shadow;
     border-radius: 3rem;
+    overflow: hidden;
   }
   img {
     position: relative;
     transform: scale(1.15); 
     transition: transform 0.3s ease;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.3);
+    }
   }
   p {
     transition: color 0.3s ease;
     color: $main-color;
     font-size: medium;
+  }
+}
+.non_active {
+  cursor: pointer;
+  .cocktailBox {
+    &:hover {
+      box-shadow: $shadow;
+      border-radius: 3rem;
+      overflow: hidden;
+      img {
+        transform: scale(1.15); 
+        transition: transform 0.3s ease;
+      }
+    }
+    padding: 1.5rem;
+    position: absolute;
+    top: 2rem;
+    left: 1rem;
   }
 }
 .center_name_ko {

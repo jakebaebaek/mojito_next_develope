@@ -1,6 +1,6 @@
 import connectDB from "@/lib/db";
 import { Hashtags } from "@/lib/schemas/hashtags";
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {

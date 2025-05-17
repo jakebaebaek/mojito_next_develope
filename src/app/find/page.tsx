@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect, useRef, useCallback } from "react";
 import { getHashtags } from "@/lib/fetchs/fetchHashtags";
 import { THashtag } from "@/lib/types/THashtag";

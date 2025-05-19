@@ -1,29 +1,31 @@
 "use client";
-import style from "./Find.module.scss";
+import style from "./FindSearchBar.module.scss";
 import SearchIcon from "@public/Search.svg";
-import CocktailList from "@/components/main/cocktailList/CocktailList";
-import { TCocktail } from "@/lib/types/TCocktail";
 import { THashtag } from "@/lib/types/THashtag";
 
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { useEmojiStore } from "@/lib/store/emojiStore";
-import { useCocktailStore } from "@/lib/store/cocktailStore";
 
 type FindProps = {
   hashtagList: THashtag[];
+  onInputChange: (value: string) => void;
+  onSelectChange: (value: string) => void;
+  className: string;
 };
 
-const Find = (hashtagList: FindProps) => {
+const FindSearchBar = ({
+  hashtagList,
+  onInputChange,
+  onSelectChange,
+  className,
+}: FindProps) => {
   const searchParams = useSearchParams();
   const linkTop100 = searchParams.get("linkTop100");
   const { emojiList } = useEmojiStore();
-  const { cocktailList, hashtagCocktails } = useCocktailStore();
-  const [hashArray, setHashArray] = useState(hashtagList.hashtagList);
   const getHashElements =
     typeof document !== "undefined" ? document.getElementsByName("check") : [];
 
-  console.log(hashArray);
   function top100Check() {
     if (linkTop100 === "1") {
       getHashElements[0]?.click();
@@ -33,7 +35,6 @@ const Find = (hashtagList: FindProps) => {
   useEffect(() => {
     top100Check();
   }, [linkTop100]);
-  console.log("😉😉😉😉", emojiList);
   const getHash = Array.from(getHashElements) as HTMLInputElement[];
   const hashTagTrueFalseArray = getHash.map((val) => val.checked);
 
@@ -50,16 +51,12 @@ const Find = (hashtagList: FindProps) => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {};
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    console.log("onsubmit event");
-  };
-
-  const [selectValue, setSelectValue] = useState("name");
-  const selectOnChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectValue(event.target.value);
+    const searchText = event.target;
+    event.preventDefault();
   };
 
   return (
-    <div className={style.Find}>
+    <div className={`${style.Find} ${className}`}>
       {/* 상단 */}
       <div>
         {/* 검색창 */}
@@ -70,7 +67,7 @@ const Find = (hashtagList: FindProps) => {
               <div className="select">
                 <select
                   onChange={(e) => {
-                    setSelectValue(e.target.value);
+                    onSelectChange(e.target.value);
                     console.log(e.target.value);
                   }}
                 >
@@ -80,7 +77,10 @@ const Find = (hashtagList: FindProps) => {
               </div>
               <input
                 className={style.search_input}
-                onChange={(e) => setSearchText(e.target.value)}
+                onChange={(e) => {
+                  onInputChange(e.target.value), setSearchText(e.target.value);
+                }}
+                maxLength={20}
                 type="text"
                 value={searchText}
               />
@@ -93,7 +93,7 @@ const Find = (hashtagList: FindProps) => {
 
         {/* 해시태그 */}
         <div className={style.tags_box}>
-          {hashArray.map((hashtag) => (
+          {hashtagList.map((hashtag) => (
             <label key={hashtag._id}>
               <input
                 type="checkbox"
@@ -130,4 +130,4 @@ const Find = (hashtagList: FindProps) => {
   );
 };
 
-export default Find;
+export default FindSearchBar;

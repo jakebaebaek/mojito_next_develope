@@ -11,7 +11,7 @@ type TNavigation = {
   page?: "desc";
   cocktailId?: string;
 };
-export default function Navigation({ page, cocktailId }: TNavigation) {
+export default function Navigation({ page, cocktailId, ref }: TNavigation) {
   const { isClicked, onClickHeart } = useHeartToggle(cocktailId || "");
 
   const scrollUp = () => {
@@ -23,6 +23,15 @@ export default function Navigation({ page, cocktailId }: TNavigation) {
       top: document.documentElement.scrollHeight,
       behavior: "smooth",
     });
+  };
+
+  const scrollEdit = () => {
+    const textarea = document.querySelector(
+      "#review-textarea"
+    ) as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   };
 
   return (
@@ -43,7 +52,7 @@ export default function Navigation({ page, cocktailId }: TNavigation) {
                 }`}
               />
             </li>
-            <li className={`${style.edit_btn}`}>
+            <li className={`${style.edit_btn}`} onClick={scrollEdit}>
               <Edit className={`${style.edit_svg}`} />
             </li>
           </>

@@ -316,7 +316,7 @@ export default function Desc({}) {
             ))}
           </div>
           <div className={`${style.divider}`} />
-          <div className={`${style.reviewText}`}>
+          <div className={`${style.reviewText}`} id="review-textarea">
             <div className={style.reviewText}>
               {matchedMemo?.memo_txt && !isEditing ? (
                 <div>{matchedMemo.memo_txt}</div>

@@ -11,8 +11,6 @@ type TCocktailStore = {
   hashtagCocktails: TCocktail[];
   filterdCocktailList: TCocktail[];
   selectedFilter: TFilter;
-  totalCount: number;
-  hashtagCocktails: TCocktail[];
 
   fetchAllCocktails: () => Promise<void>;
   setFilter: () => void;
@@ -24,8 +22,6 @@ export const useCocktailStore = create<TCocktailStore>((set, get) => ({
   hashtagCocktails: [],
   filterdCocktailList: [],
   selectedFilter: {},
-  totalCount: 0,
-  hashtagCocktails: [],
 
   fetchAllCocktails: async () => {
     const { cocktailList } = get();

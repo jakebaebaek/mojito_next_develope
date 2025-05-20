@@ -12,7 +12,7 @@ import { filterList } from "@/lib/mokdata/filterList";
 export default function Filter() {
   //zustand 상태관리
   const { emojiList } = useEmojiStore();
-  console.log(emojiList);
+  // console.log(emojiList);
 
   return (
     <div className={`${style.filter_box}`}>
@@ -21,7 +21,7 @@ export default function Filter() {
         <h3>테이스팅 노트</h3>
         <div className={`${style.item_wrap}`}>
           {filterList.tasting.map((item) => (
-            <label>
+            <label key={item.name}>
               <input type="checkbox" />
               <div className={style.checkbox_content}>
                 <img
@@ -42,7 +42,7 @@ export default function Filter() {
         <h3>베이스</h3>
         <div className={`${style.item_wrap}`}>
           {filterList.base.map((item) => (
-            <label>
+            <label key={item.name}>
               <input type="checkbox" />
               <div className={style.checkbox_content}>
                 <img

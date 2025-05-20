@@ -25,7 +25,8 @@ export default function CocktailList({
   });
 
   useEffect(() => {
-    if (!observerRef.current) return;
+    const target = observerRef.current;
+    if (!target) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -33,18 +34,15 @@ export default function CocktailList({
           loadMore();
         }
       },
-      { threshold: 1.0 }
+      { threshold: 0.3 }
     );
 
-    observer.observe(observerRef.current);
+    observer.observe(target);
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
+      observer.unobserve(target);
     };
   }, [loading, loadMore]);
-
   return (
     <div className={style.cocktailList}>
       {cocktailList.map((cocktail) => (

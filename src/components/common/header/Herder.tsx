@@ -15,12 +15,20 @@ export default function Header() {
   const memberName = session?.user?.name;
   const router = useRouter();
 
-  const goToStorage = () => {
-    if (!session) {
-      openLoginModal();
+  const linkToMenu = (name: string) => {
+    if (name === "storage") {
+      if (!session) {
+        openLoginModal();
+      } else {
+        if (!memberName) return;
+        router.push(`/${name}`);
+      }
     } else {
-      if (!memberName) return;
-      router.push("/storage");
+      if (!session) {
+        console.log("로그인 해주세요");
+      }
+      console.log("검색이동");
+      router.push(`/${name}`);
     }
   };
 
@@ -34,13 +42,17 @@ export default function Header() {
             <div>모히또에서 몰디브 한 잔</div>
           </Link>
           <ul>
-            <Link href="/find">
-              <li className={`${style.search_btn}`}>
-                <Search className={`${style.search_svg}`} />
-                <div>칵테일 검색</div>
-              </li>
-            </Link>
-            <li className={`${style.storage_btn}`} onClick={goToStorage}>
+            <li
+              onClick={() => linkToMenu("find")}
+              className={`${style.search_btn}`}
+            >
+              <Search className={`${style.search_svg}`} />
+              <div>칵테일 검색</div>
+            </li>
+            <li
+              className={`${style.storage_btn}`}
+              onClick={() => linkToMenu("storage")}
+            >
               내 칵테일 창고
             </li>
           </ul>

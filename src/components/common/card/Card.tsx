@@ -2,11 +2,7 @@
 import Link from "next/link";
 import style from "./card.module.scss";
 import Heart from "@public/Heart.svg";
-import { useMemberStore } from "@/lib/store/memberStore";
-import { useMemo, useState } from "react";
-import { useModalStore } from "@/lib/store/modalStore";
-import { useSession } from "next-auth/react";
-import { useLockButton } from "@/lib/hooks/useLockButton";
+import { useHeartToggle } from "@/lib/hooks/useHeartToggle";
 
 type TCardProps = {
   id: string;
@@ -18,31 +14,7 @@ type TCardProps = {
   className?: string;
 };
 export default function Card({ id, name, img_url }: TCardProps) {
-  const { heart, setHeart } = useMemberStore();
-  const { data: session } = useSession();
-  const { openLoginModal } = useModalStore();
-  const { run } = useLockButton("heart");
-  const isClicked = useMemo(
-    () => heart.some((item) => item.cocktail_id === id),
-    [heart, id]
-  );
-  const onClickHeart = (id: string) => {
-    if (!session) {
-      openLoginModal();
-      return;
-    }
-    run(async () => {
-      try {
-        const updateHeart = isClicked
-          ? heart.filter((item) => item.cocktail_id != id)
-          : [...heart, { cocktail_id: id, addedAt: new Date().toISOString() }];
-        setHeart(updateHeart);
-      } catch (error) {
-        console.error("🚨 즐겨찾기 저장 실패", error);
-      }
-    });
-  };
-
+  const { isClicked, onClickHeart } = useHeartToggle(id);
   return (
     <>
       <div className={`${style.card}`}>

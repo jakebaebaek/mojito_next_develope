@@ -31,5 +31,14 @@
     path {
       stroke-width: 3;
     }
+
+    &.unClicked {
+      fill: white;
+    }
+
+    &.clicked {
+      fill: $main-color;
+      stroke: $main-color;
+    }
   }
 }

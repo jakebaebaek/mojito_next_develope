@@ -178,7 +178,7 @@ export default function Desc({}) {
 
   return (
     <div id="desc" className={style.container}>
-      <Navigation page="desc" />
+      <Navigation page="desc" cocktailId={id} />
       <div className={`${style.upper}`}>
         {/* 칵테일 이름 */}
         <div className={style.nametagBox}>

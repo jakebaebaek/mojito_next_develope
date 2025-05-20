@@ -15,6 +15,7 @@ type TCardProps = {
     en: string;
   };
   img_url?: string;
+  className?: string;
 };
 export default function Card({ id, name, img_url }: TCardProps) {
   const { heart, setHeart } = useMemberStore();

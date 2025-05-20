@@ -47,42 +47,46 @@ export default function FilterSection() {
     isLoading.current = false;
   }, [offset, localCocktailList.length, totalCount, setOffset, cocktailList]);
 
-  // 이미 렌더링된 칵테일 카드가 있다면, sessionStorage에서 offset 값을 가져와서 그 값만큼 칵테일을 불러온다.
   useEffect(() => {
-    const storedOffset = sessionStorage.getItem("offset-storage");
-    console.log("세션 스토리지에서 가져온 오프셋 값 : ", storedOffset);
-
-    const restoreVisibleCocktails = async (offsetValue: number) => {
-      const newCocktails = cocktailList.slice(0, offsetValue);
-      setLocalCocktailList(() => {
-        return [...newCocktails];
-      });
-      isLoading.current = false;
+    const handleScroll = () => {
+      sessionStorage.setItem("scrollY", String(window.scrollY));
+      sessionStorage.setItem("offset", JSON.stringify(offset));
     };
 
-    if (storedOffset) {
-      try {
-        const parsedOffset = JSON.parse(storedOffset);
-        const offsetValue = parsedOffset?.state?.offset || 0;
-        console.log("파스드 오프셋", parsedOffset, "오프셋 값", offsetValue);
-      } catch (error) {
-        console.error(
-          "SessionStorage에서 offset 값을 가져오는 중 오류 발생 🚑",
-          error
-        );
-        isLoading.current = false;
-      } finally {
-        // sessionStorage에서 가져온 offset 값으로 칵테일을 불러온다.
-        restoreVisibleCocktails(offset);
-      }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [offset]);
+
+  useEffect(() => {
+    const savedOffset = sessionStorage.getItem("offset");
+    const savedScrollY = sessionStorage.getItem("scrollY");
+
+    if (savedOffset) {
+      const parsedOffset = JSON.parse(savedOffset);
+      const restoredCocktails = cocktailList.slice(0, parsedOffset);
+      setLocalCocktailList(restoredCocktails);
+      setOffset(parsedOffset);
+
+      requestAnimationFrame(() => {
+        if (savedScrollY) {
+          window.scrollTo(0, parseInt(savedScrollY));
+        }
+      });
     } else {
-      const initialCocktails = cocktailList.slice(0, 25);
+      const initial = cocktailList.slice(0, 25);
+      setLocalCocktailList(initial);
+      setOffset(25);
       window.scrollTo(0, 0);
-      setLocalCocktailList(initialCocktails);
-      isLoading.current = false;
+    }
+
+    isLoading.current = false;
+  }, []);
+  useEffect(() => {
+    if (performance.navigation.type !== 2) {
+      sessionStorage.removeItem("offset");
+      sessionStorage.removeItem("scrollY");
     }
   }, []);
-
   if (isLoading.current) {
     return <div className={`${style.loading}`}>Loading...</div>;
   }
@@ -99,6 +103,8 @@ export default function FilterSection() {
             cocktailList={localCocktailList}
             loadMore={loadMore}
             loading={isLoading.current}
+            inputValue=""
+            selectValue=""
           />
           {localCocktailList.length === 0 ? (
             <p className={`${style.nomore_data}`}>🍹잠시만 기다려주세요.🍹</p>

@@ -9,16 +9,19 @@ interface CocktailListProps {
   cocktailList: TCocktail[];
   loadMore: () => Promise<void>;
   loading: boolean;
+  inputValue: string;
+  selectValue: string;
 }
 
 export default function CocktailList({
   cocktailList,
   loadMore,
   loading,
+  inputValue,
+  selectValue,
 }: CocktailListProps) {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const renderCount = useRef(0);
-
   useEffect(() => {
     renderCount.current += 1;
     console.log(`CocktailList 리렌더링 횟수: ${renderCount.current}`);
@@ -34,18 +37,28 @@ export default function CocktailList({
           loadMore();
         }
       },
-      { threshold: 0.3 }
+      { root: null, threshold: 0.3 }
     );
 
     observer.observe(target);
+    return () => observer.disconnect();
+  }, [loadMore, loading]);
 
-    return () => {
-      observer.unobserve(target);
-    };
-  }, [loading, loadMore]);
+  // 필터링 로직
+  const filteredCocktails = cocktailList.filter((item) => {
+    const nameMatch = item.name?.ko?.includes(inputValue);
+
+    const optionMatch = item.recipe?.ingredients.some(
+      (ingre) =>
+        ingre.ingredient.ko.includes(inputValue) ||
+        ingre.ingredient.en.includes(inputValue)
+    );
+
+    return selectValue === "name" ? nameMatch : optionMatch;
+  });
   return (
     <div className={style.cocktailList}>
-      {cocktailList.map((cocktail) => (
+      {filteredCocktails.map((cocktail) => (
         <Card
           key={cocktail._id}
           id={cocktail._id}
@@ -58,7 +71,6 @@ export default function CocktailList({
         ref={observerRef}
         style={{ height: "50px", background: "transparent" }}
       />
-      {loading && <p>Loading more...</p>}
     </div>
   );
 }

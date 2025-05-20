@@ -5,7 +5,6 @@ import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 import { TCocktail } from "@/lib/types/TCocktail";
 import { useOffsetStore } from "@/lib/store/offsetStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
-import { useSmartScrollRestore } from "@/lib/hooks/useScrollRestoration";
 
 import style from "./FilterSection.module.scss";
 import Filter from "./filter/Filter";
@@ -48,7 +47,6 @@ export default function FilterSection() {
     isLoading.current = false;
   }, [offset, localCocktailList.length, totalCount, setOffset, cocktailList]);
 
-  // 이미 렌더링된 칵테일 카드가 있다면, sessionStorage에서 offset 값을 가져와서 그 값만큼 칵테일을 불러온다.
   useEffect(() => {
     const handleScroll = () => {
       sessionStorage.setItem("scrollY", String(window.scrollY));

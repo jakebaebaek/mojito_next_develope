@@ -5,7 +5,7 @@
   display: grid;
   grid-template-rows: 250px;
   place-items: center;
-
+  margin-bottom: 6rem;
   // 검색창
   .search_space {
     margin-top: 5rem;
@@ -16,6 +16,7 @@
       font-size: 2rem;
       color: rgb(136, 136, 136);
       margin-bottom: 2rem;
+      user-select: none;
     }
   }
 
@@ -108,6 +109,12 @@
       background-color: #c8d4ff;
       border-radius: 4rem;
       padding: 4px 7px;
+      user-select: none;
+      cursor: pointer;
+      &:hover {
+        color: $gray-400;
+        transition: 0.1s ease-in;
+      }
     }
 
     .TOP {
@@ -125,7 +132,6 @@
     // 체크박스가 체크되면 스타일 변경
     .cBox {
       appearance: none;
-
       &:checked + .hashtag {
         background-color: #476df7;
         color: white;
@@ -137,14 +143,10 @@
       }
     }
   }
-
-  // 카드
-  .cardContainer {
-    margin-top: 70px;
-    width: 800px;
-    place-items: center;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
-  }
+.hashtagSearchGuide {
+  font-size: 2rem;
+  color: rgb(136, 136, 136);
+  margin-bottom: 2rem;
+  user-select: none;
+}
 }

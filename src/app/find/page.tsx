@@ -12,12 +12,7 @@ import FindSearchBar from "@/components/find_search_bar/FindSearchBar";
 import CocktailList from "@/components/main/cocktailList/CocktailList";
 import Navigation from "@/components/common/navigation/Navigation";
 
-type FindProps = {
-  hashtagList: THashtag[];
-  onInputChange: (value: string) => void;
-};
-
-export default function FilterWrapper() {
+export default function FindPage() {
   const { cocktailList, totalCount } = useCocktailStore();
   const [localCocktailList, setLocalCocktailList] = useState<TCocktail[]>([]);
   const { offset, setOffset } = useOffsetStore();
@@ -25,6 +20,7 @@ export default function FilterWrapper() {
   const [inputValue, setInputValue] = useState("");
   const [selectValue, setSelectValue] = useState("name");
   const [hashtags, setHashtags] = useState<THashtag[]>([]);
+  const [clickedHashtag, setClickedHashtag] = useState("");
 
   useEffect(() => {
     const fetchHashtags = async () => {
@@ -77,6 +73,7 @@ export default function FilterWrapper() {
         hashtagList={hashtags}
         onInputChange={setInputValue}
         onSelectChange={setSelectValue}
+        onClickedHashtag={setClickedHashtag}
         className={`${style.find_search_bar}`}
       />
       <CocktailList
@@ -85,6 +82,7 @@ export default function FilterWrapper() {
         loading={isLoading.current}
         inputValue={inputValue}
         selectValue={selectValue}
+        clickedHashtag={clickedHashtag}
       />
     </div>
   );

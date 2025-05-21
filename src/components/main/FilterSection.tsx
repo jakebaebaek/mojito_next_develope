@@ -105,6 +105,7 @@ export default function FilterSection() {
             loading={isLoading.current}
             inputValue=""
             selectValue=""
+            clickedHashtag=""
           />
           {localCocktailList.length === 0 ? (
             <p className={`${style.nomore_data}`}>🍹잠시만 기다려주세요.🍹</p>

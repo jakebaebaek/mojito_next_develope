@@ -15,7 +15,7 @@ declare module "next-auth" {
   }
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     KakaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID || "",
@@ -38,7 +38,9 @@ export const authOptions: NextAuthOptions = {
           if (member) {
             token.id = member._id;
             token.nickname = member.nickname;
-            token.memberStore = memberStore ? JSON.parse(JSON.stringify(memberStore)) : null; // JSON 변환 추가
+            token.memberStore = memberStore
+              ? JSON.parse(JSON.stringify(memberStore))
+              : null; // JSON 변환 추가
             token.firstLogin = false;
           }
         } catch (error) {
@@ -46,7 +48,10 @@ export const authOptions: NextAuthOptions = {
         }
       }
 
-      if (trigger === "update" && session?.user.firstLogin !== token.firstLogin) {
+      if (
+        trigger === "update" &&
+        session?.user.firstLogin !== token.firstLogin
+      ) {
         token.firstLogin = session.user.firstLogin;
       }
       return token;

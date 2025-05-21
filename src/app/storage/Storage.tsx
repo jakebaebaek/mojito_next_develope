@@ -8,6 +8,7 @@ import DropdownArrow from "@public/DropdownArrow.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { useSearchParams, useRouter } from "next/navigation";
+import Navigation from "@/components/common/navigation/Navigation";
 
 const Storage = () => {
   const router = useRouter();
@@ -78,6 +79,7 @@ const Storage = () => {
   }, [cocktailCardList, filterOption]);
   return (
     <div className={style.container}>
+      <Navigation />
       {/* 탭 메뉴 */}
       <div className={style.storage_menu}>
         <div

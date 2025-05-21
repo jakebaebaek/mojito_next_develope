@@ -1,18 +1,22 @@
 "use client";
 
 import style from "./Filter.module.scss";
-import Card from "../../common/card/Card";
 import ReturnArrow from "@public/ReturnArrow.svg";
 import Button from "../../common/button/Button";
 import RangeSlider from "@/components/main/slider/RangeSlider";
 
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { filterList } from "@/lib/mokdata/filterList";
+import { useCocktailStore } from "@/lib/store/cocktailStore";
 
 export default function Filter() {
   //zustand 상태관리
   const { emojiList } = useEmojiStore();
-  // console.log(emojiList);
+  const { setFilter } = useCocktailStore();
+
+  const onClickSearch = () => {
+    console.log("🥰버튼클릭");
+  };
 
   return (
     <div className={`${style.filter_box}`}>
@@ -79,6 +83,7 @@ export default function Filter() {
           className={`${style.search_btn}`}
           text="검색"
           color="orange"
+          onClick={onClickSearch}
         ></Button>
         <div className={`${style.return_btn}`}>
           <ReturnArrow className={`${style.return_svg}`} />

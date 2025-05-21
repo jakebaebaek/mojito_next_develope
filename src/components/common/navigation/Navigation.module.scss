@@ -2,7 +2,6 @@
 
 .navigation {
   width: 7rem;
-  height: 21.8rem;
   background-color: white;
   box-shadow: $shadow;
   position: fixed;
@@ -31,6 +30,15 @@
 
     path {
       stroke-width: 3;
+    }
+
+    &.unClicked {
+      fill: white;
+    }
+
+    &.clicked {
+      fill: $main-color;
+      stroke: $main-color;
     }
   }
 }

@@ -178,7 +178,7 @@ export default function Desc({}) {
 
   return (
     <div id="desc" className={style.container}>
-      <Navigation />
+      <Navigation page="desc" cocktailId={id} />
       <div className={`${style.upper}`}>
         {/* 칵테일 이름 */}
         <div className={style.nametagBox}>
@@ -316,7 +316,7 @@ export default function Desc({}) {
             ))}
           </div>
           <div className={`${style.divider}`} />
-          <div className={`${style.reviewText}`}>
+          <div className={`${style.reviewText}`} id="review-textarea">
             <div className={style.reviewText}>
               {matchedMemo?.memo_txt && !isEditing ? (
                 <div>{matchedMemo.memo_txt}</div>

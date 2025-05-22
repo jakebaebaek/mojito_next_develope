@@ -6,13 +6,13 @@ import { THashtag } from "@/lib/types/THashtag";
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { useEmojiStore } from "@/lib/store/emojiStore";
-import { Value } from "sass";
 
 type FindProps = {
   hashtagList: THashtag[];
   onInputChange: (value: string) => void;
   onSelectChange: (value: string) => void;
   onClickedHashtag: (value: string) => void;
+  clickedHashtag: string;
   className: string;
 };
 
@@ -21,6 +21,7 @@ const FindSearchBar = ({
   onInputChange,
   onSelectChange,
   onClickedHashtag,
+  clickedHashtag,
   className,
 }: FindProps) => {
   const searchParams = useSearchParams();
@@ -32,16 +33,17 @@ const FindSearchBar = ({
   const getHashElements =
     typeof document !== "undefined" ? document.getElementsByName("check") : [];
 
-  function top100Check() {
-    if (linkTop100 === "1") {
-      getHashElements[0]?.click();
-    }
-  }
-
   useEffect(() => {
-    top100Check();
-  }, [linkTop100]);
-
+    if (linkTop100 === "1" && hashtagList.length > 0) {
+      const hashElements = document.getElementsByName("check");
+      const top100Checkbox = Array.from(hashElements).find(
+        (el) => (el as HTMLInputElement).value === "top100"
+      );
+      if (top100Checkbox) {
+        (top100Checkbox as HTMLInputElement).click();
+      }
+    }
+  }, [linkTop100, hashtagList]);
   const getHash = Array.from(getHashElements) as HTMLInputElement[];
   const hashTagTrueFalseArray = getHash.map((val) => val.checked);
 

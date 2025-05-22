@@ -6,6 +6,7 @@ import { TCocktail } from "@/lib/types/TCocktail";
 import { useOffsetStore } from "@/lib/store/offsetStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { getCocktail } from "@/lib/fetchs/fetchCocktail";
+import { useSearchParams } from "next/navigation";
 
 import style from "./Find.module.scss";
 import FindSearchBar from "@/components/find_search_bar/FindSearchBar";
@@ -22,6 +23,8 @@ export default function FindPage() {
   const [hashtags, setHashtags] = useState<THashtag[]>([]);
   const [clickedHashtag, setClickedHashtag] = useState("");
 
+  const searchParams = useSearchParams();
+
   useEffect(() => {
     const fetchHashtags = async () => {
       const response = await getHashtags();
@@ -30,7 +33,12 @@ export default function FindPage() {
     };
     fetchHashtags();
   }, []);
-
+  useEffect(() => {
+    const linkTop100 = searchParams.get("linkTop100");
+    if (linkTop100 === "1") {
+      setClickedHashtag("top100");
+    }
+  }, [searchParams]);
   //스크롤 바가 아래로 내려가면 실행될 loadMore 함수, 이 메서드는 cocktailList 컴포넌트로 넘겨준다.
   const loadMore = useCallback(async () => {
     //isLoading.current가 true면 return
@@ -74,6 +82,7 @@ export default function FindPage() {
         onInputChange={setInputValue}
         onSelectChange={setSelectValue}
         onClickedHashtag={setClickedHashtag}
+        clickedHashtag={setClickedHashtag}
         className={`${style.find_search_bar}`}
       />
       <CocktailList

@@ -56,12 +56,12 @@ export default function CocktailList({
       );
       setHashtagCocktails(hashtagFiltered);
     } else {
-      // 해시태그 선택이 없을 때는 전체 리스트 보여주기
       setHashtagCocktails(cocktailList);
     }
-  }, [clickedHashtag, cocktailList]); // 필터링 로직
-  const normalizedInput = inputValue.toLowerCase().replace(/\s+/g, "");
+  }, [clickedHashtag, cocktailList]);
 
+  // 필터링 로직
+  const normalizedInput = inputValue.toLowerCase().replace(/\s+/g, "");
   const filteredCocktails = hashtagCocktails.filter((item) => {
     const nameKo = item.name?.ko?.toLowerCase().replace(/\s+/g, "") ?? "";
     const nameEn = item.name?.en?.toLowerCase().replace(/\s+/g, "") ?? "";

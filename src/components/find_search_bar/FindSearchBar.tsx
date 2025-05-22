@@ -27,6 +27,8 @@ const FindSearchBar = ({
   const linkTop100 = searchParams.get("linkTop100");
   const { emojiList } = useEmojiStore();
   const [currentHashtag, setCurrentHashtag] = useState("");
+  const [searchText, setSearchText] = useState("");
+
   const getHashElements =
     typeof document !== "undefined" ? document.getElementsByName("check") : [];
 
@@ -66,10 +68,9 @@ const FindSearchBar = ({
     }
   };
 
-  const [searchText, setSearchText] = useState("");
-
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    onInputChange(searchText);
   };
 
   return (
@@ -79,7 +80,7 @@ const FindSearchBar = ({
         {/* 검색창 */}
         <div className={style.search_space}>
           <h3 className={`${style.hashtagSearchGuide}`}>
-            {currentHashtag.trim().length > 1
+            {currentHashtag.length > 1
               ? `${
                   hashtagList.find((tag) => currentHashtag === tag.value)
                     ?.name ?? "😄"
@@ -103,7 +104,7 @@ const FindSearchBar = ({
               <input
                 className={style.search_input}
                 onChange={(e) => {
-                  onInputChange(e.target.value), setSearchText(e.target.value);
+                  setSearchText(e.target.value);
                 }}
                 maxLength={20}
                 type="text"

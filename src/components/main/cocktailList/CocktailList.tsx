@@ -50,7 +50,7 @@ export default function CocktailList({
 
   // 해쉬태그 필터링된 칵테일
   useEffect(() => {
-    if (clickedHashtag.trim().length !== 0) {
+    if (clickedHashtag.length !== 0) {
       const hashtagFiltered = cocktailList.filter((item) =>
         item.hashtag?.some((tag) => tag === clickedHashtag)
       );
@@ -60,14 +60,20 @@ export default function CocktailList({
       setHashtagCocktails(cocktailList);
     }
   }, [clickedHashtag, cocktailList]); // 필터링 로직
-  const filteredCocktails = hashtagCocktails.filter((item) => {
-    const nameMatch = item.name?.ko?.includes(inputValue);
-    const ingredientMatch = item.recipe?.ingredients.some(
-      (ingre) =>
-        ingre.ingredient.ko.includes(inputValue) ||
-        ingre.ingredient.en.includes(inputValue)
-    );
+  const normalizedInput = inputValue.toLowerCase().replace(/\s+/g, "");
 
+  const filteredCocktails = hashtagCocktails.filter((item) => {
+    const nameKo = item.name?.ko?.toLowerCase().replace(/\s+/g, "") ?? "";
+    const nameEn = item.name?.en?.toLowerCase().replace(/\s+/g, "") ?? "";
+    const nameMatch =
+      normalizedInput === nameKo
+        ? nameKo.includes(normalizedInput)
+        : nameEn.includes(normalizedInput);
+    const ingredientMatch = item.recipe?.ingredients.some((ingre) => {
+      const ingKo = ingre.ingredient.ko.toLowerCase().replace(/\s+/g, "");
+      const ingEn = ingre.ingredient.en.toLowerCase().replace(/\s+/g, "");
+      return ingKo.includes(normalizedInput) || ingEn.includes(normalizedInput);
+    });
     return selectValue === "name" ? nameMatch : ingredientMatch;
   });
   return (

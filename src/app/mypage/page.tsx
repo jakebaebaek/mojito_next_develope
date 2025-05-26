@@ -1,7 +1,7 @@
 import Mypage from "./Mypage";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 export default async function MypagePage() {
   const session = await getServerSession(authOptions);

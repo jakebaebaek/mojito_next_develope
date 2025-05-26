@@ -11,7 +11,7 @@ type TNavigation = {
   page?: "desc";
   cocktailId?: string;
 };
-export default function Navigation({ page, cocktailId, ref }: TNavigation) {
+export default function Navigation({ page, cocktailId }: TNavigation) {
   const { isClicked, onClickHeart } = useHeartToggle(cocktailId || "");
 
   const scrollUp = () => {

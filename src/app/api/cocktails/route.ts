@@ -2,10 +2,11 @@ import connectDB from "@/lib/db";
 import { Cocktails } from "@/lib/schemas/cocktails";
 import { NextResponse } from 'next/server';
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
   try {
     connectDB();
-
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get("limit") || "25", 10); 
     const offset = parseInt(searchParams.get("offset") || "0", 10);

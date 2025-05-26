@@ -14,7 +14,7 @@ import { postReview, deleteReview } from "@/lib/fetchs/fetchReview";
 import { postRating } from "@/lib/fetchs/fetchRating";
 import Navigation from "@/components/common/navigation/Navigation";
 import Button from "@/components/common/button/Button";
-import style from "./Desc.module.scss";
+import style from "./desc.module.scss";
 import StarRating from "@public/StarRating.svg";
 
 export default function Desc({}) {

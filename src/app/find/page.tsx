@@ -7,7 +7,7 @@ import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { getCocktail } from "@/lib/fetchs/fetchCocktail";
 import { useSearchParams } from "next/navigation";
 
-import style from "./Find.module.scss";
+import style from "./find.module.scss";
 import FindSearchBar from "@/components/find_search_bar/FindSearchBar";
 import CocktailList from "@/components/main/cocktailList/CocktailList";
 import Navigation from "@/components/common/navigation/Navigation";

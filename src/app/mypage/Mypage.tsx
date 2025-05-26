@@ -1,5 +1,5 @@
 "use client";
-import style from "./Mypage.module.scss";
+import style from "./mypage.module.scss";
 import Person from "@public/Person.svg";
 import Setting from "@public/Setting.svg";
 import Logout from "@public/Logout.svg";

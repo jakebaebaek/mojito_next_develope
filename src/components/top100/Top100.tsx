@@ -25,7 +25,8 @@ export default function Top100() {
   const [swiper, setSwiper] = useState<swiper>();
   if (randomCocktailsRef.current.length === 0 && cocktailList.length > 0) {
     const top100Cocktails = cocktailList.filter(
-      (item) => item.hashtag?.length !== 0
+      (item) =>
+        item.hashtag?.length !== 0 && item.hashtag?.some((h) => h === "top100")
     );
     const indexes = Array.from(
       new Set(

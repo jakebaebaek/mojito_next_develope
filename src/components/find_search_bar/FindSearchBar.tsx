@@ -11,6 +11,8 @@ type FindProps = {
   hashtagList: THashtag[];
   onInputChange: (value: string) => void;
   onSelectChange: (value: string) => void;
+  onClickedHashtag: (value: string) => void;
+  clickedHashtag: string;
   className: string;
 };
 
@@ -18,41 +20,59 @@ const FindSearchBar = ({
   hashtagList,
   onInputChange,
   onSelectChange,
+  onClickedHashtag,
+  clickedHashtag,
   className,
 }: FindProps) => {
   const searchParams = useSearchParams();
   const linkTop100 = searchParams.get("linkTop100");
   const { emojiList } = useEmojiStore();
+  const [currentHashtag, setCurrentHashtag] = useState("");
+  const [searchText, setSearchText] = useState("");
+
   const getHashElements =
     typeof document !== "undefined" ? document.getElementsByName("check") : [];
 
-  function top100Check() {
-    if (linkTop100 === "1") {
-      getHashElements[0]?.click();
-    }
-  }
-
   useEffect(() => {
-    top100Check();
-  }, [linkTop100]);
+    if (linkTop100 === "1" && hashtagList.length > 0) {
+      const hashElements = document.getElementsByName("check");
+      const top100Checkbox = Array.from(hashElements).find(
+        (el) => (el as HTMLInputElement).value === "top100"
+      );
+      if (top100Checkbox) {
+        (top100Checkbox as HTMLInputElement).click();
+      }
+    }
+  }, [linkTop100, hashtagList]);
   const getHash = Array.from(getHashElements) as HTMLInputElement[];
   const hashTagTrueFalseArray = getHash.map((val) => val.checked);
 
   const onChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
     const hashValue = event.target.value;
-    for (let tag of getHash) {
-      if (tag.value !== hashValue) {
-        tag.checked = false;
+    const isAlreadySelected = currentHashtag === hashValue;
+
+    if (isAlreadySelected) {
+      // 같은 해시태그 다시 클릭했을 때 → 해제 처리
+      event.target.checked = false; // 체크박스도 수동 해제
+      setCurrentHashtag("");
+      onClickedHashtag("");
+    } else {
+      // 새로운 해시태그 선택
+      setCurrentHashtag(hashValue);
+      onClickedHashtag(hashValue);
+
+      // 다른 체크박스는 해제
+      for (let tag of getHash) {
+        if (tag.value !== hashValue) {
+          tag.checked = false;
+        }
       }
     }
   };
 
-  const [searchText, setSearchText] = useState("");
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {};
-
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    const searchText = event.target;
     event.preventDefault();
+    onInputChange(searchText);
   };
 
   return (
@@ -61,7 +81,15 @@ const FindSearchBar = ({
       <div>
         {/* 검색창 */}
         <div className={style.search_space}>
-          <h3>칵테일 이름 또는 재료를 검색해보세요</h3>
+          <h3 className={`${style.hashtagSearchGuide}`}>
+            {currentHashtag.length > 1
+              ? `${
+                  hashtagList.find((tag) => currentHashtag === tag.value)
+                    ?.name ?? "😄"
+                } 카테고리 안에서 검색 중입니다🍸`
+              : "칵테일 이름 또는 재료를 검색해보세요"}
+          </h3>
+
           <form onSubmit={onSubmit} className={style.search_box}>
             <div className={style.inputSearchBox}>
               <div className="select">
@@ -78,7 +106,7 @@ const FindSearchBar = ({
               <input
                 className={style.search_input}
                 onChange={(e) => {
-                  onInputChange(e.target.value), setSearchText(e.target.value);
+                  setSearchText(e.target.value);
                 }}
                 maxLength={20}
                 type="text"
@@ -123,9 +151,6 @@ const FindSearchBar = ({
           ))}
         </div>
       </div>
-
-      {/* 하단 */}
-      <div className={style.cardContainer}></div>
     </div>
   );
 };

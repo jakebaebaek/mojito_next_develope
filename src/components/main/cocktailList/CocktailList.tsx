@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { TCocktail } from "@/lib/types/TCocktail";
 import Card from "@/components/common/card/Card";
 import style from "./CocktailList.module.scss";
@@ -11,6 +11,7 @@ interface CocktailListProps {
   loading: boolean;
   inputValue: string;
   selectValue: string;
+  clickedHashtag: string;
 }
 
 export default function CocktailList({
@@ -19,9 +20,12 @@ export default function CocktailList({
   loading,
   inputValue,
   selectValue,
+  clickedHashtag,
 }: CocktailListProps) {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const renderCount = useRef(0);
+  const [hashtagCocktails, setHashtagCocktails] = useState(cocktailList);
+
   useEffect(() => {
     renderCount.current += 1;
     console.log(`CocktailList 리렌더링 횟수: ${renderCount.current}`);
@@ -44,17 +48,33 @@ export default function CocktailList({
     return () => observer.disconnect();
   }, [loadMore, loading]);
 
+  // 해쉬태그 필터링된 칵테일
+  useEffect(() => {
+    if (clickedHashtag.length !== 0) {
+      const hashtagFiltered = cocktailList.filter((item) =>
+        item.hashtag?.some((tag) => tag === clickedHashtag)
+      );
+      setHashtagCocktails(hashtagFiltered);
+    } else {
+      setHashtagCocktails(cocktailList);
+    }
+  }, [clickedHashtag, cocktailList]);
+
   // 필터링 로직
-  const filteredCocktails = cocktailList.filter((item) => {
-    const nameMatch = item.name?.ko?.includes(inputValue);
-
-    const optionMatch = item.recipe?.ingredients.some(
-      (ingre) =>
-        ingre.ingredient.ko.includes(inputValue) ||
-        ingre.ingredient.en.includes(inputValue)
-    );
-
-    return selectValue === "name" ? nameMatch : optionMatch;
+  const normalizedInput = inputValue.toLowerCase().replace(/\s+/g, "");
+  const filteredCocktails = hashtagCocktails.filter((item) => {
+    const nameKo = item.name?.ko?.toLowerCase().replace(/\s+/g, "") ?? "";
+    const nameEn = item.name?.en?.toLowerCase().replace(/\s+/g, "") ?? "";
+    const nameMatch =
+      normalizedInput === nameKo
+        ? nameKo.includes(normalizedInput)
+        : nameEn.includes(normalizedInput);
+    const ingredientMatch = item.recipe?.ingredients.some((ingre) => {
+      const ingKo = ingre.ingredient.ko.toLowerCase().replace(/\s+/g, "");
+      const ingEn = ingre.ingredient.en.toLowerCase().replace(/\s+/g, "");
+      return ingKo.includes(normalizedInput) || ingEn.includes(normalizedInput);
+    });
+    return selectValue === "name" ? nameMatch : ingredientMatch;
   });
   return (
     <div className={style.cocktailList}>

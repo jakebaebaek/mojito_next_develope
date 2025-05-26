@@ -39,7 +39,7 @@ export default function Top100() {
     randomCocktailsRef.current = indexes.map((i) => top100Cocktails[i]);
   }
   const handleToTop100 = () => {
-    router.push("/find");
+    router.push("/find?linkTop100=1");
   };
   return (
     <div className={style.top100_section}>

@@ -1,4 +1,4 @@
-import Mypage from "./Mypage";
+import Mypage from "./mypage";
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";

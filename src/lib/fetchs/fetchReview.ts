@@ -1,7 +1,7 @@
 
 export const postReview = async (cocktailId: string | string[], reviewText: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/memo`, {
+    const response = await fetch(`${process.env.SERVER_URL}/api/review/memo`, {
       method: 'POST',
       cache : "no-store",
       headers: {

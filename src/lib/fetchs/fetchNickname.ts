@@ -1,7 +1,7 @@
 
 export const postNickname = async (nickname: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/nickname`, {
+    const response = await fetch(`${process.env.SERVER_URL}/api/nickname`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

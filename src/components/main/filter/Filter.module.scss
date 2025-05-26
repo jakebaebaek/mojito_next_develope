@@ -27,6 +27,7 @@
     margin-top: 4rem;
     font-size: 1.8rem;
     font-weight: $bold;
+    user-select: none;
   }
 
   .item_wrap {
@@ -45,6 +46,7 @@
       &:checked + .checkbox_content {
         // border: 0.1rem solid $main-color;
         box-shadow: 0rem 0rem 0.8rem rgba(255, 139, 7, 0.559);
+        
       }
     }
     .checkbox_content {
@@ -56,6 +58,9 @@
       // border: 0.2rem solid black;
       border-radius: 1rem;
       font-size: 1.4rem;
+      span {
+        user-select: none;;
+      }
     }
 
     img {

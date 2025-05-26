@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import style from "./Storage.module.scss";
 import Card from "@/components/common/card/Card";
 import MemoCard from "@/components/common/card/MemoCard";

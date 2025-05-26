@@ -1,4 +1,4 @@
-import Mypage from "./mypage";
+import MypageClient from "./mypage";
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
@@ -18,7 +18,7 @@ export default async function Mypage() {
 
   return (
     <>
-      <Mypage />
+      <MypageClient />
     </>
   );
 }

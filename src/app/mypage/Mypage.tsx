@@ -16,7 +16,7 @@ import { useLockButton } from "@/lib/hooks/useLockButton";
 import Link from "next/link";
 import Navigation from "@/components/common/navigation/Navigation";
 
-export default function Mypage() {
+export default function MypageClient() {
   const { heart, memo } = useMemberStore();
   const { openProfileModal, openDeleteAccountModal } = useModalStore();
   const { data: session } = useSession();

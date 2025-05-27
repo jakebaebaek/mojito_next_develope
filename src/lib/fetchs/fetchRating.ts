@@ -1,7 +1,7 @@
 
 export const postRating = async (cocktailId: string | string[], rating: number) => {
   try {
-    const response = await fetch(`${process.env.SERVER_URL}/api/review/rating`, {
+    const response = await fetch(`/api/review/rating`, {
       method: 'POST',
       cache : "no-store",
       headers: {
@@ -22,7 +22,7 @@ export const postRating = async (cocktailId: string | string[], rating: number) 
 };
 export const getRating = async (cocktailId: string | string[]) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/rating?cocktailId=${cocktailId}`, {
+    const response = await fetch(`/api/review/rating?cocktailId=${cocktailId}`, {
       method: 'GET',
       cache : "no-store",
       headers: {

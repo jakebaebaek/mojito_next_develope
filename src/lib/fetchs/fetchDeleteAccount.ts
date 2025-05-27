@@ -1,7 +1,7 @@
 
 export const deleteAccount = async () => {
   try { 
-    const response = await fetch(`${process.env.SERVER_URL}/api/deleteAccount`, {
+    const response = await fetch(`/api/deleteAccount`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

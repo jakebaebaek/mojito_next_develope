@@ -3,13 +3,16 @@
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { TEmoji } from "@/lib/types/Temoji";
 import { useEffect } from "react";
+import { getEmoji } from "@/lib/fetchs/fetchEmoji";
 
-export default function EmojiClient({ emoji }: { emoji: TEmoji[] }) {
-  const { setEmoji, emojiList } = useEmojiStore();
+export default function EmojiClient() {
+  const { emojiList, setEmoji } = useEmojiStore();
 
   useEffect(() => {
-    setEmoji(emoji);
-  }, [emoji]);
+    getEmoji().then((emojis) => {
+      setEmoji(emojis);
+    });
+  }, []);
 
   // console.log("👽", emojiList);
 

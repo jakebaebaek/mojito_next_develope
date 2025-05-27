@@ -3,6 +3,7 @@
 import style from "./ProfileSettingModal.module.scss";
 import Button from "../button/Button";
 import Person from "@public/Person.svg";
+import EmojiPickerUI from "@/components/emoji_picker/EmojiPicker";
 
 import { useState } from "react";
 import { useModalStore } from "@/lib/store/modalStore";
@@ -17,7 +18,7 @@ export default function ProfileSettingModal() {
     session?.user?.nickname || "닉네임을 설정해주세요"
   );
   const { nickname, setNickname } = useUserStore();
-
+  const [profileImage, setProfileImage] = useState<string | null>();
   const buttonsaveNickname = (name: string) => {
     if (name.length < 1 || name.trim() === "") {
       alert("닉네임을 입력해주세요.");
@@ -52,7 +53,10 @@ export default function ProfileSettingModal() {
 
             <h1 className={`${style.profile_title}`}>프로필 설정</h1>
             <div className={style.profile_image}>
-              <Person />
+              <img
+                src={profileImage || "/default-profile.png"}
+                alt="프로필 이미지"
+              />
             </div>
 
             <div className={`${style.nickname_container}`}>
@@ -96,7 +100,9 @@ export default function ProfileSettingModal() {
               )}
             </div>
           </div>
-          <div className={`${style.modal_bottom}`}></div>
+          <div className={`${style.modal_bottom}`}>
+            <EmojiPickerUI setProfileImage={setProfileImage} />
+          </div>
         </div>
       </div>
     </div>

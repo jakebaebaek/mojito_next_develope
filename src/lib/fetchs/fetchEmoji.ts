@@ -1,6 +1,6 @@
 export const getEmoji = async () => {
   try {
-    const emojis = await fetch(`${process.env.SERVER_URL}/api/emoji`);
+    const emojis = await fetch(`/api/emoji`);
     
     return emojis.json();
   } catch (error) {

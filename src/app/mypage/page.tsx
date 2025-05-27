@@ -1,4 +1,4 @@
-import MypageClient from "./mypage";
+import MypageClient from "./MypageClient";
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";

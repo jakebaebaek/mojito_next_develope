@@ -12,7 +12,7 @@ export default function EmojiClient() {
     getEmoji().then((emojis) => {
       setEmoji(emojis);
     });
-  }, []);
+  }, [emojiList]);
 
   // console.log("👽", emojiList);
 

@@ -4,39 +4,56 @@ import style from "./ProfileSettingModal.module.scss";
 import Button from "../button/Button";
 import Person from "@public/Person.svg";
 import EmojiPickerUI from "@/components/emoji_picker/EmojiPicker";
+import Image from "next/image";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useModalStore } from "@/lib/store/modalStore";
 import { useUserStore } from "@/lib/store/userStore";
 import { useSession } from "next-auth/react";
 
-export default function ProfileSettingModal() {
+type ProfileSettingModalProps = {
+  nickname: string;
+  profileImage: string | null;
+  onSave: (name: string, profileImage: string) => Promise<void>;
+};
+
+export default function ProfileSettingModal({
+  nickname,
+  profileImage,
+  onSave,
+}: ProfileSettingModalProps) {
   const { profileModalOpen, closeProfileModal } = useModalStore();
   const [isEditing, setIsEditing] = useState(false);
-  const { data: session } = useSession();
-  const [nicknameLocal, setNicknameLocal] = useState(
-    session?.user?.nickname || "닉네임을 설정해주세요"
-  );
-  const { nickname, setNickname } = useUserStore();
-  const [profileImage, setProfileImage] = useState<string | null>();
-  const buttonsaveNickname = (name: string) => {
+  const [nicknameLocal, setNicknameLocal] = useState("");
+
+  const [profileImageLocal, setProfileImageLocal] = useState<string>();
+
+  useEffect(() => {
+    if (nickname && nickname.trim() !== "") {
+      setNicknameLocal(nickname);
+    }
+  }, [nickname]);
+
+  const handleModifyNickname = (name: string) => {
     if (name.length < 1 || name.trim() === "") {
       alert("닉네임을 입력해주세요.");
       return;
     }
-    setNickname(name)
-      .then((res) => {
-        console.log("닉네임 변경 성공", res);
-        setNicknameLocal(name);
-        setIsEditing(false);
-        alert("✨닉네임이 변경되었습니다.");
+    setNicknameLocal(name);
+    setIsEditing(false);
+  };
+  const handlesaveProfile = (name: string, profileImage: string) => {
+    onSave(name, profileImage)
+      .then(() => {
+        alert("프로필이 저장되었습니다.");
+        console.log("프로필 저장 성공:", { name, profileImage });
+        closeProfileModal();
       })
-      .catch((err) => {
-        alert("닉네임 변경에 실패했습니다. 다시 시도해주세요.");
-        console.error("닉네임 변경 실패", err);
+      .catch((error: unknown) => {
+        console.error("프로필 저장 실패:", error);
+        alert("프로필 저장에 실패했습니다. 다시 시도해주세요.");
       });
   };
-
   if (!profileModalOpen) return null;
 
   return (
@@ -48,15 +65,19 @@ export default function ProfileSettingModal() {
               text="완료"
               color="orange"
               className={`${style.confirm_button}`}
+              onClick={() =>
+                handlesaveProfile(nicknameLocal, profileImageLocal || "")
+              }
+            ></Button>
+            <Button
+              text="취소"
+              color="red"
+              className={`${style.close_button}`}
               onClick={closeProfileModal}
             ></Button>
-
             <h1 className={`${style.profile_title}`}>프로필 설정</h1>
             <div className={style.profile_image}>
-              <img
-                src={profileImage || "/default-profile.png"}
-                alt="프로필 이미지"
-              />
+              {profileImageLocal ? <p>{profileImageLocal}</p> : <Person />}
             </div>
 
             <div className={`${style.nickname_container}`}>
@@ -71,7 +92,7 @@ export default function ProfileSettingModal() {
                       닉네임을 설정해주세요
                     </p>
                   ) : (
-                    nickname
+                    nicknameLocal
                   )}
                 </button>
               ) : (
@@ -86,7 +107,7 @@ export default function ProfileSettingModal() {
                     />
                     <button
                       className={`${style.nickname_edit_button}`}
-                      onClick={() => buttonsaveNickname(nicknameLocal)}
+                      onClick={() => handleModifyNickname(nicknameLocal)}
                     >
                       수정
                     </button>
@@ -101,7 +122,7 @@ export default function ProfileSettingModal() {
             </div>
           </div>
           <div className={`${style.modal_bottom}`}>
-            <EmojiPickerUI setProfileImage={setProfileImage} />
+            <EmojiPickerUI setProfileImageLocal={setProfileImageLocal} />
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ export default function LoginBtn() {
     try {
       console.log("🚀 카카오 로그인 시도");
       setIsClicked(true);
-      await signIn("kakao");
+      await signIn("kakao", { redirect: true, callbackUrl: "/" });
     } catch (error) {
       alert("로그인에 실패했습니다. 다시 시도해주세요.");
       console.error("🚨 로그인 실패", error);

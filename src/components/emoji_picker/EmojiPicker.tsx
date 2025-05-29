@@ -1,18 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { EmojiStyle } from "emoji-picker-react";
 
 type EmojiPickerProps = {
-  setProfileImage: (emojiData: EmojiClickData) => void;
+  setProfileImageLocal: (emoji: string) => void;
 };
 
-export default function EmojiPickerUI(setProfileImage: any) {
-  const handleEmojiClick = (emojiData: EmojiClickData) => {
-    setProfileImage(emojiData.emoji); // 선택한 이모지만 저장e
+export default function EmojiPickerUI({
+  setProfileImageLocal,
+}: EmojiPickerProps) {
+  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
+    console.log(emojiData.emoji, "이모지 클릭됨");
+    setProfileImageLocal(emojiData.emoji);
   };
-
   return (
     <div>
       <EmojiPicker

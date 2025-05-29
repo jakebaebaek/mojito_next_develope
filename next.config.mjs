@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com"],
+    domains: [
+      "mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com",
+      "cdn.jsdelivr.net",
+    ],
   },
   webpack: (config) => {
     config.module.rules.push({

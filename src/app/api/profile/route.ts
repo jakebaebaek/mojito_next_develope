@@ -10,10 +10,11 @@ export async function POST(request: Request) {
   try {
     connectDB();
 
-    const { nickname } = await request.json();
-    if (!nickname) {
+    const { nickname, profileImage } = await request.json();
+    console.log("💢💌💢💢💢💢💢닉네임 POST 요청 데이터:", { nickname, profileImage });
+    if (!nickname || profileImage === undefined) {
       return NextResponse.json(
-        { error: "닉네임이 전달되지 않았습니다." },
+        { error: "프로필 데이터가 전달되지 않았습니다." },
         { status: 400 }
       );
     }
@@ -31,9 +32,10 @@ export async function POST(request: Request) {
 
     const updatedUser = await Member.findOneAndUpdate(
       { _id: userId },
-      { $set: { nickname } },
+      { $set: { nickname, profileImage } },
       { new: true }
     );
+    console.log("💢💌💢💢💢💢💢닉네임 업데이트 결과:", updatedUser);
     return NextResponse.json(updatedUser);
   } catch (error) {
     console.error("nickname POST 에러", error);

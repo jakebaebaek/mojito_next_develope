@@ -62,13 +62,12 @@ export default function CocktailList({
 
   // 필터링 로직
   const normalizedInput = inputValue.toLowerCase().replace(/\s+/g, "");
+  console.log("필터링된 입력값:", normalizedInput);
   const filteredCocktails = hashtagCocktails.filter((item) => {
     const nameKo = item.name?.ko?.toLowerCase().replace(/\s+/g, "") ?? "";
     const nameEn = item.name?.en?.toLowerCase().replace(/\s+/g, "") ?? "";
     const nameMatch =
-      normalizedInput === nameKo
-        ? nameKo.includes(normalizedInput)
-        : nameEn.includes(normalizedInput);
+      nameKo.includes(normalizedInput) || nameEn.includes(normalizedInput);
     const ingredientMatch = item.recipe?.ingredients.some((ingre) => {
       const ingKo = ingre.ingredient.ko.toLowerCase().replace(/\s+/g, "");
       const ingEn = ingre.ingredient.en.toLowerCase().replace(/\s+/g, "");

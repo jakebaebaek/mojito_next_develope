@@ -14,6 +14,9 @@ const memberSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    profileImage: {
+      type: String,
+    },
     provider: {
       type: String,
       required: true,

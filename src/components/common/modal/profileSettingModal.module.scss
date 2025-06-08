@@ -20,7 +20,7 @@
   position: relative;
   background-color: white;
   width: 40em;
-  height: 80rem;
+  height: 95vh;
   box-shadow: $shadow;
   border-radius: 5%;
   font-size: 1.8rem;
@@ -57,18 +57,35 @@
     height: 20rem;
     border-radius: 55%;
     background-color: white;
-    padding: 5rem;
+    padding: 3rem;
     overflow: hidden;
     justify-content: center;
     align-items: center;
-    svg {
+    
+    svg, p {
       width: 100%;
       height: 100%;
+      text-align: center;
+      font-size: 9rem;
       object-fit: cover;
     }
   }
 }
 .confirm_button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  padding: 0.2rem !important;
+  width: 9rem;
+  font-weight: $medium !important;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(253, 178, 38);
+    color: $gray_500;
+    transition: 0.2s;
+  }
+}
+.close_button {
   position: absolute;
   top: 2rem;
   right: 2rem;
@@ -81,6 +98,7 @@
     color: $gray_500;
     transition: 0.2s;
   }
+
 }
 .nickname_container {
   display: flex;

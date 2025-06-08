@@ -1,11 +1,10 @@
 "use client";
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { getHashtags } from "@/lib/fetchs/fetchHashtags";
-import { THashtag } from "@/lib/types/THashtag";
+import { useHashtagStore } from "@/lib/store/hashtagStore";
 import { useOffsetStore } from "@/lib/store/offsetStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { getCocktail } from "@/lib/fetchs/fetchCocktail";
-import { useSearchParams } from "next/navigation";
 
 import style from "./Find.module.scss";
 import FindSearchBar from "@/components/find_search_bar/FindSearchBar";
@@ -21,18 +20,17 @@ export default function FindPage() {
   const isLoading = useRef(false);
   const [inputValue, setInputValue] = useState("");
   const [selectValue, setSelectValue] = useState("name");
-  const [hashtags, setHashtags] = useState<THashtag[]>([]);
+  const { hashtags, setHashtags } = useHashtagStore();
   const [clickedHashtag, setClickedHashtag] = useState("");
 
   const visibleCocktails = cocktailList.slice(0, offset);
-
+  // 컴포넌트에서
   useEffect(() => {
-    const fetchHashtags = async () => {
-      const response = await getHashtags();
-      setHashtags(response);
-    };
-    fetchHashtags();
-  }, []);
+    if (!hashtags.length) {
+      getHashtags().then(setHashtags);
+    }
+  }, [hashtags.length, setHashtags]);
+
   useEffect(() => {
     if (offset === 0) {
       setOffset(25); // 초기 로딩

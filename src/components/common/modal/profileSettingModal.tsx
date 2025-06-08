@@ -9,7 +9,6 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useModalStore } from "@/lib/store/modalStore";
 import { useUserStore } from "@/lib/store/userStore";
-import { useSession } from "next-auth/react";
 
 type ProfileSettingModalProps = {
   nickname: string;

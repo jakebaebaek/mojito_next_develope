@@ -47,67 +47,67 @@ export default function Top100() {
       <h1 className={style.title}>
         World’s Top 100 <br /> Cocktails
       </h1>
-      <div className={style.slide_area}>
-        <div className={style.slide_btn}>
-          <LeftSlide
-            onClick={() => swiper?.slidePrev()}
-            className={style.left_svg}
-          />
-        </div>
-
-        <Swiper
-          slidesPerView={5}
-          spaceBetween={30}
-          loop={true}
-          pagination={{
-            clickable: true,
-          }}
-          modules={[Pagination]}
-          className={`${style.top100_swiper}`}
-          onSlideChange={(e) =>
-            setRealIndex(
-              e.realIndex + 2 > randomCocktailsRef.current.length - 1
-                ? e.realIndex - (randomCocktailsRef.current.length - 2)
-                : e.realIndex + 2
-            )
-          }
-          onSwiper={(swiper) => setSwiper(swiper)}
-        >
-          <div className={`${style.slider_wrap}`}>
-            {randomCocktailsRef.current ? (
-              randomCocktailsRef.current.map((cocktail, i) => (
-                <SwiperSlide
-                  key={i}
-                  className={`${
-                    i === realIndex ? style.active : style.non_active
-                  }`}
-                  onClick={() => router.push(`/desc/${cocktail._id}`)}
-                >
-                  <div className={`${style.cocktailBox}`}>
-                    <Image
-                      src={cocktail.img}
-                      alt="cocktail"
-                      width={200}
-                      height={300}
-                      className={`${style.cocktailImage}`}
-                    />
-                    <p className={style.center_name_ko}>{cocktail.name?.ko}</p>
-                    <p className={style.center_name_en}>{cocktail.name?.en}</p>
-                  </div>
-                </SwiperSlide>
-              ))
-            ) : (
-              <h1>잠시만 기다려주세요</h1>
-            )}
+      {randomCocktailsRef.current.length > 0 ? (
+        <div className={style.slide_area}>
+          <div className={style.slide_btn}>
+            <LeftSlide
+              onClick={() => swiper?.slidePrev()}
+              className={style.left_svg}
+            />
           </div>
-        </Swiper>
-        <div className={style.slide_btn}>
-          <RightSlide
-            onClick={() => swiper?.slideNext()}
-            className={style.right_svg}
-          />
+
+          <Swiper
+            slidesPerView={5}
+            spaceBetween={30}
+            loop={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Pagination]}
+            className={`${style.top100_swiper}`}
+            onSlideChange={(e) =>
+              setRealIndex(
+                e.realIndex + 2 > randomCocktailsRef.current.length - 1
+                  ? e.realIndex - (randomCocktailsRef.current.length - 2)
+                  : e.realIndex + 2
+              )
+            }
+            onSwiper={(swiper) => setSwiper(swiper)}
+          >
+            {/* top100 랜덤 칵테일 카드 렌더링 부분 */}
+            {randomCocktailsRef.current.map((cocktail, i) => (
+              <SwiperSlide
+                key={i}
+                className={`${
+                  i === realIndex ? style.active : style.non_active
+                }`}
+                onClick={() => router.push(`/desc/${cocktail._id}`)}
+              >
+                <div className={`${style.cocktailBox}`}>
+                  <Image
+                    src={cocktail.img}
+                    alt="cocktail"
+                    width={200}
+                    height={300}
+                    className={`${style.cocktailImage}`}
+                  />
+                  <p className={style.center_name_ko}>{cocktail.name?.ko}</p>
+                  <p className={style.center_name_en}>{cocktail.name?.en}</p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className={style.slide_btn}>
+            <RightSlide
+              onClick={() => swiper?.slideNext()}
+              className={style.right_svg}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <h1 className={`${style.spinner}`}></h1>
+      )}
+
       <div onClick={handleToTop100} className={`${style.find_top100_btn}`}>
         + Top100 더보기
       </div>

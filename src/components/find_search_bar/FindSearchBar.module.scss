@@ -75,9 +75,10 @@
           cursor: pointer;
           svg {
             width: 25px;
+            position: absolute;
+            right: 3rem;
           }
         }
-
     }
 
     .search_btn {

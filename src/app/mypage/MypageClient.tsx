@@ -1,6 +1,5 @@
 "use client";
 import style from "./mypage.module.scss";
-import Image from "next/image";
 import Person from "@public/Person.svg";
 import Setting from "@public/Setting.svg";
 import Logout from "@public/Logout.svg";
@@ -21,11 +20,11 @@ export default function MypageClient() {
   const { heart, memo } = useMemberStore();
   const { openProfileModal, openDeleteAccountModal } = useModalStore();
   const { data: session } = useSession();
-  const { nickname, profileImage, setProfile } = useUserStore();
+  const { nicknameState, profileImageState, setProfile } = useUserStore();
   const { locked, run } = useLockButton("logout");
 
   useEffect(() => {
-    if (session?.user?.nickname && nickname === "") {
+    if (session?.user?.nickname && nicknameState === "") {
       setProfile(session.user.nickname, session.user.profileImage || "");
     }
     console.log("세션 정보:", session);
@@ -50,20 +49,14 @@ export default function MypageClient() {
     <div className={`${style.container}`}>
       <Navigation />
       <div>
-        {profileImage ? (
-          <Image
-            className={`${style.profile_image}`}
-            src={profileImage}
-            alt="프로필 이미지"
-            width={160}
-            height={160}
-          />
+        {profileImageState ? (
+          <p className={`${style.profile_image}`}>{profileImageState}</p>
         ) : (
           <Person className={`${style.profile_image}`} />
         )}
       </div>
       <div className={`${style.nickname}`}>
-        <h1>{nickname}</h1>
+        <h1>{nicknameState}</h1>
       </div>
       <div className={`${style.mypage_buttons}`}>
         <button className={`${style.button}`} onClick={openProfileModal}>
@@ -101,8 +94,8 @@ export default function MypageClient() {
         <h4>회원탈퇴</h4>
       </div>
       <ProfileSettingModal
-        nickname={nickname}
-        profileImage={profileImage ?? null}
+        nickname={nicknameState}
+        profileImage={profileImageState ?? null}
         onSave={setProfile}
       />
       <DeleteAccountConfirmModal />

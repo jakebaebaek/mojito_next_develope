@@ -75,21 +75,29 @@ export default function CocktailList({
     });
     return selectValue === "name" ? nameMatch : ingredientMatch;
   });
+  const cardCount = filteredCocktails.length;
+  console.log(cardCount);
+
   return (
-    <div className={style.cocktailList}>
-      {filteredCocktails.map((cocktail) => (
-        <Card
-          key={cocktail._id}
-          id={cocktail._id}
-          name={cocktail.name}
-          img_url={cocktail.img}
+    <div>
+      <div className={`${style.cocktail_length}`}>
+        {cardCount}개의 칵테일이 있습니다🍹
+      </div>
+      <div className={style.cocktailList}>
+        {filteredCocktails.map((cocktail) => (
+          <Card
+            key={cocktail._id}
+            id={cocktail._id}
+            name={cocktail.name}
+            img_url={cocktail.img}
+          />
+        ))}
+        {/* 마지막 카드 뒤에 감지용 div 배치 */}
+        <div
+          ref={observerRef}
+          style={{ height: "50px", background: "transparent" }}
         />
-      ))}
-      {/* 마지막 카드 뒤에 감지용 div 배치 */}
-      <div
-        ref={observerRef}
-        style={{ height: "50px", background: "transparent" }}
-      />
+      </div>
     </div>
   );
 }

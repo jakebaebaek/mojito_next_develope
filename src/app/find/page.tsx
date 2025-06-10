@@ -47,10 +47,9 @@ export default function FindPage() {
     }
 
     // 필요한 경우 getCocktail로 더 불러오기
-    if (cocktailList.length < offset + 25) {
-      const newCocktails = await getCocktail(25, offset);
-      // 상태 갱신 로직은 기존 useCocktailStore 안에서 처리한다고 가정
-    }
+    // if (cocktailList.length < offset + 25) {
+    //   const newCocktails = await getCocktail(25, offset);
+    // }
 
     setOffset(offset + 25);
     isLoading.current = false;
@@ -70,7 +69,6 @@ export default function FindPage() {
           onInputChange={setInputValue}
           onSelectChange={setSelectValue}
           onClickedHashtag={setClickedHashtag}
-          clickedHashtag={clickedHashtag}
           className={`${style.find_search_bar}`}
         />
         <CocktailList

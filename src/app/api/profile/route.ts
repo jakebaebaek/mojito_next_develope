@@ -18,7 +18,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const reqHeaders = headers();
+    const reqHeaders = await headers();
     const cookie = reqHeaders.get("cookie") || "";
     const req = new NextRequest("http://localhost", { headers: { cookie } });
     const token = await getToken({ req, secret });

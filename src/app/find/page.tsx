@@ -1,11 +1,10 @@
 "use client";
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { getHashtags } from "@/lib/fetchs/fetchHashtags";
-import { THashtag } from "@/lib/types/THashtag";
+import { useHashtagStore } from "@/lib/store/hashtagStore";
 import { useOffsetStore } from "@/lib/store/offsetStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { getCocktail } from "@/lib/fetchs/fetchCocktail";
-import { useSearchParams } from "next/navigation";
 
 import style from "./find.module.scss";
 import FindSearchBar from "@/components/find_search_bar/FindSearchBar";
@@ -21,18 +20,17 @@ export default function FindPage() {
   const isLoading = useRef(false);
   const [inputValue, setInputValue] = useState("");
   const [selectValue, setSelectValue] = useState("name");
-  const [hashtags, setHashtags] = useState<THashtag[]>([]);
+  const { hashtags, setHashtags } = useHashtagStore();
   const [clickedHashtag, setClickedHashtag] = useState("");
 
   const visibleCocktails = cocktailList.slice(0, offset);
-
+  // 컴포넌트에서
   useEffect(() => {
-    const fetchHashtags = async () => {
-      const response = await getHashtags();
-      setHashtags(response);
-    };
-    fetchHashtags();
-  }, []);
+    if (!hashtags.length) {
+      getHashtags().then(setHashtags);
+    }
+  }, [hashtags.length, setHashtags]);
+
   useEffect(() => {
     if (offset === 0) {
       setOffset(25); // 초기 로딩
@@ -49,10 +47,9 @@ export default function FindPage() {
     }
 
     // 필요한 경우 getCocktail로 더 불러오기
-    if (cocktailList.length < offset + 25) {
-      const newCocktails = await getCocktail(25, offset);
-      // 상태 갱신 로직은 기존 useCocktailStore 안에서 처리한다고 가정
-    }
+    // if (cocktailList.length < offset + 25) {
+    //   const newCocktails = await getCocktail(25, offset);
+    // }
 
     setOffset(offset + 25);
     isLoading.current = false;
@@ -72,7 +69,6 @@ export default function FindPage() {
           onInputChange={setInputValue}
           onSelectChange={setSelectValue}
           onClickedHashtag={setClickedHashtag}
-          clickedHashtag={clickedHashtag}
           className={`${style.find_search_bar}`}
         />
         <CocktailList

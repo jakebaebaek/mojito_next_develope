@@ -12,7 +12,6 @@ type FindProps = {
   onInputChange: (value: string) => void;
   onSelectChange: (value: string) => void;
   onClickedHashtag: (value: string) => void;
-  clickedHashtag: string;
   className: string;
 };
 
@@ -21,7 +20,6 @@ const FindSearchBar = ({
   onInputChange,
   onSelectChange,
   onClickedHashtag,
-  clickedHashtag,
   className,
 }: FindProps) => {
   const searchParams = useSearchParams();

@@ -62,13 +62,12 @@ export default function CocktailList({
 
   // 필터링 로직
   const normalizedInput = inputValue.toLowerCase().replace(/\s+/g, "");
+  console.log("필터링된 입력값:", normalizedInput);
   const filteredCocktails = hashtagCocktails.filter((item) => {
     const nameKo = item.name?.ko?.toLowerCase().replace(/\s+/g, "") ?? "";
     const nameEn = item.name?.en?.toLowerCase().replace(/\s+/g, "") ?? "";
     const nameMatch =
-      normalizedInput === nameKo
-        ? nameKo.includes(normalizedInput)
-        : nameEn.includes(normalizedInput);
+      nameKo.includes(normalizedInput) || nameEn.includes(normalizedInput);
     const ingredientMatch = item.recipe?.ingredients.some((ingre) => {
       const ingKo = ingre.ingredient.ko.toLowerCase().replace(/\s+/g, "");
       const ingEn = ingre.ingredient.en.toLowerCase().replace(/\s+/g, "");
@@ -76,21 +75,29 @@ export default function CocktailList({
     });
     return selectValue === "name" ? nameMatch : ingredientMatch;
   });
+  const cardCount = filteredCocktails.length;
+  console.log(cardCount);
+
   return (
-    <div className={style.cocktailList}>
-      {filteredCocktails.map((cocktail) => (
-        <Card
-          key={cocktail._id}
-          id={cocktail._id}
-          name={cocktail.name}
-          img_url={cocktail.img}
+    <div>
+      <div className={`${style.cocktail_length}`}>
+        {cardCount}개의 칵테일이 있습니다🍹
+      </div>
+      <div className={style.cocktailList}>
+        {filteredCocktails.map((cocktail) => (
+          <Card
+            key={cocktail._id}
+            id={cocktail._id}
+            name={cocktail.name}
+            img_url={cocktail.img}
+          />
+        ))}
+        {/* 마지막 카드 뒤에 감지용 div 배치 */}
+        <div
+          ref={observerRef}
+          style={{ height: "50px", background: "transparent" }}
         />
-      ))}
-      {/* 마지막 카드 뒤에 감지용 div 배치 */}
-      <div
-        ref={observerRef}
-        style={{ height: "50px", background: "transparent" }}
-      />
+      </div>
     </div>
   );
 }

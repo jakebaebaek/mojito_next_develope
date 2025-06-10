@@ -124,7 +124,7 @@
         font-weight: $medium;
         border: 0.25rem solid $gray_400;
         border-radius: 1rem;
-        padding: 1rem 3rem;
+        padding: 1.2rem 3rem;
         &:focus {
           outline: none;
           border-color: $main-color;
@@ -153,6 +153,13 @@
       font-weight: $medium;
       color: $gray-300;
       margin-top: 1rem;
+      transition: 0.1s ease-in-out
+    }
+    .nickname_none {
+      font-size: 1.5rem;
+      font-weight: $medium;
+      color: transparent; 
+      margin-top: 1rem;
     }
     }
   .nickname_button {
@@ -162,6 +169,7 @@
     border: 0.25rem solid $gray_400;
     border-radius: 1rem;
     padding: 0.8rem 3rem;
+    margin-bottom: 3rem;
     background-color: white;
     cursor: pointer;
     &:hover {

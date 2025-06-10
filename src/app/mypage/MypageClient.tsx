@@ -20,11 +20,11 @@ export default function MypageClient() {
   const { heart, memo } = useMemberStore();
   const { openProfileModal, openDeleteAccountModal } = useModalStore();
   const { data: session } = useSession();
-  const { nickname, profileImage, setProfile } = useUserStore();
+  const { nicknameState, profileImageState, setProfile } = useUserStore();
   const { locked, run } = useLockButton("logout");
 
   useEffect(() => {
-    if (session?.user?.nickname && nickname === "") {
+    if (session?.user?.nickname && nicknameState === "") {
       setProfile(session.user.nickname, session.user.profileImage || "");
     }
     console.log("세션 정보:", session);
@@ -49,14 +49,14 @@ export default function MypageClient() {
     <div className={`${style.container}`}>
       <Navigation />
       <div>
-        {profileImage ? (
-          <p className={`${style.profile_image}`}>{profileImage}</p>
+        {profileImageState ? (
+          <p className={`${style.profile_image}`}>{profileImageState}</p>
         ) : (
           <Person className={`${style.profile_image}`} />
         )}
       </div>
       <div className={`${style.nickname}`}>
-        <h1>{nickname}</h1>
+        <h1>{nicknameState}</h1>
       </div>
       <div className={`${style.mypage_buttons}`}>
         <button className={`${style.button}`} onClick={openProfileModal}>
@@ -94,8 +94,8 @@ export default function MypageClient() {
         <h4>회원탈퇴</h4>
       </div>
       <ProfileSettingModal
-        nickname={nickname}
-        profileImage={profileImage ?? null}
+        nickname={nicknameState}
+        profileImage={profileImageState ?? null}
         onSave={setProfile}
       />
       <DeleteAccountConfirmModal />

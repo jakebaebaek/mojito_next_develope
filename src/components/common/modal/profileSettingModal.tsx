@@ -22,7 +22,7 @@ export default function ProfileSettingModal({
   onSave,
 }: ProfileSettingModalProps) {
   const { profileModalOpen, closeProfileModal } = useModalStore();
-  const {} = useUserStore();
+  const { profileImageState, nicknameState } = useUserStore();
   const [isEditing, setIsEditing] = useState(false);
   const [nicknameLocal, setNicknameLocal] = useState("");
 
@@ -42,10 +42,19 @@ export default function ProfileSettingModal({
     setNicknameLocal(name);
     setIsEditing(false);
   };
-  const handlesaveProfile = (name: string, profileImage: string) => {
+  const handlesaveProfile = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    name: string,
+    profileImage: string
+  ) => {
+    if (profileImageState === profileImage && nicknameState === name) {
+      event.preventDefault();
+      alert("변경된 내용이 없습니다.");
+      return;
+    }
     onSave(name, profileImage)
       .then(() => {
-        alert("프로필이 저장되었습니다.");
+        alert("✨프로필이 저장되었습니다.✨");
         console.log("프로필 저장 성공:", { name, profileImage });
         closeProfileModal();
       })
@@ -65,8 +74,8 @@ export default function ProfileSettingModal({
               text="완료"
               color="orange"
               className={`${style.confirm_button}`}
-              onClick={() =>
-                handlesaveProfile(nicknameLocal, profileImageLocal || "")
+              onClick={(event: any) =>
+                handlesaveProfile(event, nicknameLocal, profileImageLocal || "")
               }
             ></Button>
             <Button
@@ -108,7 +117,7 @@ export default function ProfileSettingModal({
                       type="text"
                       value={nicknameLocal}
                       onChange={(e) => setNicknameLocal(e.target.value)}
-                      maxLength={20}
+                      maxLength={15}
                       className={`${style.nickname_input}`}
                     />
                     <button
@@ -118,11 +127,15 @@ export default function ProfileSettingModal({
                       수정
                     </button>
                   </div>
-                  {nickname.length >= 20 && (
-                    <p className={style.nickname_warning}>
-                      닉네임은 최대 20자까지 입력 가능합니다.
-                    </p>
-                  )}
+                  <p
+                    className={`${
+                      nicknameLocal.length >= 20
+                        ? style.nickname_warning
+                        : style.nickname_none
+                    }`}
+                  >
+                    닉네임은 최대 15자까지 입력 가능합니다.
+                  </p>
                 </div>
               )}
             </div>

@@ -18,7 +18,7 @@ export default function EmojiPickerUI({
     <div>
       <EmojiPicker
         onEmojiClick={handleEmojiClick}
-        emojiStyle={EmojiStyle.APPLE} // 이모지 스타일 설정
+        emojiStyle={EmojiStyle.TWITTER} // 이모지 스타일 설정
         width={700}
         height={400} // 이모지 피커의 너비 설정
         previewConfig={{ showPreview: false }} // 이모지 미리보기 비활성화

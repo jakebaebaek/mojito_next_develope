@@ -4,7 +4,6 @@ import style from "./Filter.module.scss";
 import ReturnArrow from "@public/ReturnArrow.svg";
 import Button from "../../common/button/Button";
 import RangeSlider from "@/components/main/slider/RangeSlider";
-import ReactRangeSlider from "@/components/main/slider/ReactRangeSlider";
 
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
@@ -69,7 +68,7 @@ export default function Filter() {
       <div className={`${style.booziness_wrap}`}>
         <h3>얼마나 취할래?</h3>
         <div className={`${style.slider_wrap}`}>
-          <ReactRangeSlider whatSliderIsIt="booziness" />
+          <RangeSlider whatSliderIsIt="booziness" />
         </div>
       </div>
 
@@ -77,7 +76,7 @@ export default function Filter() {
         <h3>Sweet or Dry?</h3>
         <div>
           <div className={`${style.slider_wrap}`}>
-            <ReactRangeSlider whatSliderIsIt="sweetness" />
+            <RangeSlider whatSliderIsIt="sweetness" />
           </div>
         </div>
       </div>

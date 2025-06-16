@@ -72,6 +72,31 @@ export default function Top100() {
                   : e.realIndex + 2
               )
             }
+            breakpoints={{
+              // 0px 이상에서는 1개
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              // 640px 이상(태블릿)
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+              },
+              // 1024px 이상(데스크탑)
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+              1460: {
+                slidesPerView: 4,
+                spaceBetween: 30,
+              },
+              1700: {
+                slidesPerView: 5,
+                spaceBetween: 30,
+              },
+            }}
             onSwiper={(swiper) => setSwiper(swiper)}
           >
             {/* top100 랜덤 칵테일 카드 렌더링 부분 */}

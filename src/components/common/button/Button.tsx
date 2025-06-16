@@ -4,7 +4,7 @@ type TBtnProps = {
   text: string;
   color: "orange" | "gray" | "red";
   className?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export default function Button(props: TBtnProps) {

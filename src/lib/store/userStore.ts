@@ -1,21 +1,24 @@
 import { create } from "zustand";
-import { postNickname } from "@/lib/fetchs/fetchNickname";
+import { postProfile } from "@/lib/fetchs/fetchProfile";
 import { persist } from "zustand/middleware";
 
 type UserStore = {
   nickname: string;
-  setNickname: (name: string) => Promise<void>;
+  profileImage: string | null;
+  setProfile: (name: string, Pimage:string) => Promise<void>;
 };
 
 export const useUserStore = create(
   persist<UserStore>(
     (set) => ({
       nickname: "",
-      setNickname: async (name) => {
-        const res = await postNickname(name);
-        set({ nickname: res.nickname });
+      profileImage: null,
+      setProfile: async (name, Pimage) => {
+        const res = await postProfile(name, Pimage);
+        console.log("프로필 저장 결과:", res);
+        set({ nickname: res.nickname, profileImage: res.profileImage });
         return res;
-      }
+      },
     }),
     {
       name: "userStore", 

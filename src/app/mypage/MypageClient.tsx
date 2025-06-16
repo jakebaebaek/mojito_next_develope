@@ -16,17 +16,18 @@ import { useLockButton } from "@/lib/hooks/useLockButton";
 import Link from "next/link";
 import Navigation from "@/components/common/navigation/Navigation";
 
-export default function Mypage() {
+export default function MypageClient() {
   const { heart, memo } = useMemberStore();
   const { openProfileModal, openDeleteAccountModal } = useModalStore();
   const { data: session } = useSession();
-  const { nickname, setNickname } = useUserStore();
+  const { nickname, profileImage, setProfile } = useUserStore();
   const { locked, run } = useLockButton("logout");
 
   useEffect(() => {
     if (session?.user?.nickname && nickname === "") {
-      setNickname(session.user.nickname);
+      setProfile(session.user.nickname, session.user.profileImage || "");
     }
+    console.log("세션 정보:", session);
   }, [session]);
 
   const handleLogout = async () => {
@@ -48,7 +49,11 @@ export default function Mypage() {
     <div className={`${style.container}`}>
       <Navigation />
       <div>
-        <Person className={`${style.profile_image}`} />
+        {profileImage ? (
+          <p className={`${style.profile_image}`}>{profileImage}</p>
+        ) : (
+          <Person className={`${style.profile_image}`} />
+        )}
       </div>
       <div className={`${style.nickname}`}>
         <h1>{nickname}</h1>
@@ -88,7 +93,11 @@ export default function Mypage() {
       >
         <h4>회원탈퇴</h4>
       </div>
-      <ProfileSettingModal />
+      <ProfileSettingModal
+        nickname={nickname}
+        profileImage={profileImage ?? null}
+        onSave={setProfile}
+      />
       <DeleteAccountConfirmModal />
     </div>
   );

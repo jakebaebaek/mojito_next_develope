@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 
 import { postReview, deleteReview } from "@/lib/fetchs/fetchReview";
 import { postRating } from "@/lib/fetchs/fetchRating";
+import { TMemo } from "@/lib/types/TMemo";
 import Navigation from "@/components/common/navigation/Navigation";
 import Button from "@/components/common/button/Button";
 import style from "./Desc.module.scss";
@@ -32,7 +33,7 @@ export default function Desc({}) {
   const { data: session } = useSession();
   const [isEditing, setIsEditing] = useState(false);
   const matchedMemo = Array.isArray(memo)
-    ? memo.find((item: any) => item && item.cocktail_id === id)
+    ? memo.find((item: TMemo) => item && item.cocktail_id === id)
     : null;
 
   useEffect(() => {

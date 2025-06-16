@@ -5,6 +5,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       nickname?: string | null;
+      profileImage?: string | null;
       id?: any;
       memberStore?: any;
       firstLogin?: boolean;

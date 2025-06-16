@@ -7,12 +7,10 @@ import RangeSlider from "@/components/main/slider/RangeSlider";
 
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { filterList } from "@/lib/mokdata/filterList";
-import { useCocktailStore } from "@/lib/store/cocktailStore";
 
 export default function Filter() {
   //zustand 상태관리
   const { emojiList } = useEmojiStore();
-  const { setFilter } = useCocktailStore();
 
   const onClickSearch = () => {
     console.log("🥰버튼클릭");

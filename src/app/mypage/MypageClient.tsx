@@ -50,7 +50,10 @@ export default function MypageClient() {
       <Navigation />
       <div>
         {profileImageState ? (
-          <p className={`${style.profile_image}`}>{profileImageState}</p>
+          <img
+            src={profileImageState}
+            className={`${style.profile_image}`}
+          ></img>
         ) : (
           <Person className={`${style.profile_image}`} />
         )}

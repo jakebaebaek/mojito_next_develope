@@ -96,6 +96,12 @@ export default function ProfileSettingModal({
         <div className={`${style.modal_inner}`}>
           <div className={`${style.modal_upper}`}>
             <Button
+              text="취소"
+              color="red"
+              className={`${style.close_button}`}
+              onClick={handleCancelProfile}
+            ></Button>
+            <Button
               text="완료"
               color="orange"
               className={`${style.confirm_button}`}
@@ -103,18 +109,12 @@ export default function ProfileSettingModal({
                 handlesaveProfile(event, nicknameLocal, profileImageLocal)
               }
             ></Button>
-            <Button
-              text="취소"
-              color="red"
-              className={`${style.close_button}`}
-              onClick={handleCancelProfile}
-            ></Button>
             <h1 className={`${style.profile_title}`}>프로필 설정</h1>
             <div className={style.profile_image}>
               {profileImageLocal ? (
-                <p>{profileImageLocal}</p>
+                <img src={profileImageLocal} alt="profile Image"></img>
               ) : profileImage ? (
-                <p>{profileImage}</p>
+                <img src={profileImage}></img>
               ) : (
                 <Person />
               )}
@@ -154,7 +154,7 @@ export default function ProfileSettingModal({
                   </div>
                   <p
                     className={`${
-                      nicknameLocal.length >= 20
+                      nicknameLocal.length >= 15
                         ? style.nickname_warning
                         : style.nickname_none
                     }`}
@@ -165,9 +165,7 @@ export default function ProfileSettingModal({
               )}
             </div>
           </div>
-          <div className={`${style.modal_bottom}`}>
-            <EmojiPickerUI setProfileImageLocal={setProfileImageLocal} />
-          </div>
+          <EmojiPickerUI setProfileImageLocal={setProfileImageLocal} />
         </div>
       </div>
     </div>

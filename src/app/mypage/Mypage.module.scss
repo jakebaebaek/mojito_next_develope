@@ -7,11 +7,12 @@
   align-items: center;
 }
 .profile_image {
-  height: 16rem;
+  height: 8rem;
   font-size: 11rem;;
 }
 .nickname {
   margin-bottom: 2rem;
+  
   h1 {
     font-weight: $light;
   }
@@ -69,7 +70,7 @@
 }
 
 .delete_account {
-  margin: 7rem;
+  margin-top: 5rem;
   border-radius: 10rem;
   cursor: pointer;
   h4 {

@@ -19,8 +19,8 @@
   flex-direction: column;
   position: relative;
   background-color: white;
-  width: 40em;
-  height: 95vh;
+  width: 50rem;
+  height: 80vh;
   box-shadow: $shadow;
   border-radius: 5%;
   font-size: 1.8rem;
@@ -44,8 +44,6 @@
     background-color: $gray_100;
 
   }
-  .modal_bottom {
-  }
   .profile_title {
     font-size: 2rem;
     font-weight: 700;
@@ -53,28 +51,26 @@
   }
 
   .profile_image {
-    width: 20rem;
-    height: 20rem;
-    border-radius: 55%;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 50%;
     background-color: white;
-    padding: 3rem;
+    padding: 1rem;
     overflow: hidden;
+    display: flex;
     justify-content: center;
     align-items: center;
     
-    svg, p {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      font-size: 9rem;
-      object-fit: cover;
+    svg, img {
+      width: 8rem;
+      height: 8rem;
     }
   }
 }
 .confirm_button {
   position: absolute;
   top: 2rem;
-  left: 2rem;
+  right: 2rem;
   padding: 0.2rem !important;
   width: 9rem;
   font-weight: $medium !important;
@@ -88,10 +84,11 @@
 .close_button {
   position: absolute;
   top: 2rem;
-  right: 2rem;
+  left: 2rem;
   padding: 0.2rem !important;
   width: 9rem;
   font-weight: $medium !important;
+  background-color: $gray-300 !important;
   cursor: pointer;
   &:hover {
     background-color: rgb(253, 178, 38);

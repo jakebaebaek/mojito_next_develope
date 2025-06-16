@@ -4,16 +4,21 @@ import style from "./Filter.module.scss";
 import ReturnArrow from "@public/ReturnArrow.svg";
 import Button from "../../common/button/Button";
 import RangeSlider from "@/components/main/slider/RangeSlider";
+import ReactRangeSlider from "@/components/main/slider/ReactRangeSlider";
 
 import { useEmojiStore } from "@/lib/store/emojiStore";
+import { useCocktailStore } from "@/lib/store/cocktailStore";
+import { useFilterValueStore } from "@/lib/store/filterValueStore";
 import { filterList } from "@/lib/mokdata/filterList";
 
 export default function Filter() {
   //zustand 상태관리
   const { emojiList } = useEmojiStore();
-
-  const onClickSearch = () => {
+  const { toggleBase, toggleFlavor, setSearchClicked } = useFilterValueStore();
+  const { uniqueBases, uniqueFlavors } = useCocktailStore();
+  const onClickSearch = (base: string, flavor: string) => {
     console.log("🥰버튼클릭");
+    setSearchClicked(true);
   };
 
   return (
@@ -22,38 +27,39 @@ export default function Filter() {
       <div className={`${style.tasting_wrap}`}>
         <h3>테이스팅 노트</h3>
         <div className={`${style.item_wrap}`}>
-          {filterList.tasting.map((item) => (
-            <label key={item.name}>
-              <input type="checkbox" />
-              <div className={style.checkbox_content}>
-                <img
-                  className={`${style.checkbox_emoji}`}
-                  src={
-                    emojiList.find((emoji) => emoji.name === item.emoji)?.url
-                  }
-                  alt="Emoji"
-                />
-                <span className={`${style.checkbox_txt}`}>{item.name}</span>
-              </div>
-            </label>
-          ))}
+          {uniqueFlavors?.map(
+            (item) => (
+              console.log("item", item),
+              (
+                <label key={item}>
+                  <input type="checkbox" />
+                  <div className={style.checkbox_content}>
+                    <img
+                      className={`${style.checkbox_emoji}`}
+                      src={emojiList.find((emoji) => emoji.value === item)?.url}
+                      alt="Emoji"
+                    />
+                    <span className={`${style.checkbox_txt}`}>{item}</span>
+                  </div>
+                </label>
+              )
+            )
+          )}
         </div>
       </div>
 
       <div className={`${style.base_wrap}`}>
         <h3>베이스</h3>
         <div className={`${style.item_wrap}`}>
-          {filterList.base.map((item) => (
-            <label key={item.name}>
+          {uniqueBases?.map((item) => (
+            <label key={item}>
               <input type="checkbox" />
               <div className={style.checkbox_content}>
                 <img
-                  src={
-                    emojiList.find((emoji) => emoji.name === item.emoji)?.url
-                  }
+                  src={emojiList.find((emoji) => emoji.value === item)?.url}
                   alt="Emoji"
                 />
-                <span>{item.name}</span>
+                <span>{item}</span>
               </div>
             </label>
           ))}
@@ -63,7 +69,7 @@ export default function Filter() {
       <div className={`${style.booziness_wrap}`}>
         <h3>얼마나 취할래?</h3>
         <div className={`${style.slider_wrap}`}>
-          <RangeSlider />
+          <ReactRangeSlider whatSliderIsIt="booziness" />
         </div>
       </div>
 
@@ -71,7 +77,7 @@ export default function Filter() {
         <h3>Sweet or Dry?</h3>
         <div>
           <div className={`${style.slider_wrap}`}>
-            <RangeSlider />
+            <ReactRangeSlider whatSliderIsIt="sweetness" />
           </div>
         </div>
       </div>
@@ -81,7 +87,7 @@ export default function Filter() {
           className={`${style.search_btn}`}
           text="검색"
           color="orange"
-          onClick={onClickSearch}
+          onClick={() => console.log("검색")}
         ></Button>
         <div className={`${style.return_btn}`}>
           <ReturnArrow className={`${style.return_svg}`} />

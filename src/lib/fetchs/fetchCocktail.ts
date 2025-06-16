@@ -3,6 +3,8 @@ import { TCocktail } from "@/lib/types/TCocktail";
 interface CocktailResponse {
   cocktails: TCocktail[];
   totalCount: number;
+  uniqueBases: { uniqueBases: string[] };
+  uniqueFlavors: { uniqueFlavors: string[] };
 }
 
 export const getCocktail = async (limit: number = 0,offset: number = 0): Promise<CocktailResponse> => {

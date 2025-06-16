@@ -8,13 +8,48 @@ import { useCocktailStore } from "@/lib/store/cocktailStore";
 import style from "./FilterSection.module.scss";
 import Filter from "./filter/Filter";
 import CocktailList from "@/components/main/cocktailList/CocktailList";
+import { useFilterValueStore } from "@/lib/store/filterValueStore";
+import { TCocktail } from "@/lib/types/TCocktail";
 
 export default function FilterSection() {
   const { cocktailList, totalCount } = useCocktailStore();
+  const { flavor, base, booziness, sweetness, resetFilter } =
+    useFilterValueStore();
   const { offset, setOffset } = useOffsetStore();
   const isLoading = useRef(false);
 
-  const visibleCocktails = cocktailList.slice(0, offset);
+  const [visibleCocktails, setVisibleCocktails] = useState<TCocktail[]>([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  //필터링
+  const handleFilter = () => {
+    const filterdCocktailList = cocktailList.filter((cocktail) => {
+      const matchFlavor =
+        flavor.length === 0 || flavor.some((f) => cocktail.flavor?.includes(f));
+      const matchBase =
+        base.length === 0 || base.some((b) => cocktail.base?.includes(b));
+      const matchBooziness =
+        cocktail.booziness >= booziness[0] &&
+        cocktail.booziness <= booziness[1];
+      const matchSweetness =
+        cocktail.sweetness >= sweetness[0] &&
+        cocktail.sweetness <= sweetness[1];
+
+      return matchFlavor && matchBase && matchBooziness && matchSweetness;
+    });
+    setVisibleCocktails(filterdCocktailList);
+    setIsFiltered(true);
+  };
+
+  const handelReset = () => {
+    setIsFiltered(false);
+    setVisibleCocktails(cocktailList.slice(0, offset));
+    resetFilter();
+  };
+
+  useEffect(() => {
+    if (!isFiltered) setVisibleCocktails(cocktailList.slice(0, offset));
+  }, [cocktailList, offset, isFiltered]);
 
   // 무한 스크롤
   const loadMore = useCallback(async () => {
@@ -69,7 +104,7 @@ export default function FilterSection() {
       <h1>Filter Section</h1>
       <div className={`${style.filter_card_wrap}`}>
         <div className={`${style.fitler_wrap}`}>
-          <Filter />
+          <Filter onSearch={handleFilter} onReset={handelReset} />
         </div>
         <div className={`${style.card_wrap}`}>
           <CocktailList

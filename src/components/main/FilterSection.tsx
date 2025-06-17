@@ -13,13 +13,19 @@ import { TCocktail } from "@/lib/types/TCocktail";
 
 export default function FilterSection() {
   const { cocktailList, totalCount } = useCocktailStore();
-  const { flavor, base, booziness, sweetness, resetFilter } =
-    useFilterValueStore();
+  const {
+    flavor,
+    base,
+    booziness,
+    sweetness,
+    resetFilter,
+    filterClicked,
+    setFilterClicked,
+  } = useFilterValueStore();
   const { offset, setOffset } = useOffsetStore();
   const isLoading = useRef(false);
 
   const [visibleCocktails, setVisibleCocktails] = useState<TCocktail[]>([]);
-  const [isFiltered, setIsFiltered] = useState(false);
 
   //필터링
   const handleFilter = () => {
@@ -38,18 +44,18 @@ export default function FilterSection() {
       return matchFlavor && matchBase && matchBooziness && matchSweetness;
     });
     setVisibleCocktails(filterdCocktailList);
-    setIsFiltered(true);
+    setFilterClicked(true);
   };
 
   const handelReset = () => {
-    setIsFiltered(false);
+    setFilterClicked(false);
     setVisibleCocktails(cocktailList.slice(0, offset));
     resetFilter();
   };
 
   useEffect(() => {
-    if (!isFiltered) setVisibleCocktails(cocktailList.slice(0, offset));
-  }, [cocktailList, offset, isFiltered]);
+    if (!filterClicked) setVisibleCocktails(cocktailList.slice(0, offset));
+  }, [cocktailList, offset, filterClicked]);
 
   // 무한 스크롤
   const loadMore = useCallback(async () => {

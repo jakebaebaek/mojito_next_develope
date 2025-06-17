@@ -5,7 +5,6 @@ type FilterState = {
   flavor: string[];
   booziness: number[];
   sweetness: number[];
-  searchClicked: boolean;
 
   setFlavor: (value: string) => void;
   setBase: (value: string) => void;
@@ -22,7 +21,7 @@ export const useFilterValueStore = create<FilterState>((set, get) => ({
   flavor: [],
   booziness: [0, 10],
   sweetness: [0, 10],
-  searchClicked: false,
+
   filterClicked: false,
 
   setFlavor: (value) => {
@@ -52,7 +51,7 @@ export const useFilterValueStore = create<FilterState>((set, get) => ({
     set({
       base: [],
       flavor: [],
-      searchClicked: false,
+      filterClicked: false,
       booziness: [0, 10],
       sweetness: [0, 10],
     }),

@@ -1,46 +1,50 @@
 import { create } from "zustand";
 
 type FilterState = {
-  base: string[] | []; 
-  flavor: string[] | []; 
+  base: string[];
+  flavor: string[];
   booziness: number[];
   sweetness: number[];
   searchClicked: boolean;
 
-  toggleBase: (value: string) => void;
-  toggleFlavor: (value: string) => void;
+  setFlavor: (value: string) => void;
+  setBase: (value: string) => void;
   setBooziness: (value: number[]) => void;
   setSweetness: (value: number[]) => void;
-  setSearchClicked: (val: boolean) => void;
+
   resetFilter: () => void;
 };
 
 export const useFilterValueStore = create<FilterState>((set, get) => ({
   base: [],
-  flavor: [],  
+  flavor: [],
   booziness: [0, 10],
   sweetness: [0, 10],
   searchClicked: false,
 
-  toggleBase: (val) => {
-    const current = get().base;
+  setFlavor: (value) => {
+    const current = get().flavor;
+
     set({
-      base: current.map((e) => e.includes(val))
-        ? current.filter((v) => v !== val)
-        : [...current, val],
+      flavor: current.includes(value)
+        ? current.filter((v) => v !== value)
+        : [...current, value],
     });
   },
-  toggleFlavor: (val) => {
-    const current = get().flavor;
+
+  setBase: (value) => {
+    const current = get().base;
+
     set({
-      flavor: current.map((e) => e.includes(val))
-        ? current.filter((v) => v !== val)
-        : [...current, val],
+      base: current.includes(value)
+        ? current.filter((v) => v !== value)
+        : [...current, value],
     });
-  },  
+  },
+
   setBooziness: (value) => set({ booziness: value }),
   setSweetness: (value) => set({ sweetness: value }),
-  setSearchClicked: (val) => set({ searchClicked: val }),
+
   resetFilter: () =>
     set({
       base: [],

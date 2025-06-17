@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getCocktail } from "../fetchs/fetchCocktail";
 import { TCocktail } from "@/lib/types/TCocktail";
-type TFilter = { [key: string]: string[] };
 
 // 모든 칵테일을 불러옵니다.
 type TCocktailStore = {
@@ -10,7 +9,7 @@ type TCocktailStore = {
   totalCount: number;
   hashtagCocktails: TCocktail[];
   filterdCocktailList: TCocktail[];
-  selectedFilter: TFilter;
+
   uniqueBases?: string[];
   uniqueFlavors?: string[];
 
@@ -22,7 +21,6 @@ export const useCocktailStore = create<TCocktailStore>((set, get) => ({
   totalCount: 0,
   hashtagCocktails: [],
   filterdCocktailList: [],
-  selectedFilter: {},
 
   fetchAllCocktails: async () => {
     const { cocktailList } = get();

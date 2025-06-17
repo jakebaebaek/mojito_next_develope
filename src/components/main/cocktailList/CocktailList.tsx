@@ -28,7 +28,7 @@ export default function CocktailList({
 
   useEffect(() => {
     renderCount.current += 1;
-    console.log(`CocktailList 리렌더링 횟수: ${renderCount.current}`);
+    // console.log(`CocktailList 리렌더링 횟수: ${renderCount.current}`);
   });
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function CocktailList({
 
   // 필터링 로직
   const normalizedInput = inputValue.toLowerCase().replace(/\s+/g, "");
-  console.log("필터링된 입력값:", normalizedInput);
+  // console.log("필터링된 입력값:", normalizedInput);
   const filteredCocktails = hashtagCocktails.filter((item) => {
     const nameKo = item.name?.ko?.toLowerCase().replace(/\s+/g, "") ?? "";
     const nameEn = item.name?.en?.toLowerCase().replace(/\s+/g, "") ?? "";
@@ -76,7 +76,7 @@ export default function CocktailList({
     return selectValue === "name" ? nameMatch : ingredientMatch;
   });
   const cardCount = filteredCocktails.length;
-  console.log(cardCount);
+  // console.log(cardCount);
 
   return (
     <div>

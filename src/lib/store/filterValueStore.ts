@@ -11,8 +11,10 @@ type FilterState = {
   setBase: (value: string) => void;
   setBooziness: (value: number[]) => void;
   setSweetness: (value: number[]) => void;
-
   resetFilter: () => void;
+
+  filterClicked: boolean;
+  setFilterClicked: (v: boolean) => void;
 };
 
 export const useFilterValueStore = create<FilterState>((set, get) => ({
@@ -21,6 +23,7 @@ export const useFilterValueStore = create<FilterState>((set, get) => ({
   booziness: [0, 10],
   sweetness: [0, 10],
   searchClicked: false,
+  filterClicked: false,
 
   setFlavor: (value) => {
     const current = get().flavor;
@@ -53,4 +56,8 @@ export const useFilterValueStore = create<FilterState>((set, get) => ({
       booziness: [0, 10],
       sweetness: [0, 10],
     }),
+
+  setFilterClicked: (v) => {
+    set({ filterClicked: v });
+  },
 }));

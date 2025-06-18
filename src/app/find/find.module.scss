@@ -1,8 +1,29 @@
 @import "@/styles/theme";
+@import "@/styles/mixin";
 
 .body {
   display: flex;
   flex-direction: column;
   width: 65vw;
   scroll-behavior: smooth;
+  
+  // 📱 모바일
+  @include respond(mobile) {
+    width: 90vw !important;
+  }
+  // 💻 태블릿
+  @include respond(tablet) {
+    grid-template-rows: auto;
+    width: 80vw !important;
+  }
+}
+.find_search_bar {
+  // 가운데 정렬 페이지
+  display: grid;
+  grid-template-rows: 250px;
+  place-items: center;
+  margin-bottom: 6rem;
+
+
+
 }

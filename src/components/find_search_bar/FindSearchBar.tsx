@@ -75,79 +75,75 @@ const FindSearchBar = ({
 
   return (
     <div className={`${style.Find} ${className}`}>
-      {/* 상단 */}
-      <div>
-        {/* 검색창 */}
-        <div className={style.search_space}>
-          <h3 className={`${style.hashtagSearchGuide}`}>
-            {currentHashtag.length > 1
-              ? `${
-                  hashtagList.find((tag) => currentHashtag === tag.value)
-                    ?.name ?? "😄"
-                } 카테고리 안에서 검색 중입니다🍸`
-              : "칵테일 이름 또는 재료를 검색해보세요"}
-          </h3>
+      {/* 검색창 */}
+      <div className={style.search_space}>
+        <h3 className={`${style.hashtagSearchGuide}`}>
+          {currentHashtag.length > 1
+            ? `${
+                hashtagList.find((tag) => currentHashtag === tag.value)?.name ??
+                "😄"
+              } 카테고리 안에서 검색 중입니다🍸`
+            : "칵테일 이름 또는 재료를 검색해보세요"}
+        </h3>
 
-          <form onSubmit={onSubmit} className={style.search_box}>
-            <div className={style.inputSearchBox}>
-              <div className="select">
-                <select
-                  onChange={(e) => {
-                    onSelectChange(e.target.value);
-                    console.log(e.target.value);
-                  }}
-                >
-                  <option value="name">이름검색</option>
-                  <option value="ingredient">재료검색</option>
-                </select>
-              </div>
-              <input
-                className={style.search_input}
-                onChange={(e) => {
-                  setSearchText(e.target.value);
-                }}
-                maxLength={20}
-                type="text"
-                value={searchText}
-              />
-              <div className={style.search_icon}>
-                <SearchIcon />
-              </div>
-            </div>
-          </form>
-        </div>
+        <form onSubmit={onSubmit} className={style.search_box}>
+          <div className={`${style.selectBox}`}>
+            <select
+              onChange={(e) => {
+                onSelectChange(e.target.value);
+                console.log(e.target.value);
+              }}
+            >
+              <option value="name">이름검색</option>
+              <option value="ingredient">재료검색</option>
+            </select>
+          </div>
+          <input
+            className={style.search_input}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+            maxLength={20}
+            spellCheck={false}
+            type="text"
+            value={searchText}
+          />
+          <div className={style.search_icon}>
+            <SearchIcon />
+          </div>
+        </form>
+      </div>
 
-        {/* 해시태그 */}
-        <div className={style.tags_box}>
-          {hashtagList.map((hashtag) => (
-            <label key={hashtag._id}>
-              <input
-                type="checkbox"
-                name="check"
-                onChange={onChangeCheckbox}
-                value={hashtag.value}
-                className={style.cBox}
-              />
-              <span
-                className={
-                  hashtag.value === "top100"
-                    ? `${style.TOP} ${style.hashtag}`
-                    : style.hashtag
+      {/* 해시태그 */}
+      <div className={style.tags_box}>
+        {hashtagList.map((hashtag) => (
+          <label key={hashtag._id}>
+            <input
+              type="checkbox"
+              name="check"
+              onChange={onChangeCheckbox}
+              value={hashtag.value}
+              className={style.cBox}
+            />
+            <span
+              className={
+                hashtag.value === "top100"
+                  ? `${style.TOP} ${style.hashtag}`
+                  : style.hashtag
+              }
+            >
+              {hashtag.name}
+              <img
+                alt="hashtagEmoji"
+                src={
+                  emojiList.find((emoji) => hashtag.emoji === emoji.name)
+                    ?.url ?? "😄"
                 }
-              >
-                {hashtag.name}
-                <img
-                  alt="hashtagEmoji"
-                  src={
-                    emojiList.find((emoji) => hashtag.emoji === emoji.name)
-                      ?.url ?? "😄"
-                  }
-                  className={style.hash_emoji}
-                />
-              </span>
-            </label>
-          ))}
-        </div>
+                className={style.hash_emoji}
+              />
+            </span>
+          </label>
+        ))}
       </div>
     </div>
   );

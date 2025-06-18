@@ -77,6 +77,7 @@ const Storage = () => {
       return 0;
     });
   }, [cocktailCardList, filterOption]);
+
   return (
     <div className={style.container}>
       <Navigation />
@@ -119,7 +120,13 @@ const Storage = () => {
       </div>
 
       {/* 렌더링 영역 */}
-      <div className={style.card_container}>
+      <div
+        className={`${
+          activeTab === "recorded"
+            ? style.recorded_card_container
+            : style.favorite_card_container
+        }`}
+      >
         {sortedMemoList.length === 0 ? (
           <div className={`${style.empty_message}`}>
             <h3>

@@ -1,9 +1,5 @@
 @import "@/styles/theme";
-.card_page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+@import "@/styles/mixin";
 
 .card {
   width: 44rem;
@@ -16,17 +12,13 @@
   .desc_link {
     display: flex;
     flex-direction: row;
-    // justify-content: center;
-    // align-items: center;
     position: relative;
-
     .info_wrap {
       display: flex;
       position: relative;
       align-items: center;
       flex-direction: column;
       width: 19rem;
-
       .name {
         margin-top: 2rem;
         font-size: 1.6rem;
@@ -38,6 +30,33 @@
         object-fit: contain;
         position: absolute;
         top: 25%;
+      }
+      .star_wrap {
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom:-0.5rem;
+        right: 2.5rem;
+        span, svg {
+          position: absolute;
+        }
+        .rating_number {
+          z-index: 2;
+          color: black; // 필요시 조절
+          font-size: 1.7rem;
+          pointer-events: none;
+        }
+        .star {
+          z-index: 1;
+          fill: white;
+          transition: fill 0.2s;
+
+          &.filled, &.hovered {
+            fill: orange;
+          }
+        }
       }
     }
 
@@ -78,58 +97,32 @@
       }
     }
   }
-}
-
-.heartAndStar_wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  gap: 2rem;
-}
-.star_wrap {
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom:-0.5rem;
-  right: 2.5rem;
-
-  span, svg {
+  .heartAndStar_wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    gap: 2rem;
+    .heart {
+      stroke-width: 2;
+      cursor: pointer;
+
+      &.unClicked {
+        fill: white;
+        stroke: $gray-200;
+      }
+
+      &.clicked {
+        fill: $main-color;
+        stroke: $main-color;
+      }
+    }
   }
 }
 
-.rating_number {
-  z-index: 2;
-  color: black; // 필요시 조절
-  font-size: 1.7rem;
-  pointer-events: none;
-}
 
-.star {
-  z-index: 1;
-  fill: white;
-  transition: fill 0.2s;
 
-  &.filled, &.hovered {
-    fill: orange;
-  }
-}
-.heart {
-  stroke-width: 2;
-  cursor: pointer;
 
-  &.unClicked {
-    fill: white;
-    stroke: $gray-200;
-  }
 
-  &.clicked {
-    fill: $main-color;
-    stroke: $main-color;
-  }
-}

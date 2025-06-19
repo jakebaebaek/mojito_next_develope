@@ -3,12 +3,18 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { theme } from "@/styles/theme";
 import { useFilterValueStore } from "@/lib/store/filterValueStore";
+import { filterData } from "@/lib/mokdata/filterData";
+import { useEmojiStore } from "@/lib/store/emojiStore";
+import Image from "next/image";
+import style from "./RangeSlider.module.scss";
 
 type Props = {
   whatSliderIsIt: "booziness" | "sweetness";
 };
 
 export default function RangeSlider({ whatSliderIsIt }: Props) {
+  const { emojiList } = useEmojiStore();
+
   // 알코올 도수 슬라이더
   const alcohol = useFilterValueStore((state) => state.booziness);
   const setAlcohol = useFilterValueStore((state) => state.setBooziness);
@@ -29,6 +35,32 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
       console.log("sweetness", newValue);
     }
   };
+  console.log(emojiList);
+  const labelTxt = (value: number) => {
+    const emojiName =
+      whatSliderIsIt === "booziness"
+        ? filterData.booziness?.find((b) => b.value === value)?.emoji
+        : filterData.sweetness?.find((s) => s.value === value)?.emoji;
+
+    const emojiUrl = emojiList.find((emoji) => emoji.name === emojiName)?.url;
+
+    return (
+      <div className={`${style.label_wrap}`}>
+        <div>{value}</div>
+        <div className={`${style.emoji_imgWrap}`}>
+          {emojiUrl && emojiName && (
+            <Image
+              src={emojiUrl}
+              fill
+              sizes="(max-width: 2rem) 100vw"
+              alt={emojiName}
+            ></Image>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Box sx={{ width: 300 }}>
       <Slider
@@ -38,8 +70,12 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
         value={whatSliderIsIt === "booziness" ? alcohol : sweetness}
         onChange={handleChange}
         marks={[
-          { value: 0, label: "0" },
-          { value: 10, label: "10" },
+          {
+            value: 0,
+            label: labelTxt(0),
+          },
+          { value: 5, label: labelTxt(5) },
+          { value: 10, label: labelTxt(10) },
         ]}
         valueLabelDisplay="auto"
         getAriaLabel={() => "Range slider"}

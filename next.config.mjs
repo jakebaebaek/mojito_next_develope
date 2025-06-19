@@ -2,6 +2,13 @@
 const nextConfig = {
   images: {
     domains: ["mojito-cocktail-img.s3.ap-northeast-2.amazonaws.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "s3.ap-northeast-2.amazonaws.com",
+        pathname: "/mojito-emoji-img/**",
+      },
+    ],
   },
   webpack: (config) => {
     config.module.rules.push({

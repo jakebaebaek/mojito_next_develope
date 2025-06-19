@@ -9,7 +9,7 @@ import RangeSlider from "@/components/main/slider/RangeSlider";
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { useFilterValueStore } from "@/lib/store/filterValueStore";
-import { filterList } from "@/lib/mokdata/filterList";
+import { filterData } from "@/lib/mokdata/filterData";
 
 type TFilter = {
   onSearch: () => void;
@@ -47,6 +47,7 @@ export default function Filter({ onSearch, onReset }: TFilter) {
                       src={getEmojiUrl(item)!}
                       alt="Emoji"
                       fill
+                      sizes="(max-width: 2rem) 100vw"
                     />
                   )}
                 </div>
@@ -75,10 +76,13 @@ export default function Filter({ onSearch, onReset }: TFilter) {
                       src={getEmojiUrl(item)!}
                       alt="Emoji"
                       fill
+                      sizes="(max-width: 2rem) 100vw"
                     />
                   )}
                 </div>
-                <span>{item}</span>
+                <span className={`${style.checkbox_txt}`}>
+                  {filterData.base.find((b) => b.value === item)?.name}
+                </span>
               </div>
             </label>
           ))}

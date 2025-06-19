@@ -21,12 +21,15 @@ export default function Card({ id, name, img_url }: TCardProps) {
       <div className={`${style.card}`}>
         <Link className={`${style.desc_link}`} href={`/desc/${id}`}>
           <div className={`${style.name}`}>{name?.ko}</div>
-          <Image
-            className={`${style.img}`}
-            src={img_url}
-            alt="Cocktail Image"
-            fill
-          />
+          <div className={`${style.imgWrap}`}>
+            <Image
+              className={`${style.img}`}
+              src={img_url}
+              alt="Cocktail Image"
+              fill
+              sizes="(max-width: 13rem) 100vw"
+            />
+          </div>
         </Link>
         <Heart
           className={`${style.heart} ${

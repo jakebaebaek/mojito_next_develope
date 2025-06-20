@@ -1,4 +1,5 @@
 @import "@/styles/theme";
+@import "@/styles/mixin";
 
 .container {
   display: grid;
@@ -17,7 +18,7 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      padding-left: 4rem;
+      padding-left: 7rem;
       padding-right: 4rem;
       .cocktailName {
         font-size: 5rem;
@@ -43,10 +44,14 @@
           }
         }
       }
+      @include respond(mobile) {
+        .cocktailName {
+        }
+      }
     }
     .cocktailInfo {
       display: grid;
-      height: 55rem;
+      min-height: 55rem;
       grid-template-columns: 1fr 1.5fr;
       grid-template-rows: auto auto;
       gap: 2rem;
@@ -56,7 +61,6 @@
         grid-row: 1 / span 2; 
         display: flex;
         margin: auto;
-        position: relative;
       }
       .imgBox img {
         max-width: 100%;
@@ -179,8 +183,8 @@
     align-items: center;
     gap: 3rem;
     padding: 7rem;
-    width: 50vw;
     margin: 0 auto;
+    width: 100%;
     .reviewTitle {
       font-size: 2rem;
       font-weight: 700;
@@ -188,7 +192,7 @@
     }
     .reviewBox {
       width: 100%;
-      max-width: 600px;
+      max-width: 65rem;
       border-radius: 1.5rem;
       box-shadow: $shadow;
       display: flex;
@@ -202,6 +206,7 @@
         justify-content: center;
         align-items: center;
         gap: 0.5rem;
+        width: auto;
         .star {
           fill: rgb(255, 255, 255);
           transition: fill 0.2s;
@@ -215,6 +220,7 @@
         }
       }
       .reviewText {
+        padding: 0 3rem 0 3rem;
         .reviewText textarea  {
           width: 100%;
           padding: 3rem;
@@ -264,5 +270,88 @@
     height: 2px;
     background-color:$gray-100;
     margin: 1rem 0;
+  }
+  @include respond(mobile) {
+    .upper {
+      .nametagBox {
+        padding: 0;
+        .cocktailName {
+          font-size: 4rem;
+          justify-content: center;
+          text-align: center;
+        }
+        h2 {
+          text-align: center;
+        }
+      }
+      .cocktailInfo {
+        grid-template-columns: 1fr; // 1열로 강제 전환
+        grid-template-rows: auto auto auto; // img, bf, slider 순
+        .imgBox {
+          grid-column: 1 / -1;
+          grid-row: 1;
+          justify-content: center;
+          height: 30rem;
+        }
+        .bf {
+          grid-column: 1 / -1;
+          grid-row: 2;
+        }
+        .slider {
+          grid-column: 1 / -1;
+          grid-row: 3;
+        }
+      }
+    }
+  }
+  @include respond(tablet) {
+    .upper {
+      .nametagBox {
+        padding: 0 !important;
+        .cocktailName {
+          font-size: 5rem;
+          justify-content: center;
+          text-align: center;
+        }
+        h2 {
+          text-align: center;
+        }
+      }
+      .cocktailInfo {
+        grid-template-columns: 1fr; // 1열로 강제 전환
+        grid-template-rows: auto auto auto; // img, bf, slider 순
+        .cocktailName {
+          font-size: 2rem;
+        }
+        .imgBox {
+          grid-column: 1 / -1;
+          grid-row: 1;
+          justify-content: center;
+          img {
+            max-height: 40rem;
+          }
+        }
+        .bf {
+          grid-column: 1 / -1;
+          grid-row: 2;
+        }
+        .slider {
+          grid-column: 1 / -1;
+          grid-row: 3;
+        }
+      }
+    }
+  }
+  @include respond(laptop) {
+    .upper {
+      width: 80%;
+      max-width: 90rem;
+      .nametagBox {
+        padding-left: 8rem;
+        .cocktailName {
+          font-size: 5rem;
+        }
+      }
+    }
   }
 }

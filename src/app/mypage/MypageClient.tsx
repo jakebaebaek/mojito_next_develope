@@ -47,7 +47,6 @@ export default function MypageClient() {
   };
   return (
     <div className={`${style.container}`}>
-      <Navigation />
       <div>
         {profileImageState ? (
           <img
@@ -63,7 +62,7 @@ export default function MypageClient() {
       </div>
       <div className={`${style.mypage_buttons}`}>
         <button className={`${style.button}`} onClick={openProfileModal}>
-          <Setting className={`${style.svgIcon}`} />
+          <Setting />
           <h4> 프로필 수정 </h4>
         </button>
         <button
@@ -71,7 +70,7 @@ export default function MypageClient() {
           className={`${style.button}`}
           onClick={handleLogout}
         >
-          <Logout className={`${style.svgIcon}`} />
+          <Logout />
           <h4> 로그아웃 </h4>
         </button>
       </div>

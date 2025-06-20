@@ -1,86 +1,98 @@
 @import "@/styles/theme";
+@import "@/styles/mixin";
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.profile_image {
-  height: 8rem;
-  font-size: 11rem;;
-}
-.nickname {
-  margin-bottom: 2rem;
-  
-  h1 {
-    font-weight: $light;
+  .profile_image {
+    height: 8rem;
+    font-size: 11rem;;
   }
-}
-.mypage_buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  h4 {
-    font-weight: $light;
+  .nickname {
+    margin-bottom: 2rem;
+    h1 {
+      font-weight: $light;
+    }
   }
-}
-.button {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black; 
-  border-radius: 2rem;
-  background-color: white;
-  width: 15rem;
-  height: 4rem;
-  padding: 0.5rem 2rem 0.5rem;
-  margin: 2rem;
-  gap: 1rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $gray-100;
-    transition: 0.3s;
+  .mypage_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    h4 {
+      font-weight: $light;
+    }
   }
-}
+  .button {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black; 
+    border-radius: 2rem;
+    background-color: white;
+    width: 15rem;
+    height: 4rem;
+    padding: 0.5rem 2rem 0.5rem;
+    margin: 2rem;
+    gap: 1rem;
+    cursor: pointer;
 
-.cocktail_menu {
-  display: flex;
-  flex-direction: row;
-  gap: 3rem;
-}
-
-.favorite_cocktail,
-.recorded_cocktail {
-  justify-content: center;
-  text-align: center;
-  padding: 3rem 4rem 3rem 4rem;
-  background-color: white;
-  border-radius: 2rem;
-  box-shadow: $shadow;
-  position: relative;
-  &:hover {
-    background-color: rgb(247, 242, 229);
-    transition: 0.3s;
-  }
-}
-
-.delete_account {
-  margin-top: 5rem;
-  border-radius: 10rem;
-  cursor: pointer;
-  h4 {
-    padding: 2rem 4rem 2rem 4rem;
-    border-radius: 2rem;;
-    color: $gray-300;
     &:hover {
-      color: rgb(255, 39, 39);
+      background-color: $gray-100;
       transition: 0.3s;
-      background-color: rgb(255, 232, 232);
+    }
+  }
+  .cocktail_menu {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    .favorite_cocktail,
+    .recorded_cocktail {
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 4rem 3rem 4rem;
+      background-color: white;
+      border-radius: 2rem;
+      box-shadow: $shadow;
+      position: relative;
+      &:hover {
+        background-color: rgb(247, 242, 229);
+        transition: 0.3s;
+      }
+    }
+  }
+  .delete_account {
+    margin-top: 5rem;
+    border-radius: 10rem;
+    cursor: pointer;
+    h4 {
+      padding: 2rem 4rem 2rem 4rem;
+      border-radius: 2rem;;
+      color: $gray-300;
+      &:hover {
+        color: rgb(255, 39, 39);
+        transition: 0.3s;
+        background-color: rgb(255, 232, 232);
+      }
+    }
+  }
+
+  @include respond(mobile) {
+    .button {
+      h4 {
+        font-size: 1.5rem;
+      }
     }
   }
 }
+
+
+
+
+
+
+

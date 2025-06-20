@@ -1,18 +1,21 @@
 @import "@/styles/theme";
+@import "@/styles/mixin";
 
 .Find {
   // 가운데 정렬 페이지
-  display: grid;
-  grid-template-rows: 250px;
-  place-items: center;
-  margin-bottom: 6rem;
-  // 검색창
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  // 해쉬태그 전까지, 칵테일 검색 문구 및 검색 바까지. 해쉬태그 포함x
   .search_space {
+    width: 100% ; 
     margin-top: 5rem;
     display: grid;
     place-items: center;
-
-    h3 {
+    // "칵테일 이름 또는 재료를 검색해보세요" 문구 스타일
+    .hashtagSearchGuide {
       font-size: 2rem;
       color: rgb(136, 136, 136);
       margin-bottom: 2rem;
@@ -20,83 +23,64 @@
     }
   }
 
-  // form 태그 스타일
+  // form 태그 스타일, 문구를 제외한 검색 바 전체를 감싸는 form 태그 스타일
   .search_box {
-    width: 75rem;
+    width: 100rem;
     height: 4.5rem;
-    justify-content: center;
+    display: flex;
+    align-items: center;
     border: 1px solid #dcdcdc;
-    border-radius: 20px;
+    border-radius: 2rem;
     box-shadow: 1px 1px 8px 1px #dcdcdc;
-
-    // select 태그 스타일
-    select {
-      flex: 2;
-      -ms-appearance: none;
-      width: 10rem;
-      text-align: center;
-      margin-left: 1rem;
-      outline: 0;
-      border-color: white;
-      box-shadow: none;
-      font-size: 10px;
-      position: relative;
-      display: flex;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 1.5rem;
-    }
-
-    option {
-      font-size: 15px;
-    }
-
-    // input 태그 스타일
-    .search_input {
-      flex: 6;
-      border: none;
-      outline: none;
-      background: none;
-      font-size: 18px;
-      transition: 0.4s;
-      line-height: 40px;
-      padding-bottom: 0.4rem;
-      padding-left: 3rem;
-      position: relative;
-      display: flex;
-    }
-
-    .inputSearchBox {
-      display: flex;
-      flex-direction: row;
-        .search_icon {
-          flex: 1;
-          position: relative;
+      // select 태그 스타일
+      .selectBox {
+        flex: 1.6;
+        position: relative;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        select {
+          border-color: transparent;
+          font-size: 1.7rem;
+          background-color: transparent;
           cursor: pointer;
-          svg {
-            width: 25px;
-            position: absolute;
-            right: 3rem;
+          &:hover {
+            color: $gray-300;
+            transition: 0.2s ease;
+            border-radius: 2rem;
+          }
+          &:focus {
+            outline: none;
           }
         }
-    }
-
-    .search_btn {
-      color: var(--main-color);
-      float: right;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-right: 10px;
-      margin-top: 10px;
-      transform: scale(1.5); // 사이즈
-    }
+        option {
+          text-align: center;
+        }
+      }
+      .search_input {
+        flex: 6;
+        border: none;
+        outline: none;
+        text-align: left;
+        font-size: 1.8rem;
+        padding-left: 3rem;
+        line-height: 2rem;
+      }
+      .search_icon {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        svg {
+          width: 2.5rem;
+        }
+      }
   }
 
   // 해시태그
   .tags_box {
     margin-top: 3rem;
-    width: 82rem;
+    width: 80%;
     display: flex;
     grid-template-columns: repeat(6, auto);
     flex-wrap: wrap;
@@ -144,10 +128,47 @@
       }
     }
   }
-.hashtagSearchGuide {
-  font-size: 2rem;
-  color: rgb(136, 136, 136);
-  margin-bottom: 2rem;
-  user-select: none;
-}
+
+  // 📱 모바일
+  @include respond(mobile) {
+    .search_box {
+      width: 85vw;
+      height: 6rem;
+    }
+
+    .tags_box {
+      width: 100%;
+      gap: 1rem;
+    }
+  }
+
+  // 💻 태블릿
+  @include respond(tablet) {
+    .search_space {
+      width: 85vw;
+    }
+    .search_box {
+      width: 100%;
+      height: 5.5rem;
+    }
+    .tags_box {
+      width: 100%;
+      gap: 1.2rem;
+    }
+  }
+  @include respond(laptop) {
+    .search_box {
+      width: 85vw;
+    }
+    .search_box {
+      width: 90%;
+      max-width: 100rem;
+    }
+    .tags_box {
+      width: 90%;
+      gap: 1.2rem;
+      max-width: 100rem;
+
+    }
+  }
 }

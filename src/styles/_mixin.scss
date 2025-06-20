@@ -6,10 +6,15 @@
       @content;
     }
   } @else if $breakpoint == tablet {
-    @media (min-width: $mobile) and (max-width: #{$pc - 1px}) {
+    @media (min-width: $mobile) and (max-width: #{$laptop - 1px}) {
       @content;
     }
-  } @else if $breakpoint == pc {
+  } @else if $breakpoint == laptop {
+    @media (min-width: $tablet) and (max-width: #{$pc - 1px}) {
+      @content;
+    }
+  } 
+  @else if $breakpoint == pc {
     @media (min-width: $pc) {
       @content;
     }

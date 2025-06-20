@@ -1,22 +1,27 @@
 @import "@/styles/theme";
+@import "@/styles/mixin";
 
-.nulldata {
-  font-size: 48px;
-  display: block;
-  text-align: center;
-  color: #ff6347;
+.cocktail_length {
+  position:relative;
+  font-size: 1.5rem;
+  color: $gray-400;
+  margin-bottom: 1rem;
+  left: 2rem;
 }
-
 .cocktailList {
   display: grid;
+  justify-items: center;
+  align-items: center;
   grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); 
   width: 100%;
   box-sizing: border-box;
   padding: 2rem 1rem;
   gap: 3rem;
 }
-.cocktail_length {
-  font-size: 1.5rem;
-  color: $gray-400;
-  margin-bottom: 1rem;
+
+.nulldata {
+  font-size: 48px;
+  display: block;
+  text-align: center;
+  color: #ff6347;
 }

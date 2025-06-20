@@ -62,7 +62,7 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
   };
 
   return (
-    <Box sx={{ width: 300 }}>
+    <Box>
       <Slider
         min={0}
         max={10}
@@ -74,6 +74,7 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
             value: 0,
             label: labelTxt(0),
           },
+          { value: 1 },
           { value: 5, label: labelTxt(5) },
           { value: 10, label: labelTxt(10) },
         ]}

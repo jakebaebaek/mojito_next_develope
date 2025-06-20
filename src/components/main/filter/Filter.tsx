@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import style from "./Filter.module.scss";
 import ReturnArrow from "@public/ReturnArrow.svg";
 import Button from "../../common/button/Button";
@@ -8,7 +9,7 @@ import RangeSlider from "@/components/main/slider/RangeSlider";
 import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { useFilterValueStore } from "@/lib/store/filterValueStore";
-import { filterList } from "@/lib/mokdata/filterList";
+import { filterData } from "@/lib/mokdata/filterData";
 
 type TFilter = {
   onSearch: () => void;
@@ -20,6 +21,10 @@ export default function Filter({ onSearch, onReset }: TFilter) {
   const { emojiList } = useEmojiStore();
   const { flavor, base, setFlavor, setBase } = useFilterValueStore();
   const { uniqueBases, uniqueFlavors } = useCocktailStore();
+
+  const getEmojiUrl = (item: string): string | undefined => {
+    return emojiList.find((e) => e.value === item)?.url;
+  };
 
   return (
     <div className={`${style.filter_box}`}>
@@ -35,11 +40,17 @@ export default function Filter({ onSearch, onReset }: TFilter) {
                 checked={flavor.includes(item)}
               />
               <div className={style.checkbox_content}>
-                <img
-                  className={`${style.checkbox_emoji}`}
-                  src={emojiList.find((emoji) => emoji.value === item)?.url}
-                  alt="Emoji"
-                />
+                <div className={style.checkbox_imgWrap}>
+                  {getEmojiUrl(item) && (
+                    <Image
+                      className={style.checkbox_emoji}
+                      src={getEmojiUrl(item)!}
+                      alt="Emoji"
+                      fill
+                      sizes="(max-width: 2rem) 100vw"
+                    />
+                  )}
+                </div>
                 <span className={`${style.checkbox_txt}`}>{item}</span>
               </div>
             </label>
@@ -58,11 +69,20 @@ export default function Filter({ onSearch, onReset }: TFilter) {
                 checked={base.includes(item)}
               />
               <div className={style.checkbox_content}>
-                <img
-                  src={emojiList.find((emoji) => emoji.value === item)?.url}
-                  alt="Emoji"
-                />
-                <span>{item}</span>
+                <div className={style.checkbox_imgWrap}>
+                  {getEmojiUrl(item) && (
+                    <Image
+                      className={style.checkbox_emoji}
+                      src={getEmojiUrl(item)!}
+                      alt="Emoji"
+                      fill
+                      sizes="(max-width: 2rem) 100vw"
+                    />
+                  )}
+                </div>
+                <span className={`${style.checkbox_txt}`}>
+                  {filterData.base.find((b) => b.value === item)?.name}
+                </span>
               </div>
             </label>
           ))}

@@ -1,8 +1,14 @@
-@import "@/styles/theme";
+// @import "@/styles/theme";
+$mobile: 575px;
+$mobile-landscape: 932px; //아이폰 14프로맥스 기준
+$tablet: 720px;
+$laptop: 1024px;
+$pc: 1440px;
 
 @mixin respond($breakpoint) {
   @if $breakpoint == mobile {
-    @media (max-width: $mobile) {
+    @media (max-width: $mobile) and (orientation: portrait),
+      (max-width: $mobile-landscape) and (orientation: landscape) {
       @content;
     }
   } @else if $breakpoint == tablet {
@@ -13,8 +19,7 @@
     @media (min-width: $tablet) and (max-width: #{$pc - 1px}) {
       @content;
     }
-  } 
-  @else if $breakpoint == pc {
+  } @else if $breakpoint == pc {
     @media (min-width: $pc) {
       @content;
     }

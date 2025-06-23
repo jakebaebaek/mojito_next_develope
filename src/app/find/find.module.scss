@@ -3,10 +3,12 @@
 
 .body {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 65vw;
+  margin: 0 auto;
   scroll-behavior: smooth;
-  
+
   // 📱 모바일
   @include respond(mobile) {
     width: 90vw !important;
@@ -23,7 +25,4 @@
   grid-template-rows: 250px;
   place-items: center;
   margin-bottom: 6rem;
-
-
-
 }

@@ -45,3 +45,30 @@ export async function POST(request: Request) {
     );
   }
 }
+export async function GET(request: Request) {
+  try {
+    connectDB();
+
+    const reqHeaders = headers();
+    const cookie = reqHeaders.get("cookie") || "";
+    const req = new NextRequest("http://localhost", { headers: { cookie } });
+    const token = await getToken({ req, secret });
+
+    if (!token) {
+      return NextResponse.json({ error: "인증 실패" }, { status: 401 });
+    }
+
+    const user = await Member.findById(token.id);
+    if (!user) {
+      return NextResponse.json({ error: "사용자 없음" }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      nickname: user.nickname,
+      profileImage: user.profileImage,
+    });
+  } catch (error) {
+    console.error("GET /api/profile 에러:", error);
+    return NextResponse.json({ error: "서버 오류" }, { status: 500 });
+  }
+}

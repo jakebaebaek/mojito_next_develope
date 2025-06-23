@@ -162,16 +162,6 @@ export default function Desc({}) {
     return cocktail.flavor.some((f) => emoji.value.includes(f));
   });
 
-  console.log("🍹 cocktailFlavorEmoji", cocktailFlavorEmoji);
-  console.log("🍹 cocktailBaseEmoji", cocktailBaseEmoji);
-  console.log("🍹 cocktail의 base", cocktail?.base);
-  console.log("base 타입 확인:", typeof cocktail?.base, cocktail?.base);
-  console.log(
-    "emoji의 value ",
-    emojiList[0].value,
-    "emoji의 타입",
-    typeof emojiList[0].value
-  );
   // 데이터가 없는 경우 처리
   if (!cocktail) {
     return <div>칵테일 정보를 찾을 수 없습니다.</div>;

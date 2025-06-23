@@ -48,7 +48,6 @@ export default function FilterSection() {
   };
 
   const handelReset = () => {
-    setFilterClicked(false);
     setVisibleCocktails(cocktailList.slice(0, offset));
     resetFilter();
   };

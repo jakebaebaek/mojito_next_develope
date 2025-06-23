@@ -28,11 +28,10 @@
       white-space: pre-wrap;
       z-index: 1;
     }
-    .img {
+    .imgWrap {
       height: 15rem;
-      object-fit: contain;
-      position: absolute;
-      top: 25%;
+      aspect-ratio: 2 / 3; //비율
+      position: relative;
     }
   }
 

@@ -19,11 +19,6 @@ html {
   }
 }
 
-body {
-  font-size: 1.6rem;
-  margin-top: 7rem; //헤더크기 만큼 내려옴
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -35,7 +30,7 @@ body {
 }
 
 body {
-  display: flex;
-  justify-content: center;
+  font-size: 1.6rem;
+  margin-top: 7rem; //헤더크기 만큼 내려옴
   height: 100vh;
 }

@@ -106,16 +106,16 @@ export default function Filter({ onSearch, onReset }: TFilter) {
       </div>
 
       <div className={`${style.btn_wrap}`}>
+        <div className={`${style.return_btn}`} onClick={onReset}>
+          <ReturnArrow className={`${style.return_svg}`} />
+          <span className={`${style.return_txt}`}>초기화</span>
+        </div>
         <Button
           className={`${style.search_btn}`}
           text="검색"
           color="orange"
           onClick={onSearch}
         ></Button>
-        <div className={`${style.return_btn}`} onClick={onReset}>
-          <ReturnArrow className={`${style.return_svg}`} />
-          <span className={`${style.return_txt}`}>초기화</span>
-        </div>
       </div>
     </div>
   );

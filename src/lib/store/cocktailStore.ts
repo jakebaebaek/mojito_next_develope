@@ -30,8 +30,7 @@ export const useCocktailStore = create<TCocktailStore>((set, get) => ({
       Array.isArray(item.hashtag) ? item.hashtag.length !== 0 : false
     );
     const { uniqueBases, uniqueFlavors } = response;
-    console.log("이게 칵테일의 base와 flavor", uniqueBases, uniqueFlavors);
-    console.log("이게 칵테일 response", response);
+
     set({
       cocktailList: response.cocktails,
       totalCount: response.totalCount,

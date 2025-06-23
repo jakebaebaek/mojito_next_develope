@@ -10,6 +10,7 @@ import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { useFilterValueStore } from "@/lib/store/filterValueStore";
 import { filterData } from "@/lib/mokdata/filterData";
+import { useState } from "react";
 
 type TFilter = {
   onSearch: () => void;

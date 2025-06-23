@@ -2,20 +2,6 @@
 @import "@/styles/mixin";
 
 .filter_box {
-  box-shadow: $shadow;
-  border-radius: 0 2rem 2rem 0;
-  width: 42rem;
-  height: 100vh;
-  padding: 0rem 5rem;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-
-  position: sticky;
-  left: 0rem;
-  top: 7rem;
-
   .tasting_wrap {
     width: 100%;
   }
@@ -28,6 +14,10 @@
     font-size: 1.8rem;
     font-weight: $bold;
     user-select: none;
+
+    @include respond(mobile) {
+      margin-top: 2.2rem;
+    }
   }
 
   .item_wrap {
@@ -35,6 +25,10 @@
     display: grid;
     grid-template-columns: repeat(2, auto);
     gap: 2rem 3rem;
+
+    @include respond(mobile) {
+      gap: 1rem 2rem;
+    }
   }
 
   label {
@@ -102,12 +96,30 @@
     align-items: center;
     gap: 1rem;
 
-    .return_svg {
-      // height: 1.4rem;
-    }
-
     .return_txt {
       color: $main-color;
     }
+  }
+
+  @include respond(mobile) {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+
+    .search_btn {
+      width: 20rem;
+    }
+
+    .return_btn {
+      margin: 0rem;
+    }
+  }
+}
+
+@include respond(mobile) {
+  .filter_box {
+    position: relative;
   }
 }

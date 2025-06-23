@@ -9,7 +9,6 @@ import style from "./FilterSection.module.scss";
 import Filter from "./filter/Filter";
 import CocktailList from "@/components/main/cocktailList/CocktailList";
 import { useFilterValueStore } from "@/lib/store/filterValueStore";
-import { TCocktail } from "@/lib/types/TCocktail";
 import useIsMobile from "@/lib/hooks/useIsMobile";
 import Close from "@public/Close.svg";
 
@@ -30,10 +29,7 @@ export default function FilterSection() {
   const isLoading = useRef(false);
   const isMobile = useIsMobile();
 
-  const [visibleCocktails, setVisibleCocktails] = useState<TCocktail[]>([]);
   const [filterOpen, setFilterOpen] = useState(false);
-
-  console.log("🤖", isMobile);
 
   //필터링
   const handleFilter = () => {

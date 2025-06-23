@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { signIn, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUserStore } from "@/lib/store/userStore";
 import { getProfile } from "@/lib/fetchs/fetchProfile";
@@ -14,6 +15,7 @@ export default function LoginBtn() {
   const { data: session, status } = useSession();
   const [isClicked, setIsClicked] = useState(false);
   const { profileImageState, setProfile } = useUserStore();
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -50,7 +52,12 @@ export default function LoginBtn() {
 
   if (session) {
     return (
-      <Link href="/mypage" className={style.after_login_btn}>
+      <Link
+        href="/mypage"
+        className={`${style.after_login_btn} ${
+          pathname === "/mypage" ? style.active : ""
+        }`}
+      >
         {profileImageState ? (
           <Image
             src={profileImageState}

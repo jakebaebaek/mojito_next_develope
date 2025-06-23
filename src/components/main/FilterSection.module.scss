@@ -5,7 +5,7 @@
   height: 110rem;
   margin-bottom: 10rem;
   text-wrap: nowrap;
-  padding-top: 10rem;
+  padding-top: 7rem;
 
   h1 {
     width: fit-content;
@@ -20,9 +20,7 @@
     grid-template-columns: 1fr 2.5fr;
     column-gap: 2rem;
     width: 100%;
-    padding-top: 2rem;
     // overflow: auto;
-    top: 7rem;
   }
 
   //pc 필터
@@ -37,8 +35,8 @@
     flex-direction: column;
     justify-items: center;
     position: sticky;
+    top: 7rem;
     left: 0rem;
-    top: 0rem;
   }
 
   //모바일

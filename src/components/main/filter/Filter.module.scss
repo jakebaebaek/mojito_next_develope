@@ -38,7 +38,6 @@
       display: none;
 
       &:checked + .checkbox_content {
-        // border: 0.1rem solid $main-color;
         box-shadow: 0rem 0rem 0.8rem rgba(255, 139, 7, 0.559);
       }
     }
@@ -48,7 +47,6 @@
       justify-content: center;
       align-items: center;
       box-shadow: $shadow;
-      // border: 0.2rem solid black;
       border-radius: 1rem;
       font-size: 1.4rem;
 
@@ -71,26 +69,30 @@
 }
 .slider_wrap {
   margin-top: 2rem;
+  width: 96%;
+  margin: 0 auto;
 }
 .sweet_wrap {
   width: 100%;
 }
 
 .btn_wrap {
+  display: flex;
   width: 100%;
-  margin-top: 4rem;
+  margin-top: 6rem;
+  align-items: center;
   justify-items: center;
+  justify-content: space-between;
 
   .search_btn {
     cursor: pointer;
     width: 100%;
     position: relative;
+    margin-left: 6rem;
   }
 
   .return_btn {
     cursor: pointer;
-    margin-top: 2rem;
-    padding: 0 1rem;
     color: $main-color;
     display: flex;
     align-items: center;
@@ -102,18 +104,10 @@
   }
 
   @include respond(mobile) {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-between;
     padding-bottom: 2rem;
 
     .search_btn {
       width: 20rem;
-    }
-
-    .return_btn {
-      margin: 0rem;
     }
   }
 }

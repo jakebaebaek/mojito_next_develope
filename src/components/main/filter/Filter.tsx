@@ -10,7 +10,6 @@ import { useEmojiStore } from "@/lib/store/emojiStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
 import { useFilterValueStore } from "@/lib/store/filterValueStore";
 import { filterData } from "@/lib/mokdata/filterData";
-import { useState } from "react";
 
 type TFilter = {
   onSearch: () => void;
@@ -107,16 +106,16 @@ export default function Filter({ onSearch, onReset }: TFilter) {
       </div>
 
       <div className={`${style.btn_wrap}`}>
+        <div className={`${style.return_btn}`} onClick={onReset}>
+          <ReturnArrow className={`${style.return_svg}`} />
+          <span className={`${style.return_txt}`}>초기화</span>
+        </div>
         <Button
           className={`${style.search_btn}`}
           text="검색"
           color="orange"
           onClick={onSearch}
         ></Button>
-        <div className={`${style.return_btn}`} onClick={onReset}>
-          <ReturnArrow className={`${style.return_svg}`} />
-          <span className={`${style.return_txt}`}>초기화</span>
-        </div>
       </div>
     </div>
   );

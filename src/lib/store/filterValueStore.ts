@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { TCocktail } from "@/lib/types/TCocktail";
 
 type FilterState = {
   base: string[];
@@ -14,6 +15,9 @@ type FilterState = {
 
   filterClicked: boolean;
   setFilterClicked: (v: boolean) => void;
+
+  viewCocktailList: TCocktail[];
+  setViewCocktailList: (value: TCocktail[]) => void;
 };
 
 export const useFilterValueStore = create<FilterState>((set, get) => ({
@@ -58,5 +62,10 @@ export const useFilterValueStore = create<FilterState>((set, get) => ({
 
   setFilterClicked: (v) => {
     set({ filterClicked: v });
+  },
+
+  viewCocktailList: [],
+  setViewCocktailList: (value) => {
+    set({ viewCocktailList: value });
   },
 }));

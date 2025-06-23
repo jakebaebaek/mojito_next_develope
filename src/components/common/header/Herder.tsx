@@ -37,7 +37,6 @@ export default function Header() {
       <div className={`${style.header}`}>
         <div className={`${style.nav_container}`}>
           <Link className={`${style.home_btn}`} href="/">
-            {/* <img src="" alt="Emoji" /> */}
             <div>🍹</div>
             <div>모히또에서 몰디브 한 잔</div>
           </Link>

@@ -8,8 +8,6 @@ const nextConfig = {
         hostname: "s3.ap-northeast-2.amazonaws.com",
         pathname: "/mojito-emoji-img/**",
       },
-    ],
-    remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.jsdelivr.net",

@@ -20,7 +20,10 @@
     grid-template-columns: 1fr 2.5fr;
     column-gap: 2rem;
     width: 100%;
-    // overflow: auto;
+
+    &.mobile {
+      overflow: auto; //필터 버튼 위치 고정
+    }
   }
 
   //pc 필터

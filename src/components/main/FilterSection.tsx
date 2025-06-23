@@ -111,7 +111,9 @@ export default function FilterSection() {
 
   return (
     <div className={`${style.filter_section}`}>
-      <div className={`${style.filter_card_wrap}`}>
+      <div
+        className={`${style.filter_card_wrap} ${isMobile ? style.mobile : ""}`}
+      >
         {isMobile ? ( //mobile
           <>
             <button

@@ -35,7 +35,7 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
       console.log("sweetness", newValue);
     }
   };
-  console.log(emojiList);
+
   const labelTxt = (value: number) => {
     const emojiName =
       whatSliderIsIt === "booziness"

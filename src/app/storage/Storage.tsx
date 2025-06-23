@@ -26,7 +26,10 @@ const Storage = () => {
 
   // 필터링한 리뷰한 칵테일 카드들
   const memoCocktailCardList = cocktailList.filter((cocktail) =>
-    memo.some((item) => item.cocktail_id === cocktail._id && item.rating)
+    memo.some(
+      (item) =>
+        item.cocktail_id === cocktail._id && (item.rating || item.memo_txt)
+    )
   );
   // 필터링한 찜한 칵테일 카드들
   const favoriteCocktailCardList = cocktailList.filter((cocktail) =>

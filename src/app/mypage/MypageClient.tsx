@@ -23,12 +23,13 @@ export default function MypageClient() {
   const { nicknameState, profileImageState, setProfile } = useUserStore();
   const { locked, run } = useLockButton("logout");
 
-  useEffect(() => {
-    if (session?.user?.nickname && nicknameState === "") {
-      setProfile(session.user.nickname, session.user.profileImage || "");
-    }
-    console.log("세션 정보:", session);
-  }, [session]);
+  // useEffect(() => {
+  //   console.log("🥱🥱🥱🥱🥱🥱", session);
+  //   if (session?.user?.nickname && nicknameState === "" && profileImageState) {
+  //     setProfile(session.user.nickname);
+  //   }
+  //   console.log("세션 정보:", session);
+  // }, [session]);
 
   const handleLogout = async () => {
     if (locked) return;

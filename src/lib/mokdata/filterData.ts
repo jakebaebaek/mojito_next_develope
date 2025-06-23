@@ -9,18 +9,16 @@ export const filterData = {
   ],
   booziness: [
     {
+      name: "논알콜",
       emoji: "Smiling Face with Smiling Eyes",
       value: 0,
     },
-    {
-      emoji: "Monkey Face",
-      value: 5,
-    },
+    { name: "Medium", emoji: "Monkey Face", value: 5 },
     { name: "멍멍", emoji: "Dog Face", value: 10 },
   ],
   sweetness: [
-    { name: "달달함에 잠겨죽고싶다", emoji: "Honey Pot", value: 0 },
-    { name: "그냥 적당한거", emoji: "Wine Glass", value: 5 },
-    { name: "인생보다 쓴 맛", emoji: "Cigarette", value: 10 },
+    { name: "Sweet", emoji: "Honey Pot", value: 0 },
+    { name: "Medium", emoji: "Wine Glass", value: 5 },
+    { name: "Dry", emoji: "Cigarette", value: 10 },
   ],
 };

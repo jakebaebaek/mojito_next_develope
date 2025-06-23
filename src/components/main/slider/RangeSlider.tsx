@@ -36,17 +36,21 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
     }
   };
 
-  const labelTxt = (value: number) => {
+  const handleLabel = (value: number) => {
     const emojiName =
       whatSliderIsIt === "booziness"
         ? filterData.booziness?.find((b) => b.value === value)?.emoji
         : filterData.sweetness?.find((s) => s.value === value)?.emoji;
 
+    const labelTxt =
+      whatSliderIsIt === "booziness"
+        ? filterData.booziness?.find((b) => b.value === value)?.name
+        : filterData.sweetness?.find((s) => s.value === value)?.name;
+
     const emojiUrl = emojiList.find((emoji) => emoji.name === emojiName)?.url;
 
     return (
       <div className={`${style.label_wrap}`}>
-        <div>{value}</div>
         <div className={`${style.emoji_imgWrap}`}>
           {emojiUrl && emojiName && (
             <Image
@@ -57,6 +61,7 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
             ></Image>
           )}
         </div>
+        <div className={`${style.label_txt}`}>{labelTxt}</div>
       </div>
     );
   };
@@ -72,11 +77,10 @@ export default function RangeSlider({ whatSliderIsIt }: Props) {
         marks={[
           {
             value: 0,
-            label: labelTxt(0),
+            label: handleLabel(0),
           },
-          { value: 1 },
-          { value: 5, label: labelTxt(5) },
-          { value: 10, label: labelTxt(10) },
+          { value: 5, label: handleLabel(5) },
+          { value: 10, label: handleLabel(10) },
         ]}
         valueLabelDisplay="auto"
         getAriaLabel={() => "Range slider"}

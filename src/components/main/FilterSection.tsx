@@ -10,6 +10,8 @@ import Filter from "./filter/Filter";
 import CocktailList from "@/components/main/cocktailList/CocktailList";
 import { useFilterValueStore } from "@/lib/store/filterValueStore";
 import { TCocktail } from "@/lib/types/TCocktail";
+import useIsMobile from "@/lib/hooks/useIsMobile";
+import Close from "@public/Close.svg";
 
 export default function FilterSection() {
   const { cocktailList, totalCount } = useCocktailStore();
@@ -21,11 +23,17 @@ export default function FilterSection() {
     resetFilter,
     filterClicked,
     setFilterClicked,
+    viewCocktailList,
+    setViewCocktailList,
   } = useFilterValueStore();
   const { offset, setOffset } = useOffsetStore();
   const isLoading = useRef(false);
+  const isMobile = useIsMobile();
 
   const [visibleCocktails, setVisibleCocktails] = useState<TCocktail[]>([]);
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  console.log("🤖", isMobile);
 
   //필터링
   const handleFilter = () => {
@@ -43,17 +51,18 @@ export default function FilterSection() {
 
       return matchFlavor && matchBase && matchBooziness && matchSweetness;
     });
-    setVisibleCocktails(filterdCocktailList);
+    setViewCocktailList(filterdCocktailList);
     setFilterClicked(true);
+    isMobile && setFilterOpen(false);
   };
 
   const handelReset = () => {
-    setVisibleCocktails(cocktailList.slice(0, offset));
+    setViewCocktailList(cocktailList.slice(0, offset));
     resetFilter();
   };
 
   useEffect(() => {
-    if (!filterClicked) setVisibleCocktails(cocktailList.slice(0, offset));
+    if (!filterClicked) setViewCocktailList(cocktailList.slice(0, offset));
   }, [cocktailList, offset, filterClicked]);
 
   // 무한 스크롤
@@ -106,24 +115,54 @@ export default function FilterSection() {
 
   return (
     <div className={`${style.filter_section}`}>
-      <h1>Filter Section</h1>
       <div className={`${style.filter_card_wrap}`}>
-        <div className={`${style.fitler_wrap}`}>
-          <Filter onSearch={handleFilter} onReset={handelReset} />
-        </div>
+        {isMobile ? ( //mobile
+          <>
+            <button
+              className={`${style.filter_btn} ${filterOpen ? style.hide : ""}`}
+              onClick={() => setFilterOpen(true)}
+            >
+              Filter
+            </button>
+            <div
+              className={`${style.filter_modal} ${
+                filterOpen ? style.open : ""
+              } `}
+            >
+              <div className={`${style.modal_header}`}>
+                <span className={`${style.title}`}>Filter</span>
+                <div
+                  className={`${style.close_btn}`}
+                  onClick={() => setFilterOpen(false)}
+                >
+                  <Close></Close>
+                </div>
+              </div>
+              <div className={`${style.modal_fitler_wrap}`}>
+                <Filter onSearch={handleFilter} onReset={handelReset} />
+              </div>
+            </div>
+          </>
+        ) : (
+          //pc
+          <div className={`${style.fitler_wrap}`}>
+            <Filter onSearch={handleFilter} onReset={handelReset} />
+          </div>
+        )}
+
         <div className={`${style.card_wrap}`}>
           <CocktailList
-            cocktailList={visibleCocktails}
+            cocktailList={viewCocktailList}
             loadMore={loadMore}
             loading={isLoading.current}
             inputValue=""
             selectValue=""
             clickedHashtag=""
           />
-          {visibleCocktails.length === 0 ? (
+          {viewCocktailList.length === 0 ? (
             <p className={style.nomore_data}>🍹잠시만 기다려주세요.🍹</p>
           ) : (
-            visibleCocktails.length >= totalCount && (
+            viewCocktailList.length >= totalCount && (
               <p className={style.nomore_data}>
                 🍹모든 칵테일을 불러왔습니다🍹
               </p>

@@ -20,7 +20,7 @@ $pc: 1440px;
       @content;
     }
   } @else if $breakpoint == pc {
-    @media (min-width: $pc) {
+    @media (min-width: $laptop) and (max-width: #{$pc - 1px}) {
       @content;
     }
   }

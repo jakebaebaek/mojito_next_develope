@@ -8,6 +8,10 @@ const nextConfig = {
         hostname: "s3.ap-northeast-2.amazonaws.com",
         pathname: "/mojito-emoji-img/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+      },
     ],
   },
   webpack: (config) => {

@@ -259,7 +259,7 @@ export default function Desc({}) {
           <div className={style.recipeTitle}>레시피</div>
           <h2>재료</h2>
           <ul className={style.ingredients}>
-            {cocktail?.recipe.ingredients.map((item, index) => (
+            {cocktail?.recipe.ingredients?.map((item, index) => (
               <li className={`${style.ingredient}`} key={index}>
                 {item.ingredient.ko}
                 <br />

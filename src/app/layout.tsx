@@ -6,6 +6,7 @@ import Header from "@/components/common/header/Herder";
 import LoginModal from "@/components/common/modal/LoginModal";
 import AuthSession from "@/app/AuthSession";
 import UpdateStore from "@/components/updateStore";
+import ResponsiveHeader from "@/components/common/header/ResponsiveHeader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,7 @@ export default function RootLayout({
         <AuthSession>
           <UpdateStore />
           {children}
-          <Header></Header>
+          <ResponsiveHeader />
         </AuthSession>
         <LoginModal />
       </body>

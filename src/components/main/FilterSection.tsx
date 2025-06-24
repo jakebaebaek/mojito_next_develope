@@ -142,7 +142,7 @@ export default function FilterSection() {
         ) : (
           //pc
           <div>
-            <h1>Filter</h1>
+            <h1 className={`${style.filterTitle}`}>Filter</h1>
             <div className={`${style.fitler_wrap}`}>
               <Filter onSearch={handleFilter} onReset={handelReset} />
             </div>

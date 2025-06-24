@@ -6,6 +6,7 @@ import DownArrow from "@public/DownArrow.svg";
 import Heart from "@public/Heart.svg";
 import Edit from "@public/Edit.svg";
 import { useHeartToggle } from "@/lib/hooks/useHeartToggle";
+import { useEffect, useState } from "react";
 
 type TNavigation = {
   page?: "desc";
@@ -34,9 +35,27 @@ export default function Navigation({ page, cocktailId }: TNavigation) {
     }
   };
 
+  const [showNav, setShowNav] = useState(false);
+
+  const scroll = () => {
+    console.log(window.scrollY);
+    if (window.scrollY > 200) {
+      setShowNav(true);
+    } else {
+      setShowNav(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", scroll);
+    return () => window.removeEventListener("scroll", scroll);
+  });
+
   return (
     <>
-      <ul className={`${style.navigation}`}>
+      <ul
+        className={`${style.navigation} ${showNav ? style.show : style.hide}`}
+      >
         <li className={`${style.up}`} onClick={scrollUp}>
           <UpArrow />
         </li>

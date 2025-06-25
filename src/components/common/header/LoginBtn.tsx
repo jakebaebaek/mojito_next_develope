@@ -19,12 +19,12 @@ export default function LoginBtn() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const res = await getProfile(); // ✅ 여기서 결과값 받아옴
+      const res = await getProfile();
       setProfile(res.nickname, res.profileImage);
-      // 여기서 res.nickname 등으로 직접 접근 가능
     };
-
-    fetchProfile();
+    if (session) {
+      fetchProfile();
+    }
   }, []);
 
   const handleLogin = async () => {

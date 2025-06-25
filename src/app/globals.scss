@@ -37,5 +37,5 @@ html {
 body {
   font-size: 1.6rem;
   margin-top: 7rem; //헤더크기 만큼 내려옴
-  height: 100vh;
+  height: 100vh -7rem // 헤더크기 제외한 높이;
 }

@@ -188,17 +188,39 @@
         }
       }
       .top100_swiper {
-        display: block;
         max-height: 100%;
         :global(.swiper-pagination) {
         z-index: 2;
         position: relative;
         }
         :global(.swiper-wrapper) {
-          height: 80%
+          height: 80%;
         }
         .active {
-          box-shadow: none;
+          display: flex;
+          justify-content: center;
+          height: 100%;
+          .cocktailBox {
+            height: 100%;
+            width: 55%;
+            padding: 1rem;
+            img {
+              width:17rem;
+              height: 25rem;
+              margin-bottom: 0.5rem;
+              &:hover {
+                transform: scale(1.1);
+              }
+            }
+            p {
+              font-size: 1.5rem;
+            }
+            &:hover {
+              p {
+                font-size: 1.5rem;
+              }
+            }
+          }
         }
         .non_active {
           height: 100%;

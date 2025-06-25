@@ -44,10 +44,6 @@
           }
         }
       }
-      @include respond(mobile) {
-        .cocktailName {
-        }
-      }
     }
     .cocktailInfo {
       display: grid;
@@ -273,6 +269,7 @@
   }
   @include respond(mobile) {
     .upper {
+      width: 80%;
       .nametagBox {
         padding: 0;
         .cocktailName {
@@ -282,6 +279,10 @@
         }
         h2 {
           text-align: center;
+        }
+        .tagsBox {
+          justify-content: center;
+          flex-wrap: wrap;
         }
       }
       .cocktailInfo {

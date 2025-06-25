@@ -29,25 +29,12 @@
       gap: 1rem;
     }
     ul {
-      margin-left: 3rem;
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 14rem;
       position: relative;
       margin-left: 14rem;
-      margin-right: 12rem;
-      .menu_item {
-        cursor: pointer;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-      .menu_item:hover {
-        color: $gray-400;
-        transition: all 0.2s ease-in-out;
-      }
-
       .search_btn {
         display: flex;
         gap: 1rem;
@@ -60,6 +47,22 @@
             stroke-width: 3;
           }
         }
+      }
+    }
+  }
+  @include respond(tablet) {
+    .nav_container{
+      ul {
+        margin-left: 1rem;
+        gap: 1rem;
+      }
+    }
+  }
+  @include respond(laptop) {
+    .nav_container{
+      ul {
+        margin-left: 2rem;
+        gap: 5rem;
       }
     }
   }

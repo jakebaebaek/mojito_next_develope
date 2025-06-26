@@ -7,41 +7,40 @@ import Image from "next/image";
 
 import { signIn, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useUserStore } from "@/lib/store/userStore";
+import { useLockButton } from "@/lib/hooks/useLockButton";
 import { getProfile } from "@/lib/fetchs/fetchProfile";
 
 export default function LoginBtn() {
   const { data: session, status } = useSession();
-  const [isClicked, setIsClicked] = useState(false);
   const { profileImageState, setProfile } = useUserStore();
+  const { locked, run } = useLockButton("login");
   const pathname = usePathname();
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const res = await getProfile(); // ✅ 여기서 결과값 받아옴
+      const res = await getProfile();
       setProfile(res.nickname, res.profileImage);
-      // 여기서 res.nickname 등으로 직접 접근 가능
     };
-
-    fetchProfile();
-  }, []);
-
-  const handleLogin = async () => {
-    try {
-      console.log("🚀 카카오 로그인 시도");
-      setIsClicked(true);
-      console.log(session);
-      await signIn("kakao");
-    } catch (error) {
-      alert("로그인에 실패했습니다. 다시 시도해주세요.");
-      console.error("🚨 로그인 실패", error);
-      setIsClicked(false);
-    } finally {
-      setIsClicked(false);
+    if (session) {
+      fetchProfile();
     }
+  }, [session]);
+
+  const handleLogin = () => {
+    run(async () => {
+      try {
+        console.log("🚀 카카오 로그인 시도");
+        await signIn("kakao");
+      } catch (error) {
+        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        console.error("🚨 로그인 실패", error);
+      }
+    });
   };
 
+  // 1. 로딩 중이면 스피너
   if (status === "loading") {
     return (
       <button className={style.before_login_btn} disabled>
@@ -50,6 +49,7 @@ export default function LoginBtn() {
     );
   }
 
+  // 2. 로그인된 상태 (프로필 이미지 or 아이콘)
   if (session) {
     return (
       <Link
@@ -67,24 +67,22 @@ export default function LoginBtn() {
             className={`${style.login_svg}`}
           />
         ) : (
-          <Person />
+          <Person width={50} height={50} />
         )}
       </Link>
     );
   }
-
+  // 3. 미로그인 상태(버튼만)
   return (
-    <>
-      {!isClicked ? (
-        <button className={style.before_login_btn} onClick={handleLogin}>
-          <Person className={style.login_svg} />
-          <div className={style.login_txt}>login</div>
-        </button>
-      ) : (
-        <button className={style.login_btn} disabled>
-          <div className={style.spinner}></div>
-        </button>
-      )}
-    </>
+    <button
+      className={style.before_login_btn}
+      disabled={locked}
+      onClick={() => {
+        handleLogin();
+      }}
+    >
+      <Person className={style.login_svg} />
+      <div className={style.login_txt}>login</div>
+    </button>
   );
 }

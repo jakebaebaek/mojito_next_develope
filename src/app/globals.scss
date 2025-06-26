@@ -16,8 +16,13 @@ html {
   html {
     font-size: 50%;
     //  1rem = 8px
+  body {
+    margin-top: 2rem; // 모바일에서는 헤더가 없으므로 margin-top 제거
+    height: auto; // 모바일에서는 전체 높이를 auto로 설정
+    }
   }
 }
+
 
 * {
   margin: 0;

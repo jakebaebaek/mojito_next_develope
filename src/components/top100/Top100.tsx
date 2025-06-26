@@ -6,7 +6,7 @@ import RightSlide from "@public/LeftSlide.svg";
 import Image from "next/image";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -42,6 +42,23 @@ export default function Top100() {
   const handleToTop100 = () => {
     router.push("/find?linkTop100=1");
   };
+  function getSlideRealIndex(realIndex: number, slideCount: number) {
+    const width = window.innerWidth;
+    if (width <= 720) {
+      // 720px 이하: 모바일
+      return realIndex;
+    } else if (width <= 1440) {
+      // 721~1440px: 태블릿/노트북
+      return realIndex + 1 > slideCount - 1
+        ? realIndex - (slideCount - 1)
+        : realIndex + 1;
+    } else {
+      // 1441px 이상: 데스크탑
+      return realIndex + 2 > slideCount - 1
+        ? realIndex - (slideCount - 2)
+        : realIndex + 2;
+    }
+  }
   return (
     <div className={style.top100_section}>
       <h1 className={style.title}>
@@ -63,15 +80,20 @@ export default function Top100() {
             pagination={{
               clickable: true,
             }}
-            modules={[Pagination]}
+            modules={[Pagination, Autoplay]}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
             className={`${style.top100_swiper}`}
-            onSlideChange={(e) =>
+            onSlideChange={(e) => {
               setRealIndex(
-                e.realIndex + 2 > randomCocktailsRef.current.length - 1
-                  ? e.realIndex - (randomCocktailsRef.current.length - 2)
-                  : e.realIndex + 2
-              )
-            }
+                getSlideRealIndex(
+                  e.realIndex,
+                  randomCocktailsRef.current.length
+                )
+              );
+            }}
             breakpoints={{
               // 0px 이상에서는 1개
               0: {
@@ -79,18 +101,18 @@ export default function Top100() {
                 spaceBetween: 10,
               },
               // 640px 이상(태블릿)
-              640: {
-                slidesPerView: 2,
-                spaceBetween: 15,
+              720: {
+                slidesPerView: 3,
+                spaceBetween: 10,
               },
               // 1024px 이상(데스크탑)
               1024: {
                 slidesPerView: 3,
                 spaceBetween: 30,
               },
-              1460: {
-                slidesPerView: 4,
-                spaceBetween: 30,
+              1440: {
+                slidesPerView: 5,
+                spaceBetween: 15,
               },
               1700: {
                 slidesPerView: 5,

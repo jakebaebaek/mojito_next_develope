@@ -1,125 +1,139 @@
 @import "@/styles/theme";
+@import "@/styles/mixin";
 
 .filter_section {
-  width: 98vw;
+  width: 100%;
   height: 110rem;
   margin-bottom: 10rem;
-  text-wrap: nowrap;
   padding-top: 7rem;
-
-  h1 {
-    width: fit-content;
-    font-size: 5.5rem;
-    color: $main-color;
-    font-weight: $bold;
-    user-select: none;
-  }
-
   .filter_card_wrap {
     display: grid;
-    grid-template-columns: 1fr 2.5fr;
-    column-gap: 2rem;
+    grid-template-columns: 1fr 2.5fr 0.4fr;
+    column-gap: 1rem;
     width: 100%;
-    // overflow: auto;
-  }
-
-  //pc 필터
-  .fitler_wrap {
-    box-shadow: $shadow;
-    border-radius: 0 2rem 2rem 0;
-    width: 42rem;
-    height: 100vh;
-    padding: 0rem 5rem;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    position: sticky;
-    top: 7rem;
-    left: 0rem;
-  }
-
-  //모바일
-  .filter_btn {
-    position: fixed;
-    z-index: 4;
-    width: 100vw;
-    height: 6rem;
-    bottom: 7rem;
-    background-color: white;
-    border: none;
-    box-shadow: $shadow;
-    border-radius: 4rem 4rem 0 0;
-    font-size: 2.2rem;
-    font-weight: $bold;
-    color: $main-color;
-    cursor: pointer;
-
-    transition: opacity 0.3s;
-    opacity: 1;
-    //버튼 클릭시
-    &.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
-  .filter_modal {
-    background-color: white;
-    z-index: 4;
-    width: 100vw;
-    position: fixed;
-    bottom: 7rem;
-    opacity: 0;
-    box-shadow: $shadow;
-    border-radius: 4rem 4rem 0 0;
-    // 애니메이션
-    transform: translateY(100%);
-    transition: transform 0.35s cubic-bezier(0.58, 0.93, 0.66, 1), opacity 0.1s;
-
-    &.open {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .modal_header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem 4rem 0 4rem;
-    }
-    .title {
-      font-size: 3.4rem;
+    // overflow: hidden;
+    .filter_btn {
+      position: fixed;
+      z-index: 4;
+      width: 100%;
+      height: 6rem;
+      bottom: 7rem;
+      background-color: white;
+      border: none;
+      box-shadow: $shadow;
+      border-radius: 4rem 4rem 0 0;
+      font-size: 2.2rem;
       font-weight: $bold;
       color: $main-color;
-    }
-    .close_btn {
-      position: relative;
-      right: 0em;
       cursor: pointer;
-    }
 
-    .modal_fitler_wrap {
-      padding: 0rem 7rem;
+      transition: opacity 0.3s;
+      opacity: 1;
+      //버튼 클릭시
+      &.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+    //모바일
+    .filter_modal {
+      background-color: white;
+      z-index: 4;
+      width: 100%;
+      position: fixed;
+      bottom: 7rem;
+      opacity: 0;
+      box-shadow: $shadow;
+      border-radius: 4rem 4rem 0 0;
+      // 애니메이션
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.58, 0.93, 0.66, 1), opacity 0.1s;
+
+      &.open {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .modal_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 4rem 0 4rem;
+        .title {
+          font-size: 3.4rem;
+          font-weight: $bold;
+          color: $main-color;
+        }
+        .close_btn {
+          position: relative;
+          right: 0em;
+          cursor: pointer;
+        }
+      }
+      .modal_fitler_wrap {
+        padding: 0rem 7rem;
+      }
+    }
+    .filterTitle {
+      width: fit-content;
+      font-size: 5.5rem;
+      color: $main-color;
+      font-weight: $bold;
+      user-select: none;
+    }
+    //pc 필터
+    .fitler_wrap {
+      box-shadow: $shadow;
+      border-radius: 0 2rem 2rem 0;
+      width: 42rem;
+      height: 100vh;
+      padding: 0rem 5rem;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-items: center;
+      position: sticky;
+      top: 7rem;
+      left: 0rem;
+    }
+    .card_wrap {
+      overflow: visible;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+      .nomore_data {
+        font-size: 5rem;
+        color: $main-color;
+        font-weight: $bold;
+        margin-bottom: 5rem;
+        text-align: center;
+      }
     }
   }
-
-  .card_wrap {
-    overflow: visible;
+  @include respond(mobile) {
+    text-wrap: auto;
     width: 100%;
-    padding: 1rem 20rem 1rem 1rem;
+    .filter_card_wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      .card_wrap {
+        padding: 1rem;
+      }
+    }
   }
-  .nomore_data {
-    font-size: 5rem;
-    color: $main-color;
-    font-weight: $bold;
-    margin-bottom: 5rem;
-    text-align: center;
-  }
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include respond(tablet) {
     width: 100%;
-    height: 100%;
+    .filter_card_wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .card_wrap {
+        padding: 0;
+      }
+    }
   }
 }

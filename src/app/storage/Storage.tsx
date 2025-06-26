@@ -7,6 +7,7 @@ import MemoCard from "@/components/common/card/MemoCard";
 import DropdownArrow from "@public/DropdownArrow.svg";
 import { useMemberStore } from "@/lib/store/memberStore";
 import { useCocktailStore } from "@/lib/store/cocktailStore";
+import { useUserStore } from "@/lib/store/userStore";
 import { useSearchParams, useRouter } from "next/navigation";
 import Navigation from "@/components/common/navigation/Navigation";
 
@@ -18,6 +19,7 @@ const Storage = () => {
   const [filterOption, setFilterOption] = useState<string>("별점순");
   const { heart, memo } = useMemberStore();
   const { cocktailList } = useCocktailStore();
+  const { nicknameState } = useUserStore();
   const [activeTab, setActiveTab] = useState<string>(defaultTab);
 
   const handleFilterChange = (value: string) => {
@@ -85,6 +87,10 @@ const Storage = () => {
     <div className={style.container}>
       <Navigation />
       {/* 탭 메뉴 */}
+      <div className={`${style.title_wrap}`}>
+        <div className={`${style.title_nickname}`}>{nicknameState} </div>
+        <div className={`${style.title_txt}`}>님의 칵테일 창고</div>
+      </div>
       <div className={style.storage_menu}>
         <div
           className={`${style.cocktail_recorded} ${

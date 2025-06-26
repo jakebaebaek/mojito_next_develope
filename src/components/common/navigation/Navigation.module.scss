@@ -2,12 +2,13 @@
 @import "@/styles/mixin";
 
 .navigation {
+  z-index: 3;
   width: 7rem;
   background-color: white;
   box-shadow: $shadow;
   position: fixed;
   right: 0;
-  top: 14rem;
+  top: 45%;
   border-radius: 2rem 0 0 2rem;
 
   display: flex;
@@ -15,7 +16,25 @@
   justify-content: space-evenly;
   align-items: center;
   padding-left: 0.7rem;
+
+  transition: opacity 0.3s;
+  opacity: 0;
+
   z-index: 1000;
+
+  &.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  &.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @include respond(mobile) {
+    width: 6rem;
+  }
+
   li {
     display: flex;
     align-items: center;
@@ -43,12 +62,8 @@
     }
   }
 
-  @include respond(mobile) {
-    display: none;
-  }
   @include respond(tablet) {
     width: 5rem;
-    top: 25rem;
   }
   @include respond(laptop) {
     width: 5rem;

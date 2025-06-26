@@ -125,7 +125,8 @@ const FindSearchBar = ({
               value={hashtag.value}
               className={style.cBox}
             />
-            <span
+
+            <div
               className={
                 hashtag.value === "top100"
                   ? `${style.TOP} ${style.hashtag}`
@@ -141,7 +142,7 @@ const FindSearchBar = ({
                 }
                 className={style.hash_emoji}
               />
-            </span>
+            </div>
           </label>
         ))}
       </div>

@@ -25,20 +25,20 @@
 
   // form 태그 스타일, 문구를 제외한 검색 바 전체를 감싸는 form 태그 스타일
   .search_box {
-    width: 100rem;
+    width: 80%;
     height: 4.5rem;
     display: flex;
     align-items: center;
-    border: 1px solid #dcdcdc;
-    border-radius: 2rem;
+    // border: 1px solid #dcdcdc;
+    border-radius: 3rem;
     box-shadow: 1px 1px 8px 1px #dcdcdc;
     // select 태그 스타일
     .selectBox {
-      flex: 1.6;
       position: relative;
       display: flex;
       text-align: center;
       justify-content: center;
+      margin-left: 1rem;
       select {
         border-color: transparent;
         font-size: 1.7rem;
@@ -67,9 +67,7 @@
       line-height: 2rem;
     }
     .search_icon {
-      flex: 1;
-      display: flex;
-      justify-content: center;
+      padding-right: 2rem;
       cursor: pointer;
       svg {
         width: 2.5rem;
@@ -79,21 +77,26 @@
 
   // 해시태그
   .tags_box {
-    margin-top: 3rem;
+    margin-top: 1.8rem;
     width: 80%;
     display: flex;
-    grid-template-columns: repeat(6, auto);
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     justify-items: center;
-    gap: 1.8rem;
+    gap: 0 1.8rem;
 
+    label {
+      height: 4rem;
+    }
     .hashtag {
+      display: flex;
+      align-items: center;
+      // line-height: 100%;
       color: #3a5ddf;
       background-color: #c8d4ff;
       border-radius: 4rem;
-      padding: 0.4rem 1rem;
+      padding: 0.4rem 1.2rem;
       user-select: none;
 
       cursor: pointer;
@@ -109,10 +112,9 @@
     }
 
     .hash_emoji {
-      height: 20px;
+      height: 2rem;
       position: relative;
-      top: 5px;
-      margin-left: 3px;
+      margin-left: 0.3rem;
     }
 
     // 체크박스가 체크되면 스타일 변경
@@ -139,7 +141,7 @@
 
     .tags_box {
       width: 100%;
-      gap: 1rem;
+      gap: 0 1rem;
     }
   }
 
@@ -154,7 +156,7 @@
     }
     .tags_box {
       width: 100%;
-      gap: 1.2rem;
+      gap: 0 1.2rem;
     }
   }
   @include respond(laptop) {
@@ -167,7 +169,7 @@
     }
     .tags_box {
       width: 90%;
-      gap: 1.2rem;
+      gap: 0 1.2rem;
       max-width: 100rem;
     }
   }

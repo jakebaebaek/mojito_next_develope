@@ -20,7 +20,7 @@
   transition: opacity 0.3s;
   opacity: 0;
 
-  z-index: 1000;
+  z-index: 9;
 
   &.show {
     opacity: 1;

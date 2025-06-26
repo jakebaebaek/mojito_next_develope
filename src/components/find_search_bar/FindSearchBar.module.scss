@@ -7,10 +7,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   // 해쉬태그 전까지, 칵테일 검색 문구 및 검색 바까지. 해쉬태그 포함x
   .search_space {
-    width: 100% ; 
+    width: 100%;
     margin-top: 5rem;
     display: grid;
     place-items: center;
@@ -32,49 +32,49 @@
     border: 1px solid #dcdcdc;
     border-radius: 2rem;
     box-shadow: 1px 1px 8px 1px #dcdcdc;
-      // select 태그 스타일
-      .selectBox {
-        flex: 1.6;
-        position: relative;
-        display: flex;
-        text-align: center;
-        justify-content: center;
-        select {
-          border-color: transparent;
-          font-size: 1.7rem;
-          background-color: transparent;
-          cursor: pointer;
-          &:hover {
-            color: $gray-300;
-            transition: 0.2s ease;
-            border-radius: 2rem;
-          }
-          &:focus {
-            outline: none;
-          }
-        }
-        option {
-          text-align: center;
-        }
-      }
-      .search_input {
-        flex: 6;
-        border: none;
-        outline: none;
-        text-align: left;
-        font-size: 1.8rem;
-        padding-left: 3rem;
-        line-height: 2rem;
-      }
-      .search_icon {
-        flex: 1;
-        display: flex;
-        justify-content: center;
+    // select 태그 스타일
+    .selectBox {
+      flex: 1.6;
+      position: relative;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      select {
+        border-color: transparent;
+        font-size: 1.7rem;
+        background-color: transparent;
         cursor: pointer;
-        svg {
-          width: 2.5rem;
+        &:hover {
+          color: $gray-300;
+          transition: 0.2s ease;
+          border-radius: 2rem;
+        }
+        &:focus {
+          outline: none;
         }
       }
+      option {
+        text-align: center;
+      }
+    }
+    .search_input {
+      flex: 6;
+      border: none;
+      outline: none;
+      text-align: left;
+      font-size: 1.8rem;
+      padding-left: 3rem;
+      line-height: 2rem;
+    }
+    .search_icon {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+      svg {
+        width: 2.5rem;
+      }
+    }
   }
 
   // 해시태그
@@ -93,8 +93,9 @@
       color: #3a5ddf;
       background-color: #c8d4ff;
       border-radius: 4rem;
-      padding: 4px 7px;
+      padding: 0.4rem 1rem;
       user-select: none;
+
       cursor: pointer;
       &:hover {
         color: $gray-400;
@@ -168,7 +169,6 @@
       width: 90%;
       gap: 1.2rem;
       max-width: 100rem;
-
     }
   }
 }

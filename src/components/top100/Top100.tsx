@@ -6,7 +6,7 @@ import RightSlide from "@public/LeftSlide.svg";
 import Image from "next/image";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -80,7 +80,11 @@ export default function Top100() {
             pagination={{
               clickable: true,
             }}
-            modules={[Pagination]}
+            modules={[Pagination, Autoplay]}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
             className={`${style.top100_swiper}`}
             onSlideChange={(e) => {
               setRealIndex(

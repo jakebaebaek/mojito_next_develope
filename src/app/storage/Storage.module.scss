@@ -93,11 +93,10 @@
   .favorite_card_container {
     display: grid;
     position: relative;
-    justify-items: start;
+    justify-items: center;
     align-items: center;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     width: 100%;
-    gap: 2rem;
   }
   .empty_message {
     display: flex;
@@ -111,6 +110,31 @@
     font-size: 2rem;
     h3 {
       color: $gray-200;
+    }
+  }
+  @include respond(mobile) {
+    padding: 1rem;
+    gap: 3rem;
+    justify-content: center;
+    .favorite_card_container {
+      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    }
+  }
+  @include respond(tablet) {
+    padding: 2rem;
+    gap: 3rem;
+    justify-content: center;
+    .favorite_card_container {
+      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    }
+  }
+  @include respond(laptop) {
+    padding: 3rem;
+    gap: 4rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .favorite_card_container {
+      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     }
   }
 }

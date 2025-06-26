@@ -37,15 +37,16 @@
         align-items: center;
         justify-content: center;
         position: absolute;
-        bottom:-0.5rem;
+        bottom: -0.5rem;
         right: 2.5rem;
-        span, svg {
+        span,
+        svg {
           position: absolute;
         }
         .rating_number {
           z-index: 2;
-          color: black; // 필요시 조절
-          font-size: 1.7rem;
+          color: $main-color; // 필요시 조절
+          font-size: 1.4rem;
           pointer-events: none;
         }
         .star {
@@ -53,7 +54,8 @@
           fill: white;
           transition: fill 0.2s;
 
-          &.filled, &.hovered {
+          &.filled,
+          &.hovered {
             fill: orange;
           }
         }
@@ -121,8 +123,3 @@
     }
   }
 }
-
-
-
-
-

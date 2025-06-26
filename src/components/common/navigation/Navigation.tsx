@@ -7,6 +7,7 @@ import Heart from "@public/Heart.svg";
 import Edit from "@public/Edit.svg";
 import { useHeartToggle } from "@/lib/hooks/useHeartToggle";
 import { useEffect, useState } from "react";
+import throttle from "@/lib/utils/throttle";
 
 type TNavigation = {
   page?: "desc";
@@ -37,19 +38,20 @@ export default function Navigation({ page, cocktailId }: TNavigation) {
 
   const [showNav, setShowNav] = useState(false);
 
-  const scroll = () => {
+  const scroll = throttle(() => {
     console.log(window.scrollY);
+
     if (window.scrollY > 200) {
       setShowNav(true);
     } else {
       setShowNav(false);
     }
-  };
+  }, 500);
 
   useEffect(() => {
     window.addEventListener("scroll", scroll);
     return () => window.removeEventListener("scroll", scroll);
-  });
+  }, []);
 
   return (
     <>

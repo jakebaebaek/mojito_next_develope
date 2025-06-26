@@ -5,6 +5,8 @@ import style from "./header.module.scss";
 import Search from "@public/Search.svg";
 import LoginBtn from "./LoginBtn";
 import CocktailStorage from "@public/CocktailStorage.svg";
+import Home from "@public/Home.svg";
+import Heart from "@public/Heart.svg";
 
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
@@ -33,7 +35,7 @@ export default function MobileHeader() {
               pathname === "/" ? style.active : ""
             }`}
           >
-            🍹
+            <Home className={`${style.home_svg}`} />
           </a>
         </Link>
         <div
@@ -42,7 +44,7 @@ export default function MobileHeader() {
             pathname === "/find" ? style.active : ""
           }`}
         >
-          <Search />
+          <Search className={`${style.search_svg}`} />
         </div>
         <div
           onClick={() => linkToMenu("/storage")}
@@ -50,7 +52,7 @@ export default function MobileHeader() {
             pathname === "/storage" ? style.active : ""
           }`}
         >
-          <CocktailStorage />
+          <Heart className={`${style.storage_svg}`} />
         </div>
         <div
           onClick={() => linkToMenu("/mypage")}

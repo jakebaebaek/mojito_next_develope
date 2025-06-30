@@ -2,17 +2,22 @@
 @import "@/styles/mixin";
 
 .cocktail_length {
-  position:relative;
+  position: relative;
   font-size: 1.5rem;
   color: $gray-400;
   margin-bottom: 1rem;
   left: 2rem;
+  .emoji {
+    width: 2rem;
+    bottom: -0.4rem;
+    position: relative;
+  }
 }
 .cocktailList {
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
   width: 100%;
   box-sizing: border-box;
   padding: 2rem 1rem;

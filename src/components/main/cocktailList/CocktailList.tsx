@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { TCocktail } from "@/lib/types/TCocktail";
+import { useEmojiStore } from "@/lib/store/emojiStore";
 import Card from "@/components/common/card/Card";
 import style from "./CocktailList.module.scss";
 
@@ -25,6 +26,8 @@ export default function CocktailList({
   const observerRef = useRef<HTMLDivElement | null>(null);
   const renderCount = useRef(0);
   const [hashtagCocktails, setHashtagCocktails] = useState(cocktailList);
+  const { emojiList } = useEmojiStore();
+  const emoji = emojiList.find((emoji) => emoji.name === "Tropical Drink")?.url;
 
   useEffect(() => {
     renderCount.current += 1;
@@ -81,7 +84,8 @@ export default function CocktailList({
   return (
     <div>
       <div className={`${style.cocktail_length}`}>
-        {cardCount}개의 칵테일이 있습니다🍹
+        {cardCount}개의 칵테일이 있습니다
+        <img src={emoji} className={`${style.emoji}`}></img>
       </div>
       <div className={style.cocktailList}>
         {filteredCocktails.map((cocktail) => (

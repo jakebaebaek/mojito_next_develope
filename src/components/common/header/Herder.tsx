@@ -1,19 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import style from "./header.module.scss";
+import Image from "next/image";
+import style from "./Header.module.scss";
 import Search from "@public/Search.svg";
 import LoginBtn from "./LoginBtn";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useModalStore } from "@/lib/store/modalStore";
+import { useEmojiStore } from "@/lib/store/emojiStore";
 
 export default function Header() {
   const { data: session } = useSession();
   const { openLoginModal } = useModalStore();
+  const { emojiList } = useEmojiStore();
 
   const memberName = session?.user?.name;
   const router = useRouter();
+  const iconUrl = emojiList.find((emoji) => emoji.value === "header-icon")?.url;
 
   const linkToMenu = (name: string) => {
     if (name === "storage") {
@@ -37,7 +41,17 @@ export default function Header() {
       <div className={`${style.header}`}>
         <div className={`${style.nav_container}`}>
           <Link className={`${style.home_btn}`} href="/">
-            <div>🍹</div>
+            {iconUrl && (
+              <div className={`${style.icon_wrap}`}>
+                <Image
+                  src={iconUrl}
+                  className={`${style.icon}`}
+                  fill
+                  sizes="(max-width: 10rem)"
+                  alt="header-icon"
+                ></Image>
+              </div>
+            )}
             <div>모히또에서 몰디브 한 잔</div>
           </Link>
           <ul>

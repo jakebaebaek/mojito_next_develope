@@ -17,7 +17,7 @@
   font-weight: $bold;
   font-size: 1.6rem;
   white-space: nowrap;
-  z-index: 2;
+  z-index: 500;
 
   .nav_container {
     display: flex;
@@ -38,12 +38,15 @@
       cursor: pointer;
       .search_btn {
         display: flex;
-        gap: 1rem;
+        align-items: center;
+        gap: 0.1rem;
         .search_svg {
           height: 2rem;
           width: 2rem;
           object-fit: contain;
           color: $gray-500;
+          position: relative;
+          bottom: -0.1rem;
           path {
             stroke-width: 2;
           }

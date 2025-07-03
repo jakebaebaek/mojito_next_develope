@@ -1,0 +1,55 @@
+@import "@/styles/theme";
+.card_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 19rem;
+  height: 22rem;
+  background-color: white;
+  border-radius: 2rem;
+  box-shadow: $shadow;
+  position: relative;
+
+  .desc_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .name {
+      margin-top: 2rem;
+      font-size: 1.6rem;
+      font-weight: $light;
+      text-align: center;
+      word-break: keep-all;
+      white-space: pre-wrap;
+      z-index: 1;
+    }
+    .imgWrap {
+      height: 15rem;
+      aspect-ratio: 2 / 3; //비율
+      position: relative;
+    }
+  }
+
+  .heart {
+    stroke-width: 2;
+    position: absolute;
+    right: 1.5rem;
+    bottom: 2rem;
+    cursor: pointer;
+
+    &.unClicked {
+      fill: white;
+      stroke: $gray-200;
+    }
+
+    &.clicked {
+      fill: $main-color;
+      stroke: $main-color;
+    }
+  }
+}

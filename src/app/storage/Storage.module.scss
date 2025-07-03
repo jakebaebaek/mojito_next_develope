@@ -89,6 +89,10 @@
     grid-template-columns: repeat(auto-fill, minmax(42rem, 1fr));
     width: 100%;
     gap: 5rem;
+
+    @include respond(mobile) {
+      margin-top: 2rem;
+    }
   }
   .favorite_card_container {
     display: grid;
@@ -97,6 +101,11 @@
     align-items: center;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     width: 100%;
+
+    @include respond(mobile) {
+      width: 100vw;
+      padding: 2rem 4rem;
+    }
   }
   .empty_message {
     display: flex;
@@ -115,8 +124,7 @@
     }
   }
   @include respond(mobile) {
-    padding: 1rem;
-    gap: 3rem;
+    padding: 0rem;
     justify-content: center;
     .favorite_card_container {
       grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));

@@ -2,14 +2,15 @@
 @import "@/styles/mixin";
 
 .cocktail_length {
-  position: relative;
   font-size: 1.5rem;
   color: $gray-400;
   margin-bottom: 1rem;
+  margin-left: 1rem;
   left: 2rem;
 
   @include respond(mobile) {
-    left: 3rem;
+    margin-left: 9%;
+    width: 100%;
   }
 
   .emoji {

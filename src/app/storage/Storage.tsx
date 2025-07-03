@@ -138,9 +138,8 @@ const Storage = () => {
       >
         {sortedMemoList.length === 0 ? (
           <div className={`${style.empty_message}`}>
-            <h3>
-              저장된 칵테일이 없습니다. 칵테일마다 리뷰와 별점을 남겨주세요
-            </h3>
+            <h3>저장된 칵테일이 없습니다.</h3>
+            <h3>칵테일마다 리뷰와 별점을 남겨주세요.</h3>
           </div>
         ) : // 필터링한 칵테일 카드들 렌더
         activeTab === "recorded" && memoCocktailCardList ? (

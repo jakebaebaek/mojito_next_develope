@@ -109,6 +109,7 @@
   }
   .empty_message {
     display: flex;
+    flex-direction: column;
     position: fixed;
     top: -10rem;
     right: 1rem;

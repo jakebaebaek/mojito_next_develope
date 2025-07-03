@@ -268,7 +268,7 @@
     margin: 1rem 0;
   }
   @include respond(mobile) {
-    padding: 1rem;
+    padding: unset;
     .upper {
       width: 80%;
       .nametagBox {

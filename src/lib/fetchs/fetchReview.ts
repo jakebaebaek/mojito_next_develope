@@ -1,17 +1,19 @@
-
-export const postReview = async (cocktailId: string | string[], reviewText: string) => {
+export const postReview = async (
+  cocktailId: string | string[],
+  reviewText: string
+) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/memo`, {
-      method: 'POST',
-      cache : "no-store",
+    const response = await fetch(`${process.env.SERVER_URL}/api/review/memo`, {
+      method: "POST",
+      cache: "no-store",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ cocktailId, reviewText }),
     });
 
     if (!response.ok) {
-      throw new Error('리뷰 저장에 실패했습니다.');
+      throw new Error("리뷰 저장에 실패했습니다.");
     }
     const data = await response.json();
     return data;
@@ -22,37 +24,42 @@ export const postReview = async (cocktailId: string | string[], reviewText: stri
 };
 export const deleteReview = async (cocktailId: string | string[]) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/memo?cocktailId=${cocktailId}`, {
-      method: 'DELETE',
-      cache : "no-store",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `${process.env.SERVER_URL}/api/review/memo?cocktailId=${cocktailId}`,
+      {
+        method: "DELETE",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (!response.ok) {
-      throw new Error('리뷰 삭제에 실패했습니다.');
+      throw new Error("리뷰 삭제에 실패했습니다.");
     }
-    return response; 
-  }
-  catch (error) {
+    return response;
+  } catch (error) {
     console.error("리뷰 삭제 에러:", error);
     throw error;
   }
-}
+};
 
 export const getReview = async (cocktailId: string | string[]) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/memo?cocktailId=${cocktailId}`, {
-      method: 'GET',
-      cache : "no-store",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `${process.env.SERVER_URL}/api/review/memo?cocktailId=${cocktailId}`,
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (!response.ok) {
-      throw new Error('리뷰 불러오기에 실패했습니다.');
+      throw new Error("리뷰 불러오기에 실패했습니다.");
     }
-    return response.json(); 
+    return response.json();
   } catch (error) {
     console.error("리뷰 불러오기 에러:", error);
     throw error;

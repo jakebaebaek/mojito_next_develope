@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import style from "./card.module.scss";
+import style from "./Card.module.scss";
 import Heart from "@public/Heart.svg";
 import { useHeartToggle } from "@/lib/hooks/useHeartToggle";
 import Image from "next/image";

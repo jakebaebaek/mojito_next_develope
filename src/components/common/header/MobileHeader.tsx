@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import style from "./header.module.scss";
+import style from "./Header.module.scss";
 import Search from "@public/Search.svg";
 import LoginBtn from "./LoginBtn";
 import CocktailStorage from "@public/CocktailStorage.svg";

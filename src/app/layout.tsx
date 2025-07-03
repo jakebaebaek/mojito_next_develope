@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.scss";
-import Header from "@/components/common/header/Herder";
+import Header from "@/components/common/header/Hearder";
 import LoginModal from "@/components/common/modal/LoginModal";
 import AuthSession from "@/app/AuthSession";
 import UpdateStore from "@/components/updateStore";

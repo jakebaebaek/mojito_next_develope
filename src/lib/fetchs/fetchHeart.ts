@@ -2,7 +2,7 @@ import { THeartItem } from "../types/THeart";
 
 export const postHeart = async (heartList: THeartItem[]) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/review/heart`, {
+    const response = await fetch(`${process.env.SERVER_URL}/api/review/heart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

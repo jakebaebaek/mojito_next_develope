@@ -14,7 +14,7 @@ export const getCocktail = async (
   try {
     const query = `?limit=${limit}&offset=${offset}`;
     const response = await fetch(
-      `${process.env.SERVER_URL}/api/cocktails${query}`
+      `/api/cocktails${query}`
     );
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

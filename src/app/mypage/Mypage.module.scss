@@ -4,17 +4,22 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
+
   .profile_image {
+    margin-top: 20rem;
     height: 8rem;
-    font-size: 11rem;;
+    font-size: 11rem;
+
+    @include respond(mobile) {
+      margin-top: 25vh;
+    }
   }
   .nickname {
     margin-bottom: 2rem;
     h1 {
-      font-weight: $light;
+      font-weight: $medium;
     }
   }
   .mypage_buttons {
@@ -23,7 +28,7 @@
     gap: 1rem;
     margin-bottom: 2rem;
     h4 {
-      font-weight: $light;
+      font-weight: $medium;
     }
   }
   .button {
@@ -32,7 +37,7 @@
     position: relative;
     align-items: center;
     justify-content: center;
-    border: 1px solid black; 
+    border: 1px solid black;
     border-radius: 2rem;
     background-color: white;
     width: 15rem;
@@ -69,11 +74,14 @@
   .delete_account {
     margin-top: 5rem;
     border-radius: 10rem;
+    position: absolute;
+    bottom: 8vh;
     cursor: pointer;
     h4 {
       padding: 2rem 4rem 2rem 4rem;
-      border-radius: 2rem;;
-      color: $gray-300;
+      border-radius: 2rem;
+      color: $gray-200;
+      font-weight: $medium;
       &:hover {
         color: rgb(255, 39, 39);
         transition: 0.3s;
@@ -91,10 +99,3 @@
     }
   }
 }
-
-
-
-
-
-
-

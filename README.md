@@ -6,7 +6,7 @@
 분위기, 재료, 당도, 알콜세기, 이름 등의 여러 조건으로 쉽게 검색 가능한 칵테일 사이트!
 "모히또에서 몰디브 한 잔" 을 소개합니다.✨
 ************
-#####  [🍹배포링크는 여기서 확인 가능합니다 🍸](https://github.com/nextMojito/mojito)
+#####  [🍹배포링크는 여기서 확인 가능합니다 🍸]([https://github.com/nextMojito/mojito](https://mojito-next.vercel.app/))
 ************
 #### 기술 스택
 ###### Next.js 14

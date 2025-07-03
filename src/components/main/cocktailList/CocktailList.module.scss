@@ -7,6 +7,11 @@
   color: $gray-400;
   margin-bottom: 1rem;
   left: 2rem;
+
+  @include respond(mobile) {
+    left: 3rem;
+  }
+
   .emoji {
     width: 2rem;
     bottom: -0.4rem;
@@ -22,6 +27,11 @@
   box-sizing: border-box;
   padding: 2rem 1rem;
   gap: 3rem;
+
+  @include respond(mobile) {
+    padding: 2rem 4rem;
+    gap: 4rem;
+  }
 }
 
 .nulldata {

@@ -3,7 +3,7 @@ export const postReview = async (
   reviewText: string
 ) => {
   try {
-    const response = await fetch(`${process.env.SERVER_URL}/api/review/memo`, {
+    const response = await fetch(`/api/review/memo`, {
       method: "POST",
       cache: "no-store",
       headers: {
@@ -25,7 +25,7 @@ export const postReview = async (
 export const deleteReview = async (cocktailId: string | string[]) => {
   try {
     const response = await fetch(
-      `${process.env.SERVER_URL}/api/review/memo?cocktailId=${cocktailId}`,
+      `/api/review/memo?cocktailId=${cocktailId}`,
       {
         method: "DELETE",
         cache: "no-store",
@@ -47,7 +47,7 @@ export const deleteReview = async (cocktailId: string | string[]) => {
 export const getReview = async (cocktailId: string | string[]) => {
   try {
     const response = await fetch(
-      `${process.env.SERVER_URL}/api/review/memo?cocktailId=${cocktailId}`,
+      `/api/review/memo?cocktailId=${cocktailId}`,
       {
         method: "GET",
         cache: "no-store",

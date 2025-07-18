@@ -35,7 +35,7 @@
 
 |PC|모바일|
 |---|---|
-| ![PC 동작화면](https://private-user-images.githubusercontent.com/87072502/460554892-ee594f03-6874-4553-8c68-233b3b505dde.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTE1NTA0NjIsIm5iZiI6MTc1MTU1MDE2MiwicGF0aCI6Ii84NzA3MjUwMi80NjA1NTQ4OTItZWU1OTRmMDMtNjg3NC00NTUzLThjNjgtMjMzYjNiNTA1ZGRlLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MDMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzAzVDEzNDI0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE1ZDdhYTczZWNlODA1ODkwYTgxNzBjMTZlOTBiMzk4OTdlYzM0OGRiZjYyZTQ4MDdiY2M0M2FlODY0ODNhNWQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.P7GppSH3uNdb6GXOB6VwDRzM005qfXVoLQNUx1sOJLg)   |![모바일 동작 화면]()|
+| ![PC 동작화면](./public/PC_header.gif)   |![모바일 동작 화면]()|
 - PC / 모바일 UI 차별화
     - PC에서는 헤더가 상단에 위치 / 모바일에서는 하단 위치해 사용자 편의성을 높였다.
 - 카카오톡 로그인 기능
@@ -47,7 +47,7 @@
   
 |PC|모바일|
 |---|---|
-| ![PC 동작화면](https://private-user-images.githubusercontent.com/87072502/460670284-75ef0656-dade-4cab-af5c-7a6d21829304.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTE1NTA0NjIsIm5iZiI6MTc1MTU1MDE2MiwicGF0aCI6Ii84NzA3MjUwMi80NjA2NzAyODQtNzVlZjA2NTYtZGFkZS00Y2FiLWFmNWMtN2E2ZDIxODI5MzA0LmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MDMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzAzVDEzNDI0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTEwYzBiMzI3ZmQ3OTY3MGI3ZWI0MGE0ZDdlNjg2NDEzODJhOWIxYzdmMWFhMjQxYTVlOTg1ZmM3MmY5OWYxZTYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.7tYRR3o2b1NcCk-nFU0dBglqrBXyVH1s51J6tR-OHVM)   |![모바일 동작 화면]()|
+| ![PC 동작화면](./public/PC_mainpage.gif)   |![모바일 동작 화면](./public/Mobile_mainpage.gif)|
 - 랜덤칵테일
     - top100 칵테일을 렌더링 때마다 랜덤으로 10개를 보여준다.
     - 스와이프ui로 칵테일이 자동으로 슬라이드 된다.
@@ -67,7 +67,7 @@
 
 |PC|모바일|
 |---|---|
-| ![PC 동작화면](https://private-user-images.githubusercontent.com/87072502/460674567-8cff6fc6-945d-45ef-b446-beaf85f53c44.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTE1NTA0NjIsIm5iZiI6MTc1MTU1MDE2MiwicGF0aCI6Ii84NzA3MjUwMi80NjA2NzQ1NjctOGNmZjZmYzYtOTQ1ZC00NWVmLWI0NDYtYmVhZjg1ZjUzYzQ0LmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MDMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzAzVDEzNDI0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTA1YThjZDFkMWFiZTEyODA4ZGFjODgyMTFjNmYzYjY5ZjcyZTE5NjkyYjBiNWViMTVmYzljYzI1MTFmOTgxMDgmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.no5esjcRiwpwXIRp6yMHlNWJtm9NTgbfdC3-JgPGH84)   |![모바일 동작 화면]()|
+| ![PC 동작화면](./public/PC_find.gif)   |![모바일 동작 화면](./public/Mobile_find.gif)|
 - 검색기능
     - 칵테일의 이름과 재료로 검색할 수 있다.
     - 한국어 영어 모두 검색 가능하다.
@@ -78,7 +78,7 @@
 
 |PC|모바일|
 |---|---|
-| ![PC 동작화면](https://private-user-images.githubusercontent.com/87072502/460668882-c16d386f-8557-4bf7-8909-c5a36bd73c04.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTE1NTA0NjIsIm5iZiI6MTc1MTU1MDE2MiwicGF0aCI6Ii84NzA3MjUwMi80NjA2Njg4ODItYzE2ZDM4NmYtODU1Ny00YmY3LTg5MDktYzVhMzZiZDczYzA0LmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MDMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzAzVDEzNDI0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTliM2FmNTAwZjdmZDAxZGU5NjEyYjBhMzBkMWZjNGYwOTg5YzdkNzRlNGE4MjVhYjRhOWZkZjk2ZjQ3MWQ4MzUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.cX4JX62V3TGEF0FUoAx0_ZGr-yNFeD-lg1SvLmKWMFM)   |![모바일 동작 화면]()|
+| ![PC 동작화면](./public/PC_storage.gif)   |![모바일 동작 화면](./public/Mobile_storage.gif)|
 
 - 내 칵테일 데이터 확인
     - “별점”과 “리뷰”를 남긴 칵테일 카드를 “칵테일 기록” 탭에서 확인 가능하다.
@@ -90,7 +90,7 @@
 
 |PC|모바일|
 |---|---|
-| ![PC 동작화면](https://private-user-images.githubusercontent.com/87072502/460570761-00b6a6b7-2f7a-4015-8216-d53a0b0676ab.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTE1NTA0NjIsIm5iZiI6MTc1MTU1MDE2MiwicGF0aCI6Ii84NzA3MjUwMi80NjA1NzA3NjEtMDBiNmE2YjctMmY3YS00MDE1LTgyMTYtZDUzYTBiMDY3NmFiLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MDMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzAzVDEzNDI0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWY5Njk0NDY5ODBhMTY5NjdlYTJkYjE5ZTJhOWFiZTlkMTFhMjEwNmU1MDY4OWM4M2Q3MDg3MDYxMWEyMWQ2YTUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.fXkCmCcf4Kcx8VegTBQ-y5DT8ShDgbslS2p7PtV3z24)   |![모바일 동작 화면]()|
+| ![PC 동작화면](./public/PC_mypage.gif)   |![모바일 동작 화면](./public/Mobile_mypage.gif)|
 
 - 사용자 정보 확인 / 수정
     - 사용자의 프로필 이미지, 닉네임을 변경, 확인할 수 있다.
@@ -106,7 +106,7 @@
 
 |PC|모바일|
 |---|---|
-| ![PC 동작화면](https://private-user-images.githubusercontent.com/87072502/460677298-4b6efe90-c577-49ac-a3d5-bc13c0154d40.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTE1NTA0NjIsIm5iZiI6MTc1MTU1MDE2MiwicGF0aCI6Ii84NzA3MjUwMi80NjA2NzcyOTgtNGI2ZWZlOTAtYzU3Ny00OWFjLWEzZDUtYmMxM2MwMTU0ZDQwLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MDMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzAzVDEzNDI0MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPThkMmFkZjZkMDYxZTcwY2M2MWZlZjkxZTI1NDhiNjZkNjY0ZTQ1NTkwMGE3MGI3NDI4ZjI3YjM2YmNlYTliY2UmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.QP_hCGM632vNr_FABRdjHN_9-MscEsyY2G6Nxr65NZ8)   |![모바일 동작 화면]()|
+| ![PC 동작화면](./public/PC_desc.gif)   |![모바일 동작 화면](./public/Mobile_desc.gif)|
 
 - 칵테일 정보 확인 
     - 칵테일 이미지, 레시피, 알콜정도 및 당도를 확인할 수 있다.
